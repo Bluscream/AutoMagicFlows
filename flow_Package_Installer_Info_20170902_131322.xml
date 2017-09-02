@@ -1,0 +1,425 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<data version="1.34.0">
+  <trigger type="app_package_event">
+    <useDefaultName>false</useDefaultName>
+    <name>changed</name>
+    <enabled>true</enabled>
+    <broadcast>android.intent.action.PACKAGE_CHANGED</broadcast>
+    <packageNameFilter>*</packageNameFilter>
+  </trigger>
+  <trigger type="app_package_event">
+    <useDefaultName>false</useDefaultName>
+    <name>cleared</name>
+    <enabled>true</enabled>
+    <broadcast>android.intent.action.PACKAGE_DATA_CLEARED</broadcast>
+    <packageNameFilter>*</packageNameFilter>
+  </trigger>
+  <trigger type="app_package_event">
+    <useDefaultName>false</useDefaultName>
+    <name>fully uninstalled</name>
+    <enabled>true</enabled>
+    <broadcast>android.intent.action.PACKAGE_FULLY_REMOVED</broadcast>
+    <packageNameFilter>*</packageNameFilter>
+  </trigger>
+  <trigger type="app_package_event">
+    <useDefaultName>false</useDefaultName>
+    <name>installed</name>
+    <enabled>true</enabled>
+    <broadcast>android.intent.action.PACKAGE_ADDED</broadcast>
+    <packageNameFilter>*</packageNameFilter>
+  </trigger>
+  <trigger type="app_package_event">
+    <useDefaultName>false</useDefaultName>
+    <name>replaced </name>
+    <enabled>true</enabled>
+    <broadcast>android.intent.action.PACKAGE_REPLACED</broadcast>
+    <packageNameFilter>*</packageNameFilter>
+  </trigger>
+  <trigger type="app_package_event">
+    <useDefaultName>false</useDefaultName>
+    <name>uninstalled</name>
+    <enabled>true</enabled>
+    <broadcast>android.intent.action.PACKAGE_REMOVED</broadcast>
+    <packageNameFilter>*</packageNameFilter>
+  </trigger>
+  <condition type="debug_dialog">
+    <useDefaultName>true</useDefaultName>
+    <name>Debug Dialog</name>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: trigger == "changed"</name>
+    <expression>trigger == "changed"</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: trigger == "cleared"</name>
+    <expression>trigger == "cleared"</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: trigger == "fully uninstalled"</name>
+    <expression>trigger == "fully uninstalled"</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: trigger == "installed"</name>
+    <expression>trigger == "installed"</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: trigger == "replaced"</name>
+    <expression>trigger == "replaced"</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: trigger == "uninstalled"</name>
+    <expression>trigger == "uninstalled"</expression>
+  </condition>
+  <action type="execute_root_command">
+    <useDefaultName>true</useDefaultName>
+    <name>Execute Root Command: pm disable {package_name} in </name>
+    <command>pm disable {package_name}</command>
+    <user></user>
+    <seContext></seContext>
+    <workingDirectory></workingDirectory>
+    <timeout>300000</timeout>
+    <variableStdout>stdout</variableStdout>
+    <variableStderr>stderr</variableStderr>
+    <variableExitCode>exit_code</variableExitCode>
+  </action>
+  <action type="launch_app">
+    <useDefaultName>true</useDefaultName>
+    <name>Launch App: {package_name}</name>
+    <packageName>{package_name}</packageName>
+    <className></className>
+  </action>
+  <action type="notification_status_bar">
+    <useDefaultName>false</useDefaultName>
+    <name>PM Notification changed</name>
+    <notificationIconType>BUILTIN</notificationIconType>
+    <notificationIcon>GRID</notificationIcon>
+    <customNotificationIcon>/storage/emulated/0/Download/software_installer1600.png</customNotificationIcon>
+    <title>{app_name} {trigger}</title>
+    <message>{package_name}</message>
+    <sound>false</sound>
+    <vibrate>true</vibrate>
+    <flashLED>false</flashLED>
+    <flashLEDColor>#ff00ff00</flashLEDColor>
+    <flashLEDOn>500</flashLEDOn>
+    <flashLEDOff>500</flashLEDOff>
+    <flagLocalOnly>false</flagLocalOnly>
+    <accentColorEnabled>true</accentColorEnabled>
+    <accentColor>#ffddff00</accentColor>
+    <flagOngoing>false</flagOngoing>
+    <flagNoClear>false</flagNoClear>
+    <notificationIDEnabled>true</notificationIDEnabled>
+    <notificationID>326</notificationID>
+    <category>DEFAULT</category>
+    <priority>HIGH</priority>
+    <visibility>PRIVATE</visibility>
+    <messageBigEnabled>true</messageBigEnabled>
+    <messageBig>{package_name}
+
+Changed components:
+{newList(changed_component_name_list),listformat}</messageBig>
+    <showProgressbar>false</showProgressbar>
+    <progressbarIndeterminate>true</progressbarIndeterminate>
+    <progressbarValue>0</progressbarValue>
+    <progressbarMaximum>100</progressbarMaximum>
+    <largeIconEnabled>false</largeIconEnabled>
+    <largeIcon>/storage/emulated/0/Download/software_installer1600.png</largeIcon>
+    <group></group>
+    <isGroupSummary>false</isGroupSummary>
+    <actionRef text="Run" icon="PLAY" remove="false">Launch App: {package_name}</actionRef>
+    <actionRef text="Freeze" icon="LOCKED" remove="false">Execute Root Command: pm disable {package_name} in </actionRef>
+    <actionRef text="Uninstall" icon="DISCARD" remove="true">Start Activity: android.intent.action.DELETE package:{package_name} </actionRef>
+  </action>
+  <action type="notification_status_bar">
+    <useDefaultName>false</useDefaultName>
+    <name>PM Notification cleared</name>
+    <notificationIconType>BUILTIN</notificationIconType>
+    <notificationIcon>GRID</notificationIcon>
+    <customNotificationIcon>/storage/emulated/0/Download/software_installer1600.png</customNotificationIcon>
+    <title>{app_name} {trigger}</title>
+    <message>{package_name}</message>
+    <sound>false</sound>
+    <vibrate>true</vibrate>
+    <flashLED>false</flashLED>
+    <flashLEDColor>#ff00ff00</flashLEDColor>
+    <flashLEDOn>500</flashLEDOn>
+    <flashLEDOff>500</flashLEDOff>
+    <flagLocalOnly>false</flagLocalOnly>
+    <accentColorEnabled>true</accentColorEnabled>
+    <accentColor>#ffffa600</accentColor>
+    <flagOngoing>false</flagOngoing>
+    <flagNoClear>false</flagNoClear>
+    <notificationIDEnabled>true</notificationIDEnabled>
+    <notificationID>325</notificationID>
+    <category>DEFAULT</category>
+    <priority>HIGH</priority>
+    <visibility>PRIVATE</visibility>
+    <messageBigEnabled>false</messageBigEnabled>
+    <messageBig></messageBig>
+    <showProgressbar>false</showProgressbar>
+    <progressbarIndeterminate>true</progressbarIndeterminate>
+    <progressbarValue>0</progressbarValue>
+    <progressbarMaximum>100</progressbarMaximum>
+    <largeIconEnabled>false</largeIconEnabled>
+    <largeIcon>/storage/emulated/0/Download/software_installer1600.png</largeIcon>
+    <group></group>
+    <isGroupSummary>false</isGroupSummary>
+    <actionRef text="Run" icon="PLAY" remove="false">Launch App: {package_name}</actionRef>
+    <actionRef text="Freeze" icon="LOCKED" remove="false">Execute Root Command: pm disable {package_name} in </actionRef>
+    <actionRef text="Uninstall" icon="DISCARD" remove="true">Start Activity: android.intent.action.DELETE package:{package_name} </actionRef>
+  </action>
+  <action type="notification_status_bar">
+    <useDefaultName>false</useDefaultName>
+    <name>PM Notification fully uninstalled</name>
+    <notificationIconType>BUILTIN</notificationIconType>
+    <notificationIcon>GRID</notificationIcon>
+    <customNotificationIcon>/storage/emulated/0/Download/software_installer1600.png</customNotificationIcon>
+    <title>{package_name} {trigger}</title>
+    <message></message>
+    <sound>false</sound>
+    <vibrate>true</vibrate>
+    <flashLED>false</flashLED>
+    <flashLEDColor>#ff00ff00</flashLEDColor>
+    <flashLEDOn>500</flashLEDOn>
+    <flashLEDOff>500</flashLEDOff>
+    <flagLocalOnly>false</flagLocalOnly>
+    <accentColorEnabled>true</accentColorEnabled>
+    <accentColor>#ffff0000</accentColor>
+    <flagOngoing>false</flagOngoing>
+    <flagNoClear>false</flagNoClear>
+    <notificationIDEnabled>true</notificationIDEnabled>
+    <notificationID>321</notificationID>
+    <category>DEFAULT</category>
+    <priority>DEFAULT</priority>
+    <visibility>PRIVATE</visibility>
+    <messageBigEnabled>false</messageBigEnabled>
+    <messageBig></messageBig>
+    <showProgressbar>false</showProgressbar>
+    <progressbarIndeterminate>true</progressbarIndeterminate>
+    <progressbarValue>0</progressbarValue>
+    <progressbarMaximum>100</progressbarMaximum>
+    <largeIconEnabled>false</largeIconEnabled>
+    <largeIcon>/storage/emulated/0/Download/software_installer1600.png</largeIcon>
+    <group></group>
+    <isGroupSummary>false</isGroupSummary>
+    <actionRef text="Play Store" icon="PLAY" remove="false">Start Activity: android.intent.action.VIEW https://play.google.com/store/apps/details?id={package_name} </actionRef>
+    <actionRef text="Google" icon="SEARCH" remove="false">Start Activity: android.intent.action.WEB_SEARCH </actionRef>
+  </action>
+  <action type="notification_status_bar">
+    <useDefaultName>false</useDefaultName>
+    <name>PM Notification installed</name>
+    <notificationIconType>BUILTIN</notificationIconType>
+    <notificationIcon>GRID</notificationIcon>
+    <customNotificationIcon>/storage/emulated/0/Download/software_installer1600.png</customNotificationIcon>
+    <title>{app_name} {trigger}</title>
+    <message>{package_name}</message>
+    <sound>false</sound>
+    <vibrate>true</vibrate>
+    <flashLED>false</flashLED>
+    <flashLEDColor>#ff00ff00</flashLEDColor>
+    <flashLEDOn>500</flashLEDOn>
+    <flashLEDOff>500</flashLEDOff>
+    <flagLocalOnly>false</flagLocalOnly>
+    <accentColorEnabled>true</accentColorEnabled>
+    <accentColor>#ff03ff00</accentColor>
+    <flagOngoing>false</flagOngoing>
+    <flagNoClear>false</flagNoClear>
+    <notificationIDEnabled>true</notificationIDEnabled>
+    <notificationID>323</notificationID>
+    <category>DEFAULT</category>
+    <priority>HIGH</priority>
+    <visibility>PRIVATE</visibility>
+    <messageBigEnabled>false</messageBigEnabled>
+    <messageBig></messageBig>
+    <showProgressbar>false</showProgressbar>
+    <progressbarIndeterminate>true</progressbarIndeterminate>
+    <progressbarValue>0</progressbarValue>
+    <progressbarMaximum>100</progressbarMaximum>
+    <largeIconEnabled>false</largeIconEnabled>
+    <largeIcon>/storage/emulated/0/Download/software_installer1600.png</largeIcon>
+    <group></group>
+    <isGroupSummary>false</isGroupSummary>
+    <actionRef text="Run" icon="PLAY" remove="false">Launch App: {package_name}</actionRef>
+    <actionRef text="Freeze" icon="LOCKED" remove="false">Execute Root Command: pm disable {package_name} in </actionRef>
+    <actionRef text="Uninstall" icon="DISCARD" remove="true">Start Activity: android.intent.action.DELETE package:{package_name} </actionRef>
+  </action>
+  <action type="notification_status_bar">
+    <useDefaultName>false</useDefaultName>
+    <name>PM Notification replaced</name>
+    <notificationIconType>BUILTIN</notificationIconType>
+    <notificationIcon>GROUP</notificationIcon>
+    <customNotificationIcon>/storage/emulated/0/Download/software_installer1600.png</customNotificationIcon>
+    <title>{app_name} {trigger}</title>
+    <message>{package_name}</message>
+    <sound>false</sound>
+    <vibrate>true</vibrate>
+    <flashLED>false</flashLED>
+    <flashLEDColor>#ff00ff00</flashLEDColor>
+    <flashLEDOn>500</flashLEDOn>
+    <flashLEDOff>500</flashLEDOff>
+    <flagLocalOnly>true</flagLocalOnly>
+    <accentColorEnabled>true</accentColorEnabled>
+    <accentColor>#ff0085ff</accentColor>
+    <flagOngoing>false</flagOngoing>
+    <flagNoClear>false</flagNoClear>
+    <notificationIDEnabled>true</notificationIDEnabled>
+    <notificationID>324</notificationID>
+    <category>DEFAULT</category>
+    <priority>HIGH</priority>
+    <visibility>PRIVATE</visibility>
+    <messageBigEnabled>false</messageBigEnabled>
+    <messageBig></messageBig>
+    <showProgressbar>false</showProgressbar>
+    <progressbarIndeterminate>true</progressbarIndeterminate>
+    <progressbarValue>0</progressbarValue>
+    <progressbarMaximum>100</progressbarMaximum>
+    <largeIconEnabled>false</largeIconEnabled>
+    <largeIcon>/storage/emulated/0/Download/software_installer1600.png</largeIcon>
+    <group></group>
+    <isGroupSummary>false</isGroupSummary>
+    <actionRef text="Run" icon="PLAY" remove="false">Launch App: {package_name}</actionRef>
+    <actionRef text="Freeze" icon="LOCKED" remove="false">Execute Root Command: pm disable {package_name} in </actionRef>
+    <actionRef text="Uninstall" icon="DISCARD" remove="true">Start Activity: android.intent.action.DELETE package:{package_name} </actionRef>
+  </action>
+  <action type="notification_status_bar">
+    <useDefaultName>false</useDefaultName>
+    <name>PM Notification uninstalled</name>
+    <notificationIconType>BUILTIN</notificationIconType>
+    <notificationIcon>GRID</notificationIcon>
+    <customNotificationIcon>/storage/emulated/0/Download/software_installer1600.png</customNotificationIcon>
+    <title>{package_name} {trigger}</title>
+    <message></message>
+    <sound>false</sound>
+    <vibrate>true</vibrate>
+    <flashLED>false</flashLED>
+    <flashLEDColor>#ff00ff00</flashLEDColor>
+    <flashLEDOn>500</flashLEDOn>
+    <flashLEDOff>500</flashLEDOff>
+    <flagLocalOnly>false</flagLocalOnly>
+    <accentColorEnabled>true</accentColorEnabled>
+    <accentColor>#fffa5555</accentColor>
+    <flagOngoing>false</flagOngoing>
+    <flagNoClear>false</flagNoClear>
+    <notificationIDEnabled>true</notificationIDEnabled>
+    <notificationID>322</notificationID>
+    <category>DEFAULT</category>
+    <priority>MAX</priority>
+    <visibility>PRIVATE</visibility>
+    <messageBigEnabled>false</messageBigEnabled>
+    <messageBig></messageBig>
+    <showProgressbar>false</showProgressbar>
+    <progressbarIndeterminate>true</progressbarIndeterminate>
+    <progressbarValue>0</progressbarValue>
+    <progressbarMaximum>100</progressbarMaximum>
+    <largeIconEnabled>false</largeIconEnabled>
+    <largeIcon>/storage/emulated/0/Download/software_installer1600.png</largeIcon>
+    <group></group>
+    <isGroupSummary>false</isGroupSummary>
+    <actionRef text="Play Store" icon="PLAY" remove="false">Start Activity: android.intent.action.VIEW https://play.google.com/store/apps/details?id={package_name} </actionRef>
+    <actionRef text="Google" icon="SEARCH" remove="false">Start Activity: android.intent.action.WEB_SEARCH </actionRef>
+  </action>
+  <action type="script">
+    <useDefaultName>true</useDefaultName>
+    <name>Script: changed_components = join(changed_component_name_list, "\n");</name>
+    <script>changed_components = join(changed_component_name_list, "\n");</script>
+  </action>
+  <action type="start_activity">
+    <useDefaultName>true</useDefaultName>
+    <name>Start Activity: android.intent.action.DELETE package:{package_name} </name>
+    <intentAction>android.intent.action.DELETE</intentAction>
+    <categoryListEnabled>false</categoryListEnabled>
+    <categoryList>android.intent.category.DEFAULT</categoryList>
+    <dataEnabled>true</dataEnabled>
+    <data>package:{package_name}</data>
+    <dataTypeEnabled>false</dataTypeEnabled>
+    <dataType>text/plain</dataType>
+    <explicitComponent>false</explicitComponent>
+    <packageName></packageName>
+    <className></className>
+    <flagList>FLAG_ACTIVITY_NEW_TASK</flagList>
+    <extras></extras>
+    <waitForResult>false</waitForResult>
+    <accessResultExtras></accessResultExtras>
+  </action>
+  <action type="start_activity">
+    <useDefaultName>true</useDefaultName>
+    <name>Start Activity: android.intent.action.VIEW https://play.google.com/store/apps/details?id={package_name} </name>
+    <intentAction>android.intent.action.VIEW</intentAction>
+    <categoryListEnabled>false</categoryListEnabled>
+    <categoryList>android.intent.category.DEFAULT</categoryList>
+    <dataEnabled>true</dataEnabled>
+    <data>https://play.google.com/store/apps/details?id={package_name}</data>
+    <dataTypeEnabled>false</dataTypeEnabled>
+    <dataType>text/plain</dataType>
+    <explicitComponent>false</explicitComponent>
+    <packageName></packageName>
+    <className></className>
+    <flagList>FLAG_ACTIVITY_NEW_TASK</flagList>
+    <extras></extras>
+    <waitForResult>false</waitForResult>
+    <accessResultExtras></accessResultExtras>
+  </action>
+  <action type="start_activity">
+    <useDefaultName>true</useDefaultName>
+    <name>Start Activity: android.intent.action.WEB_SEARCH </name>
+    <intentAction>android.intent.action.WEB_SEARCH</intentAction>
+    <categoryListEnabled>false</categoryListEnabled>
+    <categoryList>android.intent.category.DEFAULT</categoryList>
+    <dataEnabled>false</dataEnabled>
+    <data>https://google.com/search?q={package_name}</data>
+    <dataTypeEnabled>false</dataTypeEnabled>
+    <dataType>text/plain</dataType>
+    <explicitComponent>false</explicitComponent>
+    <packageName></packageName>
+    <className></className>
+    <flagList>FLAG_ACTIVITY_NEW_TASK</flagList>
+    <extras>putString("query", "{package_name}");</extras>
+    <waitForResult>false</waitForResult>
+    <accessResultExtras></accessResultExtras>
+  </action>
+  <flow type="flow">
+    <name>Package Installer Info</name>
+    <group>Informative</group>
+    <enabled>true</enabled>
+    <executionPolicy>PARALLEL</executionPolicy>
+    <triggercontainer id="t1" x="70.0" y="52.5">
+      <trigger>uninstalled</trigger>
+      <trigger>fully uninstalled</trigger>
+      <trigger>replaced </trigger>
+      <trigger>installed</trigger>
+      <trigger>changed</trigger>
+      <trigger>cleared</trigger>
+    </triggercontainer>
+    <conditioncontainer id="t2" x="-665.0" y="402.5">Expression: trigger == "fully uninstalled"</conditioncontainer>
+    <conditioncontainer id="t3" x="-105.0" y="402.5">Expression: trigger == "installed"</conditioncontainer>
+    <conditioncontainer id="t4" x="140.0" y="402.5">Expression: trigger == "replaced"</conditioncontainer>
+    <conditioncontainer id="t5" x="420.0" y="402.5">Expression: trigger == "cleared"</conditioncontainer>
+    <conditioncontainer id="t6" x="-385.0" y="402.5">Expression: trigger == "uninstalled"</conditioncontainer>
+    <actioncontainer id="t7" x="-700.0" y="717.5">PM Notification fully uninstalled</actioncontainer>
+    <conditioncontainer id="t8" x="35.0" y="1102.5">Debug Dialog</conditioncontainer>
+    <conditioncontainer id="t9" x="665.0" y="402.5">Expression: trigger == "changed"</conditioncontainer>
+    <actioncontainer id="t10" x="-420.0" y="717.5">PM Notification uninstalled</actioncontainer>
+    <actioncontainer id="t11" x="-140.0" y="717.5">PM Notification installed</actioncontainer>
+    <actioncontainer id="t12" x="140.0" y="717.5">PM Notification replaced</actioncontainer>
+    <actioncontainer id="t13" x="455.0" y="717.5">PM Notification cleared</actioncontainer>
+    <actioncontainer id="t14" x="595.0" y="927.5">PM Notification changed</actioncontainer>
+    <actioncontainer id="t15" x="770.0" y="717.5">Script: changed_components = join(changed_component_name_list, "\n");</actioncontainer>
+    <connection from="t1" to="t6" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t1" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t1" to="t4" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t1" to="t5" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t1" to="t9" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t2" to="t7" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t3" to="t11" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t4" to="t12" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t5" to="t13" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t6" to="t10" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t9" to="t14" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t15" to="t14" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+  </flow>
+</data>

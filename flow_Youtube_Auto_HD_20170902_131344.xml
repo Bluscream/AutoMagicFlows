@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<data version="1.34.0">
+  <trigger type="activity_started">
+    <useDefaultName>true</useDefaultName>
+    <name>Activity Started: com.google.android.youtube/com.google.android.apps.youtube.app.WatchWhileActivity</name>
+    <enabled>false</enabled>
+    <method>CLASSIC</method>
+    <packageNameFilter>com.google.android.youtube</packageNameFilter>
+    <classNameFilter>com.google.android.apps.youtube.app.WatchWhileActivity</classNameFilter>
+  </trigger>
+  <action type="control_user_interface">
+    <useDefaultName>true</useDefaultName>
+    <name>Control UI: click("Quality");</name>
+    <script>
+click("Quality");</script>
+  </action>
+  <action type="control_user_interface">
+    <useDefaultName>true</useDefaultName>
+    <name>Control UI: click(512, 736);</name>
+    <script>click(512, 736);</script>
+  </action>
+  <action type="control_user_interface">
+    <useDefaultName>true</useDefaultName>
+    <name>Control UI: clickById("com.google.android.youtube:id/player_overflow_button");</name>
+    <script>clickById("com.google.android.youtube:id/player_overflow_button");</script>
+  </action>
+  <action type="sleep">
+    <useDefaultName>true</useDefaultName>
+    <name>Sleep: 1s (keep device awake)</name>
+    <duration>1s</duration>
+    <keepDeviceAwake>true</keepDeviceAwake>
+    <allowWakeupFromDeviceIdle>false</allowWakeupFromDeviceIdle>
+  </action>
+  <action type="sleep">
+    <useDefaultName>true</useDefaultName>
+    <name>Sleep: 500ms (keep device awake)</name>
+    <duration>500ms</duration>
+    <keepDeviceAwake>true</keepDeviceAwake>
+    <allowWakeupFromDeviceIdle>false</allowWakeupFromDeviceIdle>
+  </action>
+  <flow type="flow">
+    <name>Youtube Auto HD</name>
+    <group>YouTube</group>
+    <enabled>false</enabled>
+    <executionPolicy>QUEUE</executionPolicy>
+    <triggercontainer id="t1" x="70.0" y="17.5">
+      <trigger>Activity Started: com.google.android.youtube/com.google.android.apps.youtube.app.WatchWhileActivity</trigger>
+    </triggercontainer>
+    <actioncontainer id="t2" x="420.0" y="-157.5">Control UI: clickById("com.google.android.youtube:id/player_overflow_button");</actioncontainer>
+    <actioncontainer id="t3" x="420.0" y="542.5">Control UI: click(512, 736);</actioncontainer>
+    <actioncontainer id="t4" x="420.0" y="-332.5">Sleep: 1s (keep device awake)</actioncontainer>
+    <actioncontainer id="t5" x="420.0" y="192.5">Control UI: click("Quality");</actioncontainer>
+    <actioncontainer id="t6" x="420.0" y="17.5">Sleep: 500ms (keep device awake)</actioncontainer>
+    <actioncontainer id="t7" x="420.0" y="367.5">Sleep: 500ms (keep device awake)</actioncontainer>
+    <connection from="t1" to="t4" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t2" to="t6" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t4" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t5" to="t7" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t6" to="t5" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t7" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+  </flow>
+</data>

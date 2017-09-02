@@ -1,0 +1,188 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<data version="1.34.0">
+  <trigger type="shortcut">
+    <useDefaultName>true</useDefaultName>
+    <name>Shortcut: Adguard</name>
+    <enabled>false</enabled>
+    <title>Adguard</title>
+  </trigger>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: value == "1"</name>
+    <expression>value == "1"</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: value == "3"</name>
+    <expression>value == "3"</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: value == "5"</name>
+    <expression>value == "5"</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: value == "Exit"</name>
+    <expression>value == "Exit"</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: value == "Start"</name>
+    <expression>value == "Start"</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: value == "Stop"</name>
+    <expression>value == "Stop"</expression>
+  </condition>
+  <action type="start_service">
+    <useDefaultName>false</useDefaultName>
+    <name>1</name>
+    <intentAction>android.intent.action.SEND</intentAction>
+    <categoryListEnabled>false</categoryListEnabled>
+    <categoryList>android.intent.category.DEFAULT</categoryList>
+    <dataEnabled>false</dataEnabled>
+    <data></data>
+    <dataTypeEnabled>false</dataTypeEnabled>
+    <dataType></dataType>
+    <explicitComponent>true</explicitComponent>
+    <packageName>com.adguard.android</packageName>
+    <className>com.adguard.android.ServiceManager</className>
+    <flagList></flagList>
+    <extras>putInt("ACTION", 1);</extras>
+  </action>
+  <action type="start_service">
+    <useDefaultName>false</useDefaultName>
+    <name>3</name>
+    <intentAction>android.intent.action.SEND</intentAction>
+    <categoryListEnabled>false</categoryListEnabled>
+    <categoryList>android.intent.category.DEFAULT</categoryList>
+    <dataEnabled>false</dataEnabled>
+    <data></data>
+    <dataTypeEnabled>false</dataTypeEnabled>
+    <dataType></dataType>
+    <explicitComponent>true</explicitComponent>
+    <packageName>com.adguard.android</packageName>
+    <className>com.adguard.android.ServiceManager</className>
+    <flagList></flagList>
+    <extras>putInt("ACTION", 3);</extras>
+  </action>
+  <action type="start_service">
+    <useDefaultName>false</useDefaultName>
+    <name>5</name>
+    <intentAction>android.intent.action.SEND</intentAction>
+    <categoryListEnabled>false</categoryListEnabled>
+    <categoryList>android.intent.category.DEFAULT</categoryList>
+    <dataEnabled>false</dataEnabled>
+    <data></data>
+    <dataTypeEnabled>false</dataTypeEnabled>
+    <dataType></dataType>
+    <explicitComponent>true</explicitComponent>
+    <packageName>com.adguard.android</packageName>
+    <className>com.adguard.android.ServiceManager</className>
+    <flagList></flagList>
+    <extras>putInt("ACTION", 5);</extras>
+  </action>
+  <action type="start_service">
+    <useDefaultName>false</useDefaultName>
+    <name>Exit Adguard</name>
+    <intentAction>android.intent.action.SEND</intentAction>
+    <categoryListEnabled>false</categoryListEnabled>
+    <categoryList>android.intent.category.DEFAULT</categoryList>
+    <dataEnabled>false</dataEnabled>
+    <data></data>
+    <dataTypeEnabled>false</dataTypeEnabled>
+    <dataType></dataType>
+    <explicitComponent>true</explicitComponent>
+    <packageName>com.adguard.android</packageName>
+    <className>com.adguard.android.ServiceManager</className>
+    <flagList></flagList>
+    <extras>putInt("ACTION", 6);</extras>
+  </action>
+  <action type="input_dialog">
+    <useDefaultName>true</useDefaultName>
+    <name>Input Dialog: Manage Adguard Single Choice 1,Start,3,Stop,5,Exit</name>
+    <title>Manage Adguard</title>
+    <inputDialogType>SINGLE_CHOICE</inputDialogType>
+    <prompt></prompt>
+    <inputValues>1,Start,3,Stop,5,Exit</inputValues>
+    <defaultValue>1</defaultValue>
+    <titleFontSize>DEFAULT</titleFontSize>
+    <promptFontSize>DEFAULT</promptFontSize>
+    <fontSize>DEFAULT</fontSize>
+    <timeoutEnabled>false</timeoutEnabled>
+    <timeout>60000</timeout>
+    <defaultValueOnTimeout></defaultValueOnTimeout>
+    <showWhenLocked>false</showWhenLocked>
+    <turnScreenOn>false</turnScreenOn>
+    <keepScreenOn>false</keepScreenOn>
+    <enlargeDialogWidth>false</enlargeDialogWidth>
+  </action>
+  <action type="start_service">
+    <useDefaultName>false</useDefaultName>
+    <name>Start Service</name>
+    <intentAction>android.intent.action.SEND</intentAction>
+    <categoryListEnabled>false</categoryListEnabled>
+    <categoryList>android.intent.category.DEFAULT</categoryList>
+    <dataEnabled>false</dataEnabled>
+    <data></data>
+    <dataTypeEnabled>false</dataTypeEnabled>
+    <dataType></dataType>
+    <explicitComponent>true</explicitComponent>
+    <packageName>com.adguard.android</packageName>
+    <className>com.adguard.android.ServiceManager</className>
+    <flagList></flagList>
+    <extras>putInt("ACTION", 2);</extras>
+  </action>
+  <action type="start_service">
+    <useDefaultName>false</useDefaultName>
+    <name>Stop Service</name>
+    <intentAction>android.intent.action.SEND</intentAction>
+    <categoryListEnabled>false</categoryListEnabled>
+    <categoryList>android.intent.category.DEFAULT</categoryList>
+    <dataEnabled>false</dataEnabled>
+    <data></data>
+    <dataTypeEnabled>false</dataTypeEnabled>
+    <dataType></dataType>
+    <explicitComponent>true</explicitComponent>
+    <packageName>com.adguard.android</packageName>
+    <className>com.adguard.android.ServiceManager</className>
+    <flagList></flagList>
+    <extras>putInt("ACTION", 4);</extras>
+  </action>
+  <flow type="flow">
+    <name>Manage Adguard</name>
+    <enabled>false</enabled>
+    <executionPolicy>PARALLEL</executionPolicy>
+    <triggercontainer id="t1" x="0.0" y="52.5">
+      <trigger>Shortcut: Adguard</trigger>
+    </triggercontainer>
+    <conditioncontainer id="t2" x="-385.0" y="542.5">Expression: value == "Start"</conditioncontainer>
+    <actioncontainer id="t3" x="-385.0" y="717.5">Start Service</actioncontainer>
+    <conditioncontainer id="t4" x="-630.0" y="542.5">Expression: value == "1"</conditioncontainer>
+    <conditioncontainer id="t5" x="-140.0" y="542.5">Expression: value == "3"</conditioncontainer>
+    <actioncontainer id="t6" x="105.0" y="717.5">Stop Service</actioncontainer>
+    <conditioncontainer id="t7" x="105.0" y="542.5">Expression: value == "Stop"</conditioncontainer>
+    <actioncontainer id="t8" x="595.0" y="717.5">Exit Adguard</actioncontainer>
+    <conditioncontainer id="t9" x="595.0" y="542.5">Expression: value == "Exit"</conditioncontainer>
+    <conditioncontainer id="t10" x="350.0" y="542.5">Expression: value == "5"</conditioncontainer>
+    <actioncontainer id="t11" x="0.0" y="262.5">Input Dialog: Manage Adguard Single Choice 1,Start,3,Stop,5,Exit</actioncontainer>
+    <actioncontainer id="t12" x="-630.0" y="717.5">1</actioncontainer>
+    <actioncontainer id="t13" x="-140.0" y="717.5">3</actioncontainer>
+    <actioncontainer id="t14" x="350.0" y="717.5">5</actioncontainer>
+    <connection from="t1" to="t11" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t2" to="t3" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t4" to="t12" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t5" to="t13" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t7" to="t6" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t9" to="t8" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t10" to="t14" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t11" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t11" to="t7" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t11" to="t9" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t11" to="t10" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t11" to="t5" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t11" to="t4" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+  </flow>
+</data>

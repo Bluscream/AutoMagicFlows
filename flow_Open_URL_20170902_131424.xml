@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<data version="1.34.0">
+  <trigger type="shortcut">
+    <useDefaultName>true</useDefaultName>
+    <name>Shortcut: Open URL</name>
+    <enabled>true</enabled>
+    <title>Open URL</title>
+  </trigger>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: operation=='ok'</name>
+    <expression>operation=='ok'</expression>
+  </condition>
+  <action type="input_dialog">
+    <useDefaultName>true</useDefaultName>
+    <name>Input Dialog: URL/I Single-line text </name>
+    <title>URL/I</title>
+    <inputDialogType>SINGLE_LINE_TEXT</inputDialogType>
+    <prompt></prompt>
+    <inputValues></inputValues>
+    <defaultValue>https://www.</defaultValue>
+    <titleFontSize>DEFAULT</titleFontSize>
+    <promptFontSize>DEFAULT</promptFontSize>
+    <fontSize>DEFAULT</fontSize>
+    <timeoutEnabled>false</timeoutEnabled>
+    <timeout>60000</timeout>
+    <defaultValueOnTimeout></defaultValueOnTimeout>
+    <showWhenLocked>false</showWhenLocked>
+    <turnScreenOn>false</turnScreenOn>
+    <keepScreenOn>false</keepScreenOn>
+    <enlargeDialogWidth>false</enlargeDialogWidth>
+  </action>
+  <action type="open_browser_url">
+    <useDefaultName>true</useDefaultName>
+    <name>Open URL in Browser: {value}</name>
+    <url>{value}</url>
+    <explicitComponent>false</explicitComponent>
+    <packageName></packageName>
+    <className></className>
+    <appName></appName>
+  </action>
+  <flow type="flow">
+    <name>Open URL</name>
+    <enabled>true</enabled>
+    <executionPolicy>PARALLEL</executionPolicy>
+    <triggercontainer id="t1" x="70.0" y="52.5">
+      <trigger>Shortcut: Open URL</trigger>
+    </triggercontainer>
+    <actioncontainer id="t2" x="70.0" y="227.5">Input Dialog: URL/I Single-line text </actioncontainer>
+    <conditioncontainer id="t3" x="70.0" y="402.5">Expression: operation=='ok'</conditioncontainer>
+    <actioncontainer id="t4" x="70.0" y="682.5">Open URL in Browser: {value}</actioncontainer>
+    <connection from="t1" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t2" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t3" to="t4" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+  </flow>
+</data>

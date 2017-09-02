@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<data version="1.34.0">
+  <trigger type="activity_started">
+    <useDefaultName>false</useDefaultName>
+    <name>App Details shown</name>
+    <enabled>false</enabled>
+    <method>CLASSIC</method>
+    <packageNameFilter>com.android.settings</packageNameFilter>
+    <classNameFilter>com.android.settings.applications.InstalledAppDetailsTop</classNameFilter>
+  </trigger>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: getValue("isblocked", false) == true</name>
+    <expression>getValue("isblocked", false) == true</expression>
+  </condition>
+  <action type="control_user_interface">
+    <useDefaultName>false</useDefaultName>
+    <name>Clear defaults</name>
+    <script>
+click("Set as default");
+sleep(500);
+click("Clear defaults");
+setValue("isblocked", true);
+back();sleep(500);back();
+recents();sleep(750);back();
+setValue("isblocked", false);</script>
+  </action>
+  <action type="script">
+    <useDefaultName>true</useDefaultName>
+    <name>Script: setValue("isblocked", false);</name>
+    <script>setValue("isblocked", false);</script>
+  </action>
+  <flow type="flow">
+    <name>Auto Clear Defaults</name>
+    <group>Auto actions</group>
+    <enabled>false</enabled>
+    <executionPolicy>PARALLEL</executionPolicy>
+    <triggercontainer id="t1" x="70.0" y="17.5">
+      <trigger>App Details shown</trigger>
+    </triggercontainer>
+    <conditioncontainer id="t2" x="105.0" y="472.5">Expression: getValue("isblocked", false) == true</conditioncontainer>
+    <actioncontainer id="t3" x="630.0" y="157.5">Script: setValue("isblocked", false);</actioncontainer>
+    <actioncontainer id="t4" x="70.0" y="717.5">Clear defaults</actioncontainer>
+    <connection from="t1" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t2" to="t4" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
+  </flow>
+</data>

@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<data version="1.34.0">
+  <trigger type="activity_started">
+    <useDefaultName>true</useDefaultName>
+    <name>Activity Started: */*</name>
+    <enabled>false</enabled>
+    <method>CLASSIC</method>
+    <packageNameFilter>*</packageNameFilter>
+    <classNameFilter>*</classNameFilter>
+  </trigger>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: activity_class == ""</name>
+    <expression>activity_class == ""</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: activity_class == "ch.gridvision.ppam.androidautomagic.ConditionActivity"</name>
+    <expression>activity_class == "ch.gridvision.ppam.androidautomagic.ConditionActivity"</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: activity_class == "ch.gridvision.ppam.androidautomagic.FlowActivity"</name>
+    <expression>activity_class == "ch.gridvision.ppam.androidautomagic.FlowActivity"</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: activity_class == "com.android.launcher3.Launcher"</name>
+    <expression>activity_class == "com.android.launcher3.Launcher"</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: activity_class == "com.android.systemui.recents.RecentsActivity"</name>
+    <expression>activity_class == "com.android.systemui.recents.RecentsActivity"</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: activity_class == null</name>
+    <expression>activity_class == null</expression>
+  </condition>
+  <action type="notification_screen">
+    <useDefaultName>true</useDefaultName>
+    <name>Notification on Screen: {activity_class} (long)</name>
+    <showText>true</showText>
+    <text>{activity_class}</text>
+    <widgetName></widgetName>
+    <width>200</width>
+    <height>250</height>
+    <stretchToFillArea>false</stretchToFillArea>
+    <opacity>1.00</opacity>
+    <durationLong>true</durationLong>
+    <customPosition>true</customPosition>
+    <gravityType>BOTTOM_CENTER</gravityType>
+    <xOffset>0</xOffset>
+    <yOffset>0</yOffset>
+  </action>
+  <action type="notification_status_bar">
+    <useDefaultName>true</useDefaultName>
+    <name>Notification on Statusbar: Current Activity Information</name>
+    <notificationIconType>BUILTIN</notificationIconType>
+    <notificationIcon>INFO</notificationIcon>
+    <customNotificationIcon></customNotificationIcon>
+    <title>Current Activity</title>
+    <message>{activity_class}</message>
+    <sound>false</sound>
+    <vibrate>false</vibrate>
+    <flashLED>false</flashLED>
+    <flashLEDColor>#ff00ff00</flashLEDColor>
+    <flashLEDOn>500</flashLEDOn>
+    <flashLEDOff>500</flashLEDOff>
+    <flagLocalOnly>false</flagLocalOnly>
+    <accentColorEnabled>false</accentColorEnabled>
+    <accentColor>#ffff0000</accentColor>
+    <flagOngoing>true</flagOngoing>
+    <flagNoClear>false</flagNoClear>
+    <notificationIDEnabled>false</notificationIDEnabled>
+    <notificationID>1</notificationID>
+    <category>DEFAULT</category>
+    <priority>MIN</priority>
+    <visibility>PRIVATE</visibility>
+    <messageBigEnabled>false</messageBigEnabled>
+    <messageBig>lol</messageBig>
+    <showProgressbar>false</showProgressbar>
+    <progressbarIndeterminate>false</progressbarIndeterminate>
+    <progressbarValue>0</progressbarValue>
+    <progressbarMaximum>100</progressbarMaximum>
+    <largeIconEnabled>false</largeIconEnabled>
+    <largeIcon></largeIcon>
+    <group></group>
+    <isGroupSummary>false</isGroupSummary>
+  </action>
+  <flow type="flow">
+    <name>New activity</name>
+    <group>Informative</group>
+    <enabled>false</enabled>
+    <executionPolicy>QUEUE</executionPolicy>
+    <triggercontainer id="t1" x="70.0" y="-192.5">
+      <trigger>Activity Started: */*</trigger>
+    </triggercontainer>
+    <conditioncontainer id="t2" x="-1015.0" y="52.5">Expression: activity_class == "ch.gridvision.ppam.androidautomagic.ConditionActivity"</conditioncontainer>
+    <conditioncontainer id="t3" x="-770.0" y="52.5">Expression: activity_class == "ch.gridvision.ppam.androidautomagic.FlowActivity"</conditioncontainer>
+    <conditioncontainer id="t4" x="-490.0" y="52.5">Expression: activity_class == "com.android.systemui.recents.RecentsActivity"</conditioncontainer>
+    <conditioncontainer id="t5" x="-210.0" y="52.5">Expression: activity_class == "com.android.launcher3.Launcher"</conditioncontainer>
+    <conditioncontainer id="t6" x="980.0" y="52.5">Expression: activity_class == ""</conditioncontainer>
+    <conditioncontainer id="t7" x="1260.0" y="52.5">Expression: activity_class == null</conditioncontainer>
+    <actioncontainer id="t8" x="-35.0" y="367.5">Notification on Screen: {activity_class} (long)</actioncontainer>
+    <actioncontainer id="t9" x="210.0" y="367.5">Notification on Statusbar: Current Activity Information</actioncontainer>
+    <connection from="t1" to="t6" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t2" to="t3" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t3" to="t4" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t4" to="t5" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t5" to="t6" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t6" to="t7" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t7" to="t9" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
+  </flow>
+</data>

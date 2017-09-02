@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<data version="1.34.0">
+  <trigger type="user_interface_event">
+    <useDefaultName>true</useDefaultName>
+    <name>UI Event: Window opened package com.android.systemui contains text Volume</name>
+    <enabled>false</enabled>
+    <accessibilityEventType>TYPE_WINDOW_STATE_CHANGED</accessibilityEventType>
+    <packageNameFilter>com.android.systemui</packageNameFilter>
+    <textMatchType>CONTAINS_TEXT</textMatchType>
+    <textFilter>Volume</textFilter>
+    <removeNonPrintableCharacters>false</removeNonPrintableCharacters>
+  </trigger>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: source_class_name != "ch.gridvision.ppam.androidautomagic.ConditionActivity"</name>
+    <expression>source_class_name != "ch.gridvision.ppam.androidautomagic.ConditionActivity"</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: source_class_name == "com.android.systemui.volume.SecVolumeDialog$7"</name>
+    <expression>source_class_name == "com.android.systemui.volume.SecVolumeDialog$7"</expression>
+  </condition>
+  <action type="control_user_interface">
+    <useDefaultName>true</useDefaultName>
+    <name>Control UI: clickById("android:id/button1");</name>
+    <script>clickById("android:id/button1");</script>
+  </action>
+  <action type="copy_text_to_clipboard">
+    <useDefaultName>true</useDefaultName>
+    <name>Copy Text to Clipboard: {source_class_name}</name>
+    <text>{source_class_name}</text>
+  </action>
+  <action type="notification_screen">
+    <useDefaultName>true</useDefaultName>
+    <name>Notification on Screen: {source_class_name} (long)</name>
+    <showText>true</showText>
+    <text>{source_class_name}</text>
+    <widgetName></widgetName>
+    <width>200</width>
+    <height>250</height>
+    <stretchToFillArea>false</stretchToFillArea>
+    <opacity>1.00</opacity>
+    <durationLong>true</durationLong>
+    <customPosition>true</customPosition>
+    <gravityType>BOTTOM_CENTER</gravityType>
+    <xOffset>0</xOffset>
+    <yOffset>0</yOffset>
+  </action>
+  <flow type="flow">
+    <name>Auto allow volume change</name>
+    <group>Auto actions</group>
+    <enabled>false</enabled>
+    <executionPolicy>PARALLEL</executionPolicy>
+    <triggercontainer id="t1" x="70.0" y="52.5">
+      <trigger>UI Event: Window opened package com.android.systemui contains text Volume</trigger>
+    </triggercontainer>
+    <actioncontainer id="t2" x="525.0" y="717.5">Control UI: clickById("android:id/button1");</actioncontainer>
+    <conditioncontainer id="t3" x="490.0" y="402.5">Expression: source_class_name == "com.android.systemui.volume.SecVolumeDialog$7"</conditioncontainer>
+    <conditioncontainer id="t4" x="-175.0" y="402.5">Expression: source_class_name != "ch.gridvision.ppam.androidautomagic.ConditionActivity"</conditioncontainer>
+    <actioncontainer id="t5" x="-210.0" y="577.5">Notification on Screen: {source_class_name} (long)</actioncontainer>
+    <actioncontainer id="t6" x="-175.0" y="717.5">Copy Text to Clipboard: {source_class_name}</actioncontainer>
+    <connection from="t1" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t3" to="t2" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t4" to="t5" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t5" to="t6" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+  </flow>
+</data>
