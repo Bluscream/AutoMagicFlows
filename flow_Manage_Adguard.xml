@@ -3,7 +3,7 @@
   <trigger type="shortcut">
     <useDefaultName>true</useDefaultName>
     <name>Shortcut: Adguard</name>
-    <enabled>false</enabled>
+    <enabled>true</enabled>
     <title>Adguard</title>
   </trigger>
   <condition type="expression">
@@ -153,36 +153,37 @@
   </action>
   <flow type="flow">
     <name>Manage Adguard</name>
-    <enabled>false</enabled>
+    <group>Adguard</group>
+    <enabled>true</enabled>
     <executionPolicy>PARALLEL</executionPolicy>
     <triggercontainer id="t1" x="0.0" y="52.5">
       <trigger>Shortcut: Adguard</trigger>
     </triggercontainer>
     <conditioncontainer id="t2" x="-385.0" y="542.5">Expression: value == "Start"</conditioncontainer>
-    <actioncontainer id="t3" x="-385.0" y="717.5">Start Service</actioncontainer>
-    <conditioncontainer id="t4" x="-630.0" y="542.5">Expression: value == "1"</conditioncontainer>
-    <conditioncontainer id="t5" x="-140.0" y="542.5">Expression: value == "3"</conditioncontainer>
-    <actioncontainer id="t6" x="105.0" y="717.5">Stop Service</actioncontainer>
-    <conditioncontainer id="t7" x="105.0" y="542.5">Expression: value == "Stop"</conditioncontainer>
-    <actioncontainer id="t8" x="595.0" y="717.5">Exit Adguard</actioncontainer>
-    <conditioncontainer id="t9" x="595.0" y="542.5">Expression: value == "Exit"</conditioncontainer>
-    <conditioncontainer id="t10" x="350.0" y="542.5">Expression: value == "5"</conditioncontainer>
-    <actioncontainer id="t11" x="0.0" y="262.5">Input Dialog: Manage Adguard Single Choice 1,Start,3,Stop,5,Exit</actioncontainer>
-    <actioncontainer id="t12" x="-630.0" y="717.5">1</actioncontainer>
-    <actioncontainer id="t13" x="-140.0" y="717.5">3</actioncontainer>
-    <actioncontainer id="t14" x="350.0" y="717.5">5</actioncontainer>
-    <connection from="t1" to="t11" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t2" to="t3" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <conditioncontainer id="t3" x="-630.0" y="542.5">Expression: value == "1"</conditioncontainer>
+    <conditioncontainer id="t4" x="-140.0" y="542.5">Expression: value == "3"</conditioncontainer>
+    <actioncontainer id="t5" x="105.0" y="717.5">Stop Service</actioncontainer>
+    <conditioncontainer id="t6" x="105.0" y="542.5">Expression: value == "Stop"</conditioncontainer>
+    <actioncontainer id="t7" x="595.0" y="717.5">Exit Adguard</actioncontainer>
+    <conditioncontainer id="t8" x="595.0" y="542.5">Expression: value == "Exit"</conditioncontainer>
+    <conditioncontainer id="t9" x="350.0" y="542.5">Expression: value == "5"</conditioncontainer>
+    <actioncontainer id="t10" x="0.0" y="262.5">Input Dialog: Manage Adguard Single Choice 1,Start,3,Stop,5,Exit</actioncontainer>
+    <actioncontainer id="t11" x="-630.0" y="717.5">1</actioncontainer>
+    <actioncontainer id="t12" x="-140.0" y="717.5">3</actioncontainer>
+    <actioncontainer id="t13" x="350.0" y="717.5">5</actioncontainer>
+    <actioncontainer id="t14" x="-385.0" y="717.5">Start Service</actioncontainer>
+    <connection from="t1" to="t10" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t2" to="t14" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t3" to="t11" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
     <connection from="t4" to="t12" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t5" to="t13" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t7" to="t6" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t9" to="t8" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t10" to="t14" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t11" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t11" to="t7" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t11" to="t9" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t11" to="t10" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t11" to="t5" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t11" to="t4" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t6" to="t5" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t8" to="t7" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t9" to="t13" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t10" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t10" to="t6" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t10" to="t8" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t10" to="t9" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t10" to="t4" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t10" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
   </flow>
 </data>

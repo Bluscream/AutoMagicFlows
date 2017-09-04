@@ -2,20 +2,22 @@
 <data version="1.34.0">
   <trigger type="app_task_started">
     <useDefaultName>true</useDefaultName>
-    <name>App Task Started: com.google.android.youtube</name>
+    <name>App Task Started: com.google.android.ogyoutube,com.google.android.youtube,com.google.android.apps.youtube.gaming</name>
     <enabled>true</enabled>
-    <method>CLASSIC</method>
-    <packageNameFilter>com.google.android.youtube</packageNameFilter>
+    <method>USAGE_STATISTICS</method>
+    <packageNameFilter>com.google.android.ogyoutube,com.google.android.youtube,com.google.android.apps.youtube.gaming</packageNameFilter>
   </trigger>
   <action type="control_user_interface">
     <useDefaultName>true</useDefaultName>
-    <name>Control UI: click("Subscriptions");</name>
-    <script>click("Subscriptions");</script>
-  </action>
-  <action type="set_night_mode">
-    <useDefaultName>true</useDefaultName>
-    <name>Set Night Mode: On</name>
-    <nightMode>YES</nightMode>
+    <name>Control UI: if (containsElement(newList("com.google.android.ogyoutube", "com.google.android.youtube"), package_name) ){ click("Subscriptions") } else if (package_name == "com.google.android.apps.youtube.gaming"){ if ( getText() == "Channels"){ return } sleep(5000); click("Channels"); //sleep(5000); //scrollForw</name>
+    <script>if (containsElement(newList("com.google.android.ogyoutube", "com.google.android.youtube"), package_name) ){ click("Subscriptions") }
+else if (package_name == "com.google.android.apps.youtube.gaming"){
+  if ( getText() == "Channels"){ return }
+  sleep(5000);
+  click("Channels");
+  //sleep(5000);
+  //scrollForwardById("com.google.android.apps.youtube.gaming:id/video_card_view");
+}</script>
   </action>
   <action type="start_activity">
     <useDefaultName>true</useDefaultName>
@@ -41,12 +43,10 @@
     <enabled>true</enabled>
     <executionPolicy>PARALLEL</executionPolicy>
     <triggercontainer id="t1" x="35.0" y="52.5">
-      <trigger>App Task Started: com.google.android.youtube</trigger>
+      <trigger>App Task Started: com.google.android.ogyoutube,com.google.android.youtube,com.google.android.apps.youtube.gaming</trigger>
     </triggercontainer>
-    <actioncontainer id="t2" x="-105.0" y="402.5">Control UI: click("Subscriptions");</actioncontainer>
-    <actioncontainer id="t3" x="140.00014" y="402.49997">Set Night Mode: On</actioncontainer>
-    <actioncontainer id="t4" x="-315.00006" y="402.49994">Start Activity: android.intent.action.VIEW com.google.android.youtube/com.google.android.apps.youtube.app.application.Shell$MediaSearchActivity </actioncontainer>
-    <connection from="t1" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <actioncontainer id="t2" x="-350.0" y="402.5">Start Activity: android.intent.action.VIEW com.google.android.youtube/com.google.android.apps.youtube.app.application.Shell$MediaSearchActivity </actioncontainer>
+    <actioncontainer id="t3" x="34.999992" y="227.49997">Control UI: if (containsElement(newList("com.google.android.ogyoutube", "com.google.android.youtube"), package_name) ){ click("Subscriptions") } else if (package_name == "com.google.android.apps.youtube.gaming"){ if ( getText() == "Channels"){ return } sleep(5000); click("Channels"); //sleep(5000); //scrollForw</actioncontainer>
     <connection from="t1" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
   </flow>
 </data>

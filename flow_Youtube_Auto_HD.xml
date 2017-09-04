@@ -1,13 +1,42 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
 <data version="1.34.0">
-  <trigger type="activity_started">
+  <trigger type="user_interface_event">
     <useDefaultName>true</useDefaultName>
-    <name>Activity Started: com.google.android.youtube/com.google.android.apps.youtube.app.WatchWhileActivity</name>
-    <enabled>false</enabled>
-    <method>CLASSIC</method>
-    <packageNameFilter>com.google.android.youtube</packageNameFilter>
-    <classNameFilter>com.google.android.apps.youtube.app.WatchWhileActivity</classNameFilter>
+    <name>UI Event: Component clicked package com.google.android.ogyoutube,com.google.android.youtube,com.google.android.apps.youtube.gaming contains text More options</name>
+    <enabled>true</enabled>
+    <accessibilityEventType>TYPE_VIEW_CLICKED</accessibilityEventType>
+    <packageNameFilter>com.google.android.ogyoutube,com.google.android.youtube,com.google.android.apps.youtube.gaming</packageNameFilter>
+    <textMatchType>CONTAINS_TEXT</textMatchType>
+    <textFilter>More options</textFilter>
+    <removeNonPrintableCharacters>false</removeNonPrintableCharacters>
   </trigger>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: _continue</name>
+    <expression>_continue</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: if (views != global_yt_autohd_views){ global_yt_autohd_views = views; return true } return false;</name>
+    <expression>if (views != global_yt_autohd_views){
+    global_yt_autohd_views = views;
+    return true
+}
+return false;</expression>
+  </condition>
+  <action type="control_user_interface">
+    <useDefaultName>true</useDefaultName>
+    <name>Control UI: _views = "com.google.android.apps.youtube.gaming:id/num_views"; if (existsElementById(_views)){ views = getTextById(_views); if (views != global_yt_autohd_views){ global_yt_autohd_views = views; } }</name>
+    <script>_views = "com.google.android.apps.youtube.gaming:id/num_views";
+if (existsElementById(_views)){
+  views = getTextById(_views);
+  if (views != global_yt_autohd_views){
+    global_yt_autohd_views = views;
+  }
+}
+
+</script>
+  </action>
   <action type="control_user_interface">
     <useDefaultName>true</useDefaultName>
     <name>Control UI: click("Quality");</name>
@@ -16,47 +45,97 @@ click("Quality");</script>
   </action>
   <action type="control_user_interface">
     <useDefaultName>true</useDefaultName>
-    <name>Control UI: click(512, 736);</name>
-    <script>click(512, 736);</script>
+    <name>Control UI: if (existsElementById("com.google.android.apps.youtube.gaming:id/player_overflow_button")){ clickById("com.google.android.youtube:id/player_overflow_button"); _continue = true; } else { _continue = false; }</name>
+    <script>if (existsElementById("com.google.android.apps.youtube.gaming:id/player_overflow_button")){
+  clickById("com.google.android.youtube:id/player_overflow_button");
+  _continue = true;
+} else {
+  _continue = false;
+}</script>
   </action>
   <action type="control_user_interface">
     <useDefaultName>true</useDefaultName>
-    <name>Control UI: clickById("com.google.android.youtube:id/player_overflow_button");</name>
-    <script>clickById("com.google.android.youtube:id/player_overflow_button");</script>
+    <name>Control UI: resolutions = newList("1440p", "1080p60", "1080p", "720p60", "720p", "480p", "360p", "240p", "144p"); for (res in resolutions) { text = getText(res); if (text != null){ click(res); return; } }</name>
+    <script>resolutions = newList("1440p", "1080p60", "1080p", "720p60", "720p", "480p", "360p", "240p", "144p");
+for (res in resolutions) {
+  text = getText(res);
+  if (text != null){
+    click(res);
+    return;
+  }
+}</script>
   </action>
-  <action type="sleep">
+  <action type="control_user_interface">
     <useDefaultName>true</useDefaultName>
-    <name>Sleep: 1s (keep device awake)</name>
-    <duration>1s</duration>
-    <keepDeviceAwake>true</keepDeviceAwake>
-    <allowWakeupFromDeviceIdle>false</allowWakeupFromDeviceIdle>
+    <name>Control UI: text = getText("1080p60"); if (text != null){ click("1080p60"); return; } text = getText("1080p"); if (text != null){ click("1080p"); return; } text = getText("720p60"); if (text != null){ click("720p60"); return; } text = getText("720p"); if (text != null){ click("720p"); return; } text = getText("</name>
+    <script>text = getText("1080p60");
+if (text != null){
+  click("1080p60");
+  return;
+}
+text = getText("1080p");
+if (text != null){
+  click("1080p");
+  return;
+}
+text = getText("720p60");
+if (text != null){
+  click("720p60");
+  return;
+}
+text = getText("720p");
+if (text != null){
+  click("720p");
+  return;
+}
+text = getText("480p");
+if (text != null){
+  click("480p");
+  return;
+}
+text = getText("360p");
+if (text != null){
+  click("360p");
+  return;
+}</script>
   </action>
-  <action type="sleep">
+  <action type="notification_screen">
     <useDefaultName>true</useDefaultName>
-    <name>Sleep: 500ms (keep device awake)</name>
-    <duration>500ms</duration>
-    <keepDeviceAwake>true</keepDeviceAwake>
-    <allowWakeupFromDeviceIdle>false</allowWakeupFromDeviceIdle>
+    <name>Notification on Screen: Switched to {res}</name>
+    <showText>true</showText>
+    <text>Switched to {res}</text>
+    <widgetName></widgetName>
+    <width>200</width>
+    <height>250</height>
+    <stretchToFillArea>false</stretchToFillArea>
+    <opacity>1.00</opacity>
+    <durationLong>false</durationLong>
+    <customPosition>true</customPosition>
+    <gravityType>TOP_RIGHT</gravityType>
+    <xOffset>0</xOffset>
+    <yOffset>0</yOffset>
   </action>
   <flow type="flow">
     <name>Youtube Auto HD</name>
     <group>YouTube</group>
-    <enabled>false</enabled>
+    <enabled>true</enabled>
     <executionPolicy>QUEUE</executionPolicy>
-    <triggercontainer id="t1" x="70.0" y="17.5">
-      <trigger>Activity Started: com.google.android.youtube/com.google.android.apps.youtube.app.WatchWhileActivity</trigger>
+    <triggercontainer id="t1" x="420.0" y="-962.5">
+      <trigger>UI Event: Component clicked package com.google.android.ogyoutube,com.google.android.youtube,com.google.android.apps.youtube.gaming contains text More options</trigger>
     </triggercontainer>
-    <actioncontainer id="t2" x="420.0" y="-157.5">Control UI: clickById("com.google.android.youtube:id/player_overflow_button");</actioncontainer>
-    <actioncontainer id="t3" x="420.0" y="542.5">Control UI: click(512, 736);</actioncontainer>
-    <actioncontainer id="t4" x="420.0" y="-332.5">Sleep: 1s (keep device awake)</actioncontainer>
-    <actioncontainer id="t5" x="420.0" y="192.5">Control UI: click("Quality");</actioncontainer>
-    <actioncontainer id="t6" x="420.0" y="17.5">Sleep: 500ms (keep device awake)</actioncontainer>
-    <actioncontainer id="t7" x="420.0" y="367.5">Sleep: 500ms (keep device awake)</actioncontainer>
-    <connection from="t1" to="t4" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t2" to="t6" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t4" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t5" to="t7" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t6" to="t5" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t7" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <actioncontainer id="t2" x="420.0" y="-17.5">Notification on Screen: Switched to {res}</actioncontainer>
+    <actioncontainer id="t3" x="140.0" y="-822.5">Control UI: if (existsElementById("com.google.android.apps.youtube.gaming:id/player_overflow_button")){ clickById("com.google.android.youtube:id/player_overflow_button"); _continue = true; } else { _continue = false; }</actioncontainer>
+    <conditioncontainer id="t4" x="140.0" y="-647.5">Expression: _continue</conditioncontainer>
+    <actioncontainer id="t5" x="700.0" y="-752.5">Control UI: _views = "com.google.android.apps.youtube.gaming:id/num_views"; if (existsElementById(_views)){ views = getTextById(_views); if (views != global_yt_autohd_views){ global_yt_autohd_views = views; } }</actioncontainer>
+    <conditioncontainer id="t6" x="700.0" y="-577.5">Expression: if (views != global_yt_autohd_views){ global_yt_autohd_views = views; return true } return false;</conditioncontainer>
+    <actioncontainer id="t7" x="420.0" y="-402.5">Control UI: click("Quality");</actioncontainer>
+    <actioncontainer id="t8" x="420.0" y="-192.5">Control UI: resolutions = newList("1440p", "1080p60", "1080p", "720p60", "720p", "480p", "360p", "240p", "144p"); for (res in resolutions) { text = getText(res); if (text != null){ click(res); return; } }</actioncontainer>
+    <actioncontainer id="t9" x="140.0" y="-192.5">Control UI: text = getText("1080p60"); if (text != null){ click("1080p60"); return; } text = getText("1080p"); if (text != null){ click("1080p"); return; } text = getText("720p60"); if (text != null){ click("720p60"); return; } text = getText("720p"); if (text != null){ click("720p"); return; } text = getText("</actioncontainer>
+    <connection from="t1" to="t7" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t3" to="t4" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t5" to="t6" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t6" to="t7" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t7" to="t8" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t8" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
   </flow>
 </data>
