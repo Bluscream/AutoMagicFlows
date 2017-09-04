@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<data version="1.34.0">
+  <trigger type="automagic_startup">
+    <useDefaultName>true</useDefaultName>
+    <name>Automagic Startup</name>
+    <enabled>true</enabled>
+  </trigger>
+  <action type="start_service">
+    <useDefaultName>false</useDefaultName>
+    <name>Autostart Adguard</name>
+    <intentAction>android.intent.action.SEND</intentAction>
+    <categoryListEnabled>false</categoryListEnabled>
+    <categoryList>android.intent.category.DEFAULT</categoryList>
+    <dataEnabled>false</dataEnabled>
+    <data></data>
+    <dataTypeEnabled>false</dataTypeEnabled>
+    <dataType></dataType>
+    <explicitComponent>true</explicitComponent>
+    <packageName>com.adguard.android</packageName>
+    <className>com.adguard.android.ServiceManager</className>
+    <flagList></flagList>
+    <extras>putInt("ACTION", 1);</extras>
+  </action>
+  <action type="start_service">
+    <useDefaultName>false</useDefaultName>
+    <name>Autostart Adguard Service</name>
+    <intentAction>android.intent.action.SEND</intentAction>
+    <categoryListEnabled>false</categoryListEnabled>
+    <categoryList>android.intent.category.DEFAULT</categoryList>
+    <dataEnabled>false</dataEnabled>
+    <data></data>
+    <dataTypeEnabled>false</dataTypeEnabled>
+    <dataType></dataType>
+    <explicitComponent>true</explicitComponent>
+    <packageName>com.adguard.android</packageName>
+    <className>com.adguard.android.ServiceManager</className>
+    <flagList></flagList>
+    <extras>putInt("ACTION", 2);</extras>
+  </action>
+  <flow type="flow">
+    <name>Autostart Adguard</name>
+    <group>Adguard</group>
+    <enabled>true</enabled>
+    <executionPolicy>PARALLEL</executionPolicy>
+    <triggercontainer id="t1" x="70.0" y="52.5">
+      <trigger>Automagic Startup</trigger>
+    </triggercontainer>
+    <actioncontainer id="t2" x="175.00003" y="262.5">Autostart Adguard Service</actioncontainer>
+    <actioncontainer id="t3" x="-34.999992" y="262.5">Autostart Adguard</actioncontainer>
+    <connection from="t1" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t1" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+  </flow>
+</data>

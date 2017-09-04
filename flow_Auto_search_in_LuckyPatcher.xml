@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<data version="1.34.0">
+  <trigger type="user_interface_event">
+    <useDefaultName>true</useDefaultName>
+    <name>UI Event: Window opened package com.android.vending.billing.InAppBillingService.CLON contains text Lucky Patcher</name>
+    <enabled>true</enabled>
+    <accessibilityEventType>TYPE_WINDOW_STATE_CHANGED</accessibilityEventType>
+    <packageNameFilter>com.android.vending.billing.InAppBillingService.CLON</packageNameFilter>
+    <textMatchType>CONTAINS_TEXT</textMatchType>
+    <textFilter>Lucky Patcher</textFilter>
+    <removeNonPrintableCharacters>false</removeNonPrintableCharacters>
+  </trigger>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: visible != null</name>
+    <expression>visible != null</expression>
+  </condition>
+  <action type="control_user_interface">
+    <useDefaultName>true</useDefaultName>
+    <name>Control UI: click("Search");</name>
+    <script>click("Search");</script>
+  </action>
+  <action type="control_user_interface">
+    <useDefaultName>true</useDefaultName>
+    <name>Control UI: visible = getTextById("com.android.vending.billing.InAppBillingService.CLON:id/editTextFilter");</name>
+    <script>visible = getTextById("com.android.vending.billing.InAppBillingService.CLON:id/editTextFilter");</script>
+  </action>
+  <flow type="flow">
+    <name>Auto search in LP</name>
+    <enabled>true</enabled>
+    <executionPolicy>PARALLEL</executionPolicy>
+    <triggercontainer id="t1" x="70.0" y="52.5">
+      <trigger>UI Event: Window opened package com.android.vending.billing.InAppBillingService.CLON contains text Lucky Patcher</trigger>
+    </triggercontainer>
+    <actioncontainer id="t2" x="70.0" y="262.50003">Control UI: visible = getTextById("com.android.vending.billing.InAppBillingService.CLON:id/editTextFilter");</actioncontainer>
+    <conditioncontainer id="t3" x="70.0" y="472.5">Expression: visible != null</conditioncontainer>
+    <actioncontainer id="t4" x="69.99997" y="682.5">Control UI: click("Search");</actioncontainer>
+    <connection from="t1" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t2" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t3" to="t4" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
+  </flow>
+</data>

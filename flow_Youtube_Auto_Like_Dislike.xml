@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<data version="1.34.0">
+  <trigger type="user_interface_event">
+    <useDefaultName>false</useDefaultName>
+    <name>Click in Youtube</name>
+    <enabled>true</enabled>
+    <accessibilityEventType>TYPE_VIEW_CLICKED</accessibilityEventType>
+    <packageNameFilter>com.google.android.ogyoutube,com.google.android.youtube,com.google.android.apps.youtube.gaming</packageNameFilter>
+    <textMatchType>CONTAINS_TEXT</textMatchType>
+    <textFilter></textFilter>
+    <removeNonPrintableCharacters>false</removeNonPrintableCharacters>
+  </trigger>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: if (title != global_title){ global_yt_autolike_title = title; return true } return false;</name>
+    <expression>if (title != global_title){
+    global_yt_autolike_title = title;
+    return true
+}
+return false;</expression>
+  </condition>
+  <action type="control_user_interface">
+    <useDefaultName>false</useDefaultName>
+    <name>Dis/Like if not already dis/liked</name>
+    <script>_title = "com.google.android.apps.youtube.gaming:id/title";
+if (existsElementById(_title)){
+  title = getTextById(_title);
+  if (title != global_yt_autolike_title){
+    global_yt_autolike_title = title;
+    clickById("com.google.android.apps.youtube.gaming:id/like_button");
+    //clickById("com.google.android.apps.youtube.gaming:id/dislike_button");
+  }
+}</script>
+  </action>
+  <action type="notification_screen">
+    <useDefaultName>true</useDefaultName>
+    <name>Notification on Screen: Liked {title}</name>
+    <showText>true</showText>
+    <text>Liked {title}</text>
+    <widgetName></widgetName>
+    <width>200</width>
+    <height>250</height>
+    <stretchToFillArea>false</stretchToFillArea>
+    <opacity>1.00</opacity>
+    <durationLong>false</durationLong>
+    <customPosition>false</customPosition>
+    <gravityType>TOP_LEFT</gravityType>
+    <xOffset>0</xOffset>
+    <yOffset>0</yOffset>
+  </action>
+  <action type="sleep">
+    <useDefaultName>true</useDefaultName>
+    <name>Sleep: 500ms (allow device sleep)</name>
+    <duration>500ms</duration>
+    <keepDeviceAwake>false</keepDeviceAwake>
+    <allowWakeupFromDeviceIdle>false</allowWakeupFromDeviceIdle>
+  </action>
+  <flow type="flow">
+    <name>Youtube Auto Like/Dislike</name>
+    <group>YouTube</group>
+    <enabled>true</enabled>
+    <executionPolicy>STOP</executionPolicy>
+    <emergencyStopCount>250</emergencyStopCount>
+    <triggercontainer id="t1" x="70.0" y="52.5">
+      <trigger>Click in Youtube</trigger>
+    </triggercontainer>
+    <conditioncontainer id="t2" x="70.0" y="577.5">Expression: if (title != global_title){ global_yt_autolike_title = title; return true } return false;</conditioncontainer>
+    <actioncontainer id="t3" x="70.00003" y="752.49994">Notification on Screen: Liked {title}</actioncontainer>
+    <actioncontainer id="t4" x="70.0" y="227.5">Sleep: 500ms (allow device sleep)</actioncontainer>
+    <actioncontainer id="t5" x="70.000046" y="402.5">Dis/Like if not already dis/liked</actioncontainer>
+    <connection from="t1" to="t4" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t2" to="t3" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t4" to="t5" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+  </flow>
+</data>
