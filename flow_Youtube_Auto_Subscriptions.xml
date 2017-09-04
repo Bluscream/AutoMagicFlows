@@ -1,15 +1,15 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
 <data version="1.34.0">
   <trigger type="app_task_started">
-    <useDefaultName>true</useDefaultName>
-    <name>App Task Started: com.google.android.ogyoutube,com.google.android.youtube,com.google.android.apps.youtube.gaming</name>
+    <useDefaultName>false</useDefaultName>
+    <name>Youtube started</name>
     <enabled>true</enabled>
     <method>USAGE_STATISTICS</method>
     <packageNameFilter>com.google.android.ogyoutube,com.google.android.youtube,com.google.android.apps.youtube.gaming</packageNameFilter>
   </trigger>
   <action type="control_user_interface">
-    <useDefaultName>true</useDefaultName>
-    <name>Control UI: if (containsElement(newList("com.google.android.ogyoutube", "com.google.android.youtube"), package_name) ){ click("Subscriptions") } else if (package_name == "com.google.android.apps.youtube.gaming"){ if ( getText() == "Channels"){ return } sleep(5000); click("Channels"); //sleep(5000); //scrollForw</name>
+    <useDefaultName>false</useDefaultName>
+    <name>Click on "Subscriptions"/"Channels"</name>
     <script>if (containsElement(newList("com.google.android.ogyoutube", "com.google.android.youtube"), package_name) ){ click("Subscriptions") }
 else if (package_name == "com.google.android.apps.youtube.gaming"){
   if ( getText() == "Channels"){ return }
@@ -19,34 +19,15 @@ else if (package_name == "com.google.android.apps.youtube.gaming"){
   //scrollForwardById("com.google.android.apps.youtube.gaming:id/video_card_view");
 }</script>
   </action>
-  <action type="start_activity">
-    <useDefaultName>true</useDefaultName>
-    <name>Start Activity: android.intent.action.VIEW com.google.android.youtube/com.google.android.apps.youtube.app.application.Shell$MediaSearchActivity </name>
-    <intentAction>android.intent.action.VIEW</intentAction>
-    <categoryListEnabled>false</categoryListEnabled>
-    <categoryList>android.intent.category.DEFAULT</categoryList>
-    <dataEnabled>false</dataEnabled>
-    <data></data>
-    <dataTypeEnabled>false</dataTypeEnabled>
-    <dataType>text/plain</dataType>
-    <explicitComponent>true</explicitComponent>
-    <packageName>com.google.android.youtube</packageName>
-    <className>com.google.android.apps.youtube.app.application.Shell$MediaSearchActivity</className>
-    <flagList>FLAG_ACTIVITY_NEW_TASK</flagList>
-    <extras></extras>
-    <waitForResult>false</waitForResult>
-    <accessResultExtras></accessResultExtras>
-  </action>
   <flow type="flow">
     <name>Youtube Auto Subscriptions</name>
     <group>YouTube</group>
     <enabled>true</enabled>
     <executionPolicy>PARALLEL</executionPolicy>
     <triggercontainer id="t1" x="35.0" y="52.5">
-      <trigger>App Task Started: com.google.android.ogyoutube,com.google.android.youtube,com.google.android.apps.youtube.gaming</trigger>
+      <trigger>Youtube started</trigger>
     </triggercontainer>
-    <actioncontainer id="t2" x="-350.0" y="402.5">Start Activity: android.intent.action.VIEW com.google.android.youtube/com.google.android.apps.youtube.app.application.Shell$MediaSearchActivity </actioncontainer>
-    <actioncontainer id="t3" x="34.999992" y="227.49997">Control UI: if (containsElement(newList("com.google.android.ogyoutube", "com.google.android.youtube"), package_name) ){ click("Subscriptions") } else if (package_name == "com.google.android.apps.youtube.gaming"){ if ( getText() == "Channels"){ return } sleep(5000); click("Channels"); //sleep(5000); //scrollForw</actioncontainer>
-    <connection from="t1" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <actioncontainer id="t2" x="35.0" y="227.5">Click on "Subscriptions"/"Channels"</actioncontainer>
+    <connection from="t1" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
   </flow>
 </data>
