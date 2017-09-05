@@ -1,23 +1,15 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
 <data version="1.34.0">
-  <trigger type="activity_started">
+  <trigger type="user_interface_event">
     <useDefaultName>true</useDefaultName>
-    <name>Activity Started: */*</name>
+    <name>UI Event: Window opened package * matches glob *</name>
     <enabled>false</enabled>
-    <method>CLASSIC</method>
+    <accessibilityEventType>TYPE_WINDOW_STATE_CHANGED</accessibilityEventType>
     <packageNameFilter>*</packageNameFilter>
-    <classNameFilter>*</classNameFilter>
+    <textMatchType>GLOB</textMatchType>
+    <textFilter>*</textFilter>
+    <removeNonPrintableCharacters>false</removeNonPrintableCharacters>
   </trigger>
-  <condition type="expression">
-    <useDefaultName>true</useDefaultName>
-    <name>Expression: activity_class == ""</name>
-    <expression>activity_class == ""</expression>
-  </condition>
-  <condition type="expression">
-    <useDefaultName>true</useDefaultName>
-    <name>Expression: activity_class == "ch.gridvision.ppam.androidautomagic.ConditionActivity"</name>
-    <expression>activity_class == "ch.gridvision.ppam.androidautomagic.ConditionActivity"</expression>
-  </condition>
   <condition type="expression">
     <useDefaultName>true</useDefaultName>
     <name>Expression: activity_class == "ch.gridvision.ppam.androidautomagic.FlowActivity"</name>
@@ -35,9 +27,37 @@
   </condition>
   <condition type="expression">
     <useDefaultName>true</useDefaultName>
-    <name>Expression: activity_class == null</name>
-    <expression>activity_class == null</expression>
+    <name>Expression: package_whitelist = newList( "ch.gridvision.ppam.androidautomagic", "com.teslacoilsw.launcher", "com.android.launcher3.Launcher" ); activity_whitelist = newList( "com.android.systemui.recents.RecentsActivity", "android.widget.framelayout" ); source_class_name != "" and source_class_name != null and not containsElement(activity_whitelist, source_class_name) and not containsElement(package_whitelist, package_name)</name>
+    <expression>package_whitelist = newList(
+"ch.gridvision.ppam.androidautomagic",
+"com.teslacoilsw.launcher",
+"com.android.launcher3.Launcher"
+);
+activity_whitelist = newList(
+"com.android.systemui.recents.RecentsActivity",
+"android.widget.framelayout"
+);
+source_class_name != "" and source_class_name != null and not containsElement(activity_whitelist, source_class_name) and not containsElement(package_whitelist, package_name)</expression>
   </condition>
+  <action type="copy_text_to_clipboard">
+    <useDefaultName>true</useDefaultName>
+    <name>Copy Text to Clipboard: {global_lastactivites[1]}</name>
+    <text>{global_lastactivites[1]}</text>
+  </action>
+  <action type="copy_text_to_clipboard">
+    <useDefaultName>true</useDefaultName>
+    <name>Copy Text to Clipboard: {global_lastactivites[2]}</name>
+    <text>{global_lastactivites[2]}</text>
+  </action>
+  <action type="execute_flows">
+    <useDefaultName>true</useDefaultName>
+    <name>Execute Flows: Stop new activity</name>
+    <includeFlowNamePatternList>Stop new activity</includeFlowNamePatternList>
+    <excludeFlowNamePatternList></excludeFlowNamePatternList>
+    <skipDisabledFlowsWithoutError>true</skipDisabledFlowsWithoutError>
+    <waitForFlowsToFinish>false</waitForFlowsToFinish>
+    <returnLocalVariablesToCallingFlow>false</returnLocalVariablesToCallingFlow>
+  </action>
   <action type="notification_screen">
     <useDefaultName>true</useDefaultName>
     <name>Notification on Screen: {activity_class} (long)</name>
@@ -78,39 +98,84 @@
     <category>DEFAULT</category>
     <priority>MIN</priority>
     <visibility>PRIVATE</visibility>
-    <messageBigEnabled>false</messageBigEnabled>
-    <messageBig>lol</messageBig>
-    <showProgressbar>false</showProgressbar>
-    <progressbarIndeterminate>false</progressbarIndeterminate>
+    <messageBigEnabled>true</messageBigEnabled>
+    <messageBig>{notification_text}</messageBig>
+    <showProgressbar>true</showProgressbar>
+    <progressbarIndeterminate>true</progressbarIndeterminate>
     <progressbarValue>0</progressbarValue>
     <progressbarMaximum>100</progressbarMaximum>
     <largeIconEnabled>false</largeIconEnabled>
     <largeIcon></largeIcon>
     <group></group>
     <isGroupSummary>false</isGroupSummary>
+    <actionRef text="COPY" icon="NUMBER_ONE" remove="false">Copy Text to Clipboard: {global_lastactivites[2]}</actionRef>
+    <actionRef text="COPY" icon="NUMBER_TWO" remove="false">Copy Text to Clipboard: {global_lastactivites[1]}</actionRef>
+    <actionRef text="Stop" icon="REMOVE" remove="false">Execute Flows: Stop new activity</actionRef>
+  </action>
+  <action type="remove_notification_status_bar">
+    <useDefaultName>true</useDefaultName>
+    <name>Remove Notification on Statusbar: 1 (Automagic)</name>
+    <automagicNotifications>true</automagicNotifications>
+    <all>false</all>
+    <notificationID>1</notificationID>
+    <overall>true</overall>
+    <packageName></packageName>
+    <allOfApp>true</allOfApp>
+    <filterNotificationID></filterNotificationID>
+    <textMatchField>TEXT</textMatchField>
+    <textMatchType>CONTAINS_TEXT</textMatchType>
+    <textFilter></textFilter>
+  </action>
+  <action type="script">
+    <useDefaultName>true</useDefaultName>
+    <name>Script: addElement(global_lastactivites, "{app_name};{package_name};{source_class_name}"); if(length(global_lastactivites) &gt; 3) removeElement(global_lastactivites, 0); notification_text = ""; for (i in global_lastactivites) { a=split(i, ";"); notification_text = notification_text + join(a, "\n") + "\n\n"; }</name>
+    <script>addElement(global_lastactivites, "{app_name};{package_name};{source_class_name}");
+if(length(global_lastactivites) &gt; 3)
+  removeElement(global_lastactivites, 0);
+notification_text = "";
+for (i in global_lastactivites)
+{
+  a=split(i, ";");
+  notification_text = notification_text + join(a, "\n") + "\n\n";
+}</script>
+  </action>
+  <action type="set_flow_state">
+    <useDefaultName>true</useDefaultName>
+    <name>Set Flow State: Disable New activity</name>
+    <enable>false</enable>
+    <includeFlowNamePatternList>New activity</includeFlowNamePatternList>
+    <excludeFlowNamePatternList></excludeFlowNamePatternList>
   </action>
   <flow type="flow">
     <name>New activity</name>
     <group>Informative</group>
     <enabled>false</enabled>
     <executionPolicy>QUEUE</executionPolicy>
-    <triggercontainer id="t1" x="70.0" y="-192.5">
-      <trigger>Activity Started: */*</trigger>
-    </triggercontainer>
-    <conditioncontainer id="t2" x="-1015.0" y="52.5">Expression: activity_class == "ch.gridvision.ppam.androidautomagic.ConditionActivity"</conditioncontainer>
-    <conditioncontainer id="t3" x="-770.0" y="52.5">Expression: activity_class == "ch.gridvision.ppam.androidautomagic.FlowActivity"</conditioncontainer>
+    <conditioncontainer id="t1" x="-770.0" y="52.5">Expression: activity_class == "ch.gridvision.ppam.androidautomagic.FlowActivity"</conditioncontainer>
+    <actioncontainer id="t2" x="-139.99998" y="332.5">Notification on Screen: {activity_class} (long)</actioncontainer>
+    <conditioncontainer id="t3" x="-210.0" y="52.5">Expression: activity_class == "com.android.launcher3.Launcher"</conditioncontainer>
     <conditioncontainer id="t4" x="-490.0" y="52.5">Expression: activity_class == "com.android.systemui.recents.RecentsActivity"</conditioncontainer>
-    <conditioncontainer id="t5" x="-210.0" y="52.5">Expression: activity_class == "com.android.launcher3.Launcher"</conditioncontainer>
-    <conditioncontainer id="t6" x="980.0" y="52.5">Expression: activity_class == ""</conditioncontainer>
-    <conditioncontainer id="t7" x="1260.0" y="52.5">Expression: activity_class == null</conditioncontainer>
-    <actioncontainer id="t8" x="-35.0" y="367.5">Notification on Screen: {activity_class} (long)</actioncontainer>
-    <actioncontainer id="t9" x="210.0" y="367.5">Notification on Statusbar: Current Activity Information</actioncontainer>
-    <connection from="t1" to="t6" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t2" to="t3" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t3" to="t4" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t4" to="t5" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t5" to="t6" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t6" to="t7" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t7" to="t9" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <actioncontainer id="t5" x="70.0" y="332.50006">Notification on Statusbar: Current Activity Information</actioncontainer>
+    <actioncontainer id="t6" x="70.000015" y="157.49995">Script: addElement(global_lastactivites, "{app_name};{package_name};{source_class_name}"); if(length(global_lastactivites) &gt; 3) removeElement(global_lastactivites, 0); notification_text = ""; for (i in global_lastactivites) { a=split(i, ";"); notification_text = notification_text + join(a, "\n") + "\n\n"; }</actioncontainer>
+    <conditioncontainer id="t7" x="70.000084" y="-17.500008">Expression: package_whitelist = newList( "ch.gridvision.ppam.androidautomagic", "com.teslacoilsw.launcher", "com.android.launcher3.Launcher" ); activity_whitelist = newList( "com.android.systemui.recents.RecentsActivity", "android.widget.framelayout" ); source_class_name != "" and source_class_name != null and not containsElement(activity_whitelist, source_class_name) and not containsElement(package_whitelist, package_name)</conditioncontainer>
+    <triggercontainer id="t8" x="70.0" y="-192.5">
+      <trigger>UI Event: Window opened package * matches glob *</trigger>
+    </triggercontainer>
+    <connection from="t1" to="t4" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t4" to="t3" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t6" to="t5" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t7" to="t6" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t8" to="t7" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+  </flow>
+  <flow type="flow">
+    <name>Stop new activity</name>
+    <group>Informative</group>
+    <enabled>true</enabled>
+    <executionPolicy>PARALLEL</executionPolicy>
+    <actioncontainer id="t1" x="69.999985" y="227.5">Set Flow State: Disable New activity</actioncontainer>
+    <actioncontainer id="t2" x="69.99995" y="402.50003">Remove Notification on Statusbar: 1 (Automagic)</actioncontainer>
+    <triggercontainer id="t3" x="70.0" y="52.5" />
+    <connection from="t1" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t3" to="t1" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
   </flow>
 </data>

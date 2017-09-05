@@ -27,14 +27,15 @@
   </action>
   <flow type="flow">
     <name>Auto search in LP</name>
+    <group>Auto actions</group>
     <enabled>true</enabled>
     <executionPolicy>PARALLEL</executionPolicy>
     <triggercontainer id="t1" x="70.0" y="52.5">
       <trigger>UI Event: Window opened package com.android.vending.billing.InAppBillingService.CLON contains text Lucky Patcher</trigger>
     </triggercontainer>
-    <actioncontainer id="t2" x="70.0" y="262.50003">Control UI: visible = getTextById("com.android.vending.billing.InAppBillingService.CLON:id/editTextFilter");</actioncontainer>
+    <actioncontainer id="t2" x="70.0" y="262.5">Control UI: visible = getTextById("com.android.vending.billing.InAppBillingService.CLON:id/editTextFilter");</actioncontainer>
     <conditioncontainer id="t3" x="70.0" y="472.5">Expression: visible != null</conditioncontainer>
-    <actioncontainer id="t4" x="69.99997" y="682.5">Control UI: click("Search");</actioncontainer>
+    <actioncontainer id="t4" x="70.0" y="682.5">Control UI: click("Search");</actioncontainer>
     <connection from="t1" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
     <connection from="t2" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
     <connection from="t3" to="t4" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />

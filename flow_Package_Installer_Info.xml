@@ -472,30 +472,30 @@ Changed components:
     <actioncontainer id="t5" x="-700.0" y="717.5">PM Notification fully uninstalled</actioncontainer>
     <conditioncontainer id="t6" x="35.0" y="1102.5">Debug Dialog</conditioncontainer>
     <actioncontainer id="t7" x="140.0" y="717.5">PM Notification replaced</actioncontainer>
-    <actioncontainer id="t8" x="945.0" y="157.49997">Script: changed_components = join(changed_component_name_list, "\n");</actioncontainer>
+    <actioncontainer id="t8" x="945.0" y="157.5">Script: changed_components = join(changed_component_name_list, "\n");</actioncontainer>
     <actioncontainer id="t9" x="385.0" y="717.5">PM Notification cleared</actioncontainer>
     <conditioncontainer id="t10" x="-350.0" y="402.5">Expression: trigger == "uninstalled"</conditioncontainer>
     <actioncontainer id="t11" x="-350.0" y="717.5">PM Notification uninstalled</actioncontainer>
-    <actioncontainer id="t12" x="-105.000015" y="717.5">PM Notification installed</actioncontainer>
-    <conditioncontainer id="t13" x="385.0" y="402.5">Expression: trigger == "cleared"</conditioncontainer>
-    <conditioncontainer id="t14" x="630.0" y="402.50006">Expression: trigger == "changed"</conditioncontainer>
-    <actioncontainer id="t15" x="630.0" y="577.5">Init Variable Package Info: {package_name} into package_info</actioncontainer>
-    <conditioncontainer id="t16" x="630.0" y="717.5">Expression: package_info[package_name]["application_info"]["enabled"] == true</conditioncontainer>
-    <actioncontainer id="t17" x="700.0" y="857.5">PM Notification changed (unfreeze)</actioncontainer>
-    <actioncontainer id="t18" x="560.0001" y="857.5">PM Notification changed (freeze)</actioncontainer>
+    <conditioncontainer id="t12" x="385.0" y="402.5">Expression: trigger == "cleared"</conditioncontainer>
+    <conditioncontainer id="t13" x="630.0" y="402.5">Expression: trigger == "changed"</conditioncontainer>
+    <actioncontainer id="t14" x="630.0" y="577.5">Init Variable Package Info: {package_name} into package_info</actioncontainer>
+    <conditioncontainer id="t15" x="630.0" y="717.5">Expression: package_info[package_name]["application_info"]["enabled"] == true</conditioncontainer>
+    <actioncontainer id="t16" x="700.0" y="857.5">PM Notification changed (unfreeze)</actioncontainer>
+    <actioncontainer id="t17" x="560.0" y="857.5">PM Notification changed (freeze)</actioncontainer>
+    <actioncontainer id="t18" x="-105.0" y="717.5">PM Notification installed</actioncontainer>
     <connection from="t1" to="t10" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
     <connection from="t1" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
     <connection from="t1" to="t4" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t1" to="t12" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
     <connection from="t1" to="t13" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t1" to="t14" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
     <connection from="t2" to="t5" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t3" to="t12" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t3" to="t18" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
     <connection from="t4" to="t7" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
     <connection from="t10" to="t11" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t13" to="t9" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t14" to="t15" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t15" to="t16" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t16" to="t18" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t16" to="t17" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t12" to="t9" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t13" to="t14" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t14" to="t15" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t15" to="t17" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t15" to="t16" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
   </flow>
 </data>

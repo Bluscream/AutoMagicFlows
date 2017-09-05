@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<data version="1.34.0">
+  <trigger type="activity_started">
+    <useDefaultName>false</useDefaultName>
+    <name>Post preview</name>
+    <enabled>true</enabled>
+    <method>USAGE_STATISTICS</method>
+    <packageNameFilter>com.imgur.mobile</packageNameFilter>
+    <classNameFilter>com.imgur.mobile.creation.preview.PreviewPostActivity</classNameFilter>
+  </trigger>
+  <trigger type="user_interface_event">
+    <useDefaultName>true</useDefaultName>
+    <name>UI Event: Window opened package com.imgur.mobile contains text Skip</name>
+    <enabled>true</enabled>
+    <accessibilityEventType>TYPE_WINDOW_STATE_CHANGED</accessibilityEventType>
+    <packageNameFilter>com.imgur.mobile</packageNameFilter>
+    <textMatchType>CONTAINS_TEXT</textMatchType>
+    <textFilter>Skip</textFilter>
+    <removeNonPrintableCharacters>false</removeNonPrintableCharacters>
+  </trigger>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: trigger == "Post preview"</name>
+    <expression>trigger == "Post preview"</expression>
+  </condition>
+  <action type="control_user_interface">
+    <useDefaultName>true</useDefaultName>
+    <name>Control UI: click("Skip");</name>
+    <script>click("Skip");</script>
+  </action>
+  <action type="control_user_interface">
+    <useDefaultName>true</useDefaultName>
+    <name>Control UI: setText2ById("com.imgur.mobile:id/post_title_ed", "Uploaded via {app_name}"); click("Post") //clickById("com.imgur.mobile:id/ripple_fl");</name>
+    <script>setText2ById("com.imgur.mobile:id/post_title_ed", "Uploaded via {app_name}");
+click("Post")
+//clickById("com.imgur.mobile:id/ripple_fl");</script>
+  </action>
+  <flow type="flow">
+    <name>Imgur skip upload naming</name>
+    <group>Auto actions</group>
+    <enabled>true</enabled>
+    <executionPolicy>PARALLEL</executionPolicy>
+    <triggercontainer id="t1" x="70.0" y="52.5">
+      <trigger>Post preview</trigger>
+      <trigger>UI Event: Window opened package com.imgur.mobile contains text Skip</trigger>
+    </triggercontainer>
+    <conditioncontainer id="t2" x="69.99999" y="262.5">Expression: trigger == "Post preview"</conditioncontainer>
+    <actioncontainer id="t3" x="-69.99999" y="577.5">Control UI: setText2ById("com.imgur.mobile:id/post_title_ed", "Uploaded via {app_name}"); click("Post") //clickById("com.imgur.mobile:id/ripple_fl");</actioncontainer>
+    <actioncontainer id="t4" x="209.99997" y="577.5">Control UI: click("Skip");</actioncontainer>
+    <connection from="t1" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t2" to="t3" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t2" to="t4" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
+  </flow>
+</data>

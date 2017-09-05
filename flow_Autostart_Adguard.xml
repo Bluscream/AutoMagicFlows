@@ -5,6 +5,31 @@
     <name>Automagic Startup</name>
     <enabled>true</enabled>
   </trigger>
+  <trigger type="display_state">
+    <useDefaultName>true</useDefaultName>
+    <name>Display Status: Aus</name>
+    <enabled>true</enabled>
+    <displayOn>false</displayOn>
+  </trigger>
+  <trigger type="periodic_timer_inexact">
+    <useDefaultName>true</useDefaultName>
+    <name>Periodic Timer Inexact: ~every 15m (Don't wake device)</name>
+    <enabled>true</enabled>
+    <inexactInterval>MINUTES_15</inexactInterval>
+    <wakeDevice>false</wakeDevice>
+    <limitTimeRange>false</limitTimeRange>
+    <weekday>Mon</weekday>
+    <weekday>Tue</weekday>
+    <weekday>Wed</weekday>
+    <weekday>Thu</weekday>
+    <weekday>Fri</weekday>
+    <weekday>Sat</weekday>
+    <weekday>Sun</weekday>
+    <hourFrom>8</hourFrom>
+    <minuteFrom>0</minuteFrom>
+    <hourTo>17</hourTo>
+    <minuteTo>0</minuteTo>
+  </trigger>
   <action type="start_service">
     <useDefaultName>false</useDefaultName>
     <name>Autostart Adguard</name>
@@ -43,11 +68,13 @@
     <enabled>true</enabled>
     <executionPolicy>PARALLEL</executionPolicy>
     <triggercontainer id="t1" x="70.0" y="52.5">
+      <trigger>Display Status: Aus</trigger>
       <trigger>Automagic Startup</trigger>
+      <trigger>Periodic Timer Inexact: ~every 15m (Don't wake device)</trigger>
     </triggercontainer>
-    <actioncontainer id="t2" x="175.00003" y="262.5">Autostart Adguard Service</actioncontainer>
-    <actioncontainer id="t3" x="-34.999992" y="262.5">Autostart Adguard</actioncontainer>
+    <actioncontainer id="t2" x="69.999985" y="507.5">Autostart Adguard Service</actioncontainer>
+    <actioncontainer id="t3" x="70.00001" y="262.50003">Autostart Adguard</actioncontainer>
     <connection from="t1" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t1" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t3" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
   </flow>
 </data>

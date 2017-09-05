@@ -3,7 +3,7 @@
   <trigger type="app_task_started">
     <useDefaultName>false</useDefaultName>
     <name>Youtube started</name>
-    <enabled>true</enabled>
+    <enabled>false</enabled>
     <method>USAGE_STATISTICS</method>
     <packageNameFilter>com.google.android.ogyoutube,com.google.android.youtube,com.google.android.apps.youtube.gaming</packageNameFilter>
   </trigger>
@@ -22,7 +22,7 @@ else if (package_name == "com.google.android.apps.youtube.gaming"){
   <flow type="flow">
     <name>Youtube Auto Subscriptions</name>
     <group>YouTube</group>
-    <enabled>true</enabled>
+    <enabled>false</enabled>
     <executionPolicy>PARALLEL</executionPolicy>
     <triggercontainer id="t1" x="35.0" y="52.5">
       <trigger>Youtube started</trigger>

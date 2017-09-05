@@ -3,7 +3,7 @@
   <trigger type="user_interface_event">
     <useDefaultName>false</useDefaultName>
     <name>Click in Youtube</name>
-    <enabled>true</enabled>
+    <enabled>false</enabled>
     <accessibilityEventType>TYPE_VIEW_CLICKED</accessibilityEventType>
     <packageNameFilter>com.google.android.ogyoutube,com.google.android.youtube,com.google.android.apps.youtube.gaming</packageNameFilter>
     <textMatchType>CONTAINS_TEXT</textMatchType>
@@ -33,7 +33,7 @@ if (existsElementById(_title)){
   <flow type="flow">
     <name>Youtube Auto Like/Dislike</name>
     <group>YouTube</group>
-    <enabled>true</enabled>
+    <enabled>false</enabled>
     <executionPolicy>STOP</executionPolicy>
     <emergencyStopCount>250</emergencyStopCount>
     <triggercontainer id="t1" x="70.0" y="52.5">

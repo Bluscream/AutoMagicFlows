@@ -3,7 +3,7 @@
   <trigger type="user_interface_event">
     <useDefaultName>false</useDefaultName>
     <name>"More Options clicked"</name>
-    <enabled>true</enabled>
+    <enabled>false</enabled>
     <accessibilityEventType>TYPE_VIEW_CLICKED</accessibilityEventType>
     <packageNameFilter>com.google.android.ogyoutube,com.google.android.youtube,com.google.android.apps.youtube.gaming</packageNameFilter>
     <textMatchType>CONTAINS_TEXT</textMatchType>
@@ -47,16 +47,16 @@ for (res in resolutions) {
   <flow type="flow">
     <name>Youtube Auto HD</name>
     <group>YouTube</group>
-    <enabled>true</enabled>
+    <enabled>false</enabled>
     <executionPolicy>QUEUE</executionPolicy>
-    <actioncontainer id="t1" x="420.0" y="-787.5">Control UI: click("Quality");</actioncontainer>
-    <triggercontainer id="t2" x="420.0" y="-962.5">
+    <triggercontainer id="t1" x="420.0" y="-962.5">
       <trigger>"More Options clicked"</trigger>
     </triggercontainer>
-    <actioncontainer id="t3" x="420.0" y="-612.4998">Control UI: Iterate over possible resolutions</actioncontainer>
-    <actioncontainer id="t4" x="420.0" y="-437.50006">Success Toast</actioncontainer>
-    <connection from="t1" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t2" to="t1" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <actioncontainer id="t2" x="420.0" y="-787.5">Control UI: click("Quality");</actioncontainer>
+    <actioncontainer id="t3" x="420.0" y="-612.5">Control UI: Iterate over possible resolutions</actioncontainer>
+    <actioncontainer id="t4" x="420.0" y="-437.5">Success Toast</actioncontainer>
+    <connection from="t1" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t2" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
     <connection from="t3" to="t4" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
   </flow>
 </data>
