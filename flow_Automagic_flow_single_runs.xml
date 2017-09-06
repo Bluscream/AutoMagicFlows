@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<data version="1.34.0">
+  <trigger type="notification_status_bar_displayed">
+    <useDefaultName>true</useDefaultName>
+    <name>Notification on Statusbar Displayed: ch.gridvision.ppam.androidautomagic Text matches glob *Error: Can not execute disabled flow *</name>
+    <enabled>true</enabled>
+    <packageNameFilter>ch.gridvision.ppam.androidautomagic</packageNameFilter>
+    <textMatchField>TEXT</textMatchField>
+    <textMatchType>GLOB</textMatchType>
+    <textFilter>*Error: Can not execute disabled flow *</textFilter>
+    <ignoreRegular>false</ignoreRegular>
+    <ignoreOngoing>true</ignoreOngoing>
+  </trigger>
+  <condition type="debug_dialog">
+    <useDefaultName>false</useDefaultName>
+    <name> Debug Dialog</name>
+  </condition>
+  <action type="execute_flows">
+    <useDefaultName>true</useDefaultName>
+    <name>Execute Flows: {exec_flow}</name>
+    <includeFlowNamePatternList>{exec_flow}</includeFlowNamePatternList>
+    <excludeFlowNamePatternList></excludeFlowNamePatternList>
+    <skipDisabledFlowsWithoutError>false</skipDisabledFlowsWithoutError>
+    <waitForFlowsToFinish>true</waitForFlowsToFinish>
+    <returnLocalVariablesToCallingFlow>false</returnLocalVariablesToCallingFlow>
+  </action>
+  <action type="remove_notification_status_bar">
+    <useDefaultName>true</useDefaultName>
+    <name>Remove Notification on Statusbar: All from app ch.gridvision.ppam.androidautomagic (Text matches glob *Error: Can not execute disabled flow *)</name>
+    <automagicNotifications>false</automagicNotifications>
+    <all>false</all>
+    <notificationID>1</notificationID>
+    <overall>false</overall>
+    <packageName>ch.gridvision.ppam.androidautomagic</packageName>
+    <allOfApp>true</allOfApp>
+    <filterNotificationID></filterNotificationID>
+    <textMatchField>TEXT</textMatchField>
+    <textMatchType>GLOB</textMatchType>
+    <textFilter>*Error: Can not execute disabled flow *</textFilter>
+  </action>
+  <action type="script">
+    <useDefaultName>true</useDefaultName>
+    <name>Script: //*Error: Can not execute disabled flow * exec_flow = split(title, "Flow ")[1]; exec_flow = split(exec_flow, " ended with an error")[0];</name>
+    <script>//*Error: Can not execute disabled flow *
+
+
+exec_flow = split(title, "Flow ")[1];
+exec_flow = split(exec_flow, " ended with an error")[0];</script>
+  </action>
+  <flow type="flow">
+    <name>Automagic flow single runs</name>
+    <group>. Utilities AM</group>
+    <enabled>true</enabled>
+    <executionPolicy>PARALLEL</executionPolicy>
+    <actioncontainer id="t1" x="315.0" y="647.5">Execute Flows: {exec_flow}</actioncontainer>
+    <triggercontainer id="t2" x="315.0" y="-122.499985">
+      <trigger>Notification on Statusbar Displayed: ch.gridvision.ppam.androidautomagic Text matches glob *Error: Can not execute disabled flow *</trigger>
+    </triggercontainer>
+    <conditioncontainer id="t3" x="595.0" y="157.5"> Debug Dialog</conditioncontainer>
+    <actioncontainer id="t4" x="315.0" y="52.5">Remove Notification on Statusbar: All from app ch.gridvision.ppam.androidautomagic (Text matches glob *Error: Can not execute disabled flow *)</actioncontainer>
+    <actioncontainer id="t5" x="314.99997" y="472.5">Script: //*Error: Can not execute disabled flow * exec_flow = split(title, "Flow ")[1]; exec_flow = split(exec_flow, " ended with an error")[0];</actioncontainer>
+    <connection from="t2" to="t4" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t4" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t5" to="t1" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+  </flow>
+</data>

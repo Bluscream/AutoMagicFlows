@@ -17,21 +17,9 @@
   </condition>
   <condition type="expression">
     <useDefaultName>true</useDefaultName>
-    <name>Expression: source_class_name == "android.widget.MultiAutoCompleteTextView" and before_text == ""</name>
-    <expression>source_class_name == "android.widget.MultiAutoCompleteTextView" and before_text == ""</expression>
+    <name>Expression: trigger == 'Octodroid input detected' and source_class_name == "android.widget.MultiAutoCompleteTextView" and before_text == ""</name>
+    <expression>trigger == 'Octodroid input detected' and source_class_name == "android.widget.MultiAutoCompleteTextView" and before_text == ""</expression>
   </condition>
-  <condition type="expression">
-    <useDefaultName>true</useDefaultName>
-    <name>Expression: trigger == 'Octodroid input detected'</name>
-    <expression>trigger == 'Octodroid input detected'</expression>
-  </condition>
-  <action type="control_user_interface">
-    <useDefaultName>true</useDefaultName>
-    <name>Control UI: click("More options"); sleep(100); click("Execute");</name>
-    <script>click("More options");
-sleep(100);
-click("Execute");</script>
-  </action>
   <action type="control_user_interface">
     <useDefaultName>true</useDefaultName>
     <name>Control UI: device_model = trim(device_model); device_version = trim(device_version); signature = '\n\n---\nSent from my '+ device_model +' running Android '+ device_version +' via '+ package_info["com.gh4a"]["application_info"]["label"] +' v.'+package_info["com.gh4a"]["version_name"]; /*if (text == null){ text</name>
@@ -113,31 +101,30 @@ clickById("com.gh4a:id/send_button");
     <name>Octodroid Signature</name>
     <group>Auto actions</group>
     <enabled>true</enabled>
-    <executionPolicy>PARALLEL</executionPolicy>
-    <actioncontainer id="t1" x="-420.0" y="472.5">Show Custom Widget Overlay: Intercept Octodroid message, Octodroid send message (60*120) Center Right</actioncontainer>
-    <actioncontainer id="t2" x="-874.99994" y="892.49994">Control UI: click("More options"); sleep(100); click("Execute");</actioncontainer>
-    <conditioncontainer id="t3" x="279.99994" y="-52.50002">Expression: source_class_name == "android.widget.MultiAutoCompleteTextView" and before_text == ""</conditioncontainer>
-    <actioncontainer id="t4" x="3.8146973E-5" y="1032.4999">Set Default Input Method: Hacker's Keyboard</actioncontainer>
-    <actioncontainer id="t5" x="35.000076" y="682.50006">Get Android version</actioncontainer>
-    <actioncontainer id="t6" x="279.9999" y="472.49997">Get Device model</actioncontainer>
-    <conditioncontainer id="t7" x="35.0" y="192.5">Expression: contains(trigger, 'Click')</conditioncontainer>
-    <actioncontainer id="t8" x="34.999943" y="402.50006">Set Default Input Method: Automagic Premium</actioncontainer>
-    <conditioncontainer id="t9" x="-385.00003" y="192.5">Expression: trigger == 'Octodroid input detected'</conditioncontainer>
-    <triggercontainer id="t10" x="35.0" y="-17.5">
+    <executionPolicy>STOP</executionPolicy>
+    <emergencyStopCount>150</emergencyStopCount>
+    <actioncontainer id="t1" x="279.9999" y="472.49997">Get Device model</actioncontainer>
+    <actioncontainer id="t2" x="280.00003" y="297.5">Init Variable Package Info: com.gh4a into package_info</actioncontainer>
+    <triggercontainer id="t3" x="35.0" y="-87.500015">
       <trigger>Octodroid input detected</trigger>
     </triggercontainer>
-    <actioncontainer id="t11" x="280.00003" y="297.5">Init Variable Package Info: com.gh4a into package_info</actioncontainer>
-    <actioncontainer id="t12" x="279.99994" y="717.5">Control UI: device_model = trim(device_model); device_version = trim(device_version); signature = '\n\n---\nSent from my '+ device_model +' running Android '+ device_version +' via '+ package_info["com.gh4a"]["application_info"]["label"] +' v.'+package_info["com.gh4a"]["version_name"]; /*if (text == null){ text</actioncontainer>
-    <actioncontainer id="t13" x="280.0" y="1032.5001">Hide Custom Widget Overlay: Intercept Octodroid message</actioncontainer>
-    <connection from="t4" to="t13" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t5" to="t12" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t6" to="t5" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t7" to="t8" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t8" to="t11" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t9" to="t1" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t10" to="t9" type="NORMAL" sourcePosition="WEST" targetPosition="NORTH" />
-    <connection from="t10" to="t7" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t11" to="t6" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t12" to="t4" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <conditioncontainer id="t4" x="-385.00003" y="87.5">Expression: trigger == 'Octodroid input detected' and source_class_name == "android.widget.MultiAutoCompleteTextView" and before_text == ""</conditioncontainer>
+    <actioncontainer id="t5" x="-385.0" y="332.5">Show Custom Widget Overlay: Intercept Octodroid message, Octodroid send message (60*120) Center Right</actioncontainer>
+    <actioncontainer id="t6" x="5.340576E-5" y="507.5">Get Android version</actioncontainer>
+    <actioncontainer id="t7" x="280.00003" y="717.4999">Set Default Input Method: Hacker's Keyboard</actioncontainer>
+    <actioncontainer id="t8" x="-6.866455E-5" y="717.5">Control UI: device_model = trim(device_model); device_version = trim(device_version); signature = '\n\n---\nSent from my '+ device_model +' running Android '+ device_version +' via '+ package_info["com.gh4a"]["application_info"]["label"] +' v.'+package_info["com.gh4a"]["version_name"]; /*if (text == null){ text</actioncontainer>
+    <conditioncontainer id="t9" x="35.0" y="87.49998">Expression: contains(trigger, 'Click')</conditioncontainer>
+    <actioncontainer id="t10" x="34.999947" y="297.50006">Set Default Input Method: Automagic Premium</actioncontainer>
+    <actioncontainer id="t11" x="280.0" y="87.500206">Hide Custom Widget Overlay: Intercept Octodroid message</actioncontainer>
+    <connection from="t1" to="t6" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t2" to="t1" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t3" to="t4" type="NORMAL" sourcePosition="WEST" targetPosition="NORTH" />
+    <connection from="t3" to="t9" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t4" to="t5" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t6" to="t8" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t8" to="t7" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t9" to="t11" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t10" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t11" to="t10" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
   </flow>
 </data>
