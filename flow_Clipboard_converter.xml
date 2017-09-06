@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<data version="1.34.0">
+  <trigger type="clipboard_changed">
+    <useDefaultName>true</useDefaultName>
+    <name>Clipboard Changed</name>
+    <enabled>true</enabled>
+  </trigger>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: matches(clip_data, "https://gyazo.com/.*(?&lt;!.png)$");</name>
+    <expression>matches(clip_data, "https://gyazo.com/.*(?&lt;!.png)$");</expression>
+  </condition>
+  <action type="copy_text_to_clipboard">
+    <useDefaultName>true</useDefaultName>
+    <name>Copy Text to Clipboard: {clip_data}.png</name>
+    <text>{clip_data}.png</text>
+  </action>
+  <flow type="flow">
+    <name>Clipboard converter</name>
+    <group>Auto actions</group>
+    <enabled>true</enabled>
+    <executionPolicy>PARALLEL</executionPolicy>
+    <conditioncontainer id="t1" x="70.0" y="262.49994">Expression: matches(clip_data, "https://gyazo.com/.*(?&lt;!.png)$");</conditioncontainer>
+    <triggercontainer id="t2" x="70.0" y="52.5">
+      <trigger>Clipboard Changed</trigger>
+    </triggercontainer>
+    <actioncontainer id="t3" x="280.0" y="262.49988">Copy Text to Clipboard: {clip_data}.png</actioncontainer>
+    <connection from="t1" to="t3" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t2" to="t1" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+  </flow>
+</data>
