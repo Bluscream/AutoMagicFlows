@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<data version="1.34.0">
+  <trigger type="send_intent_received">
+    <useDefaultName>true</useDefaultName>
+    <name>Send/Share Intent Received</name>
+    <enabled>true</enabled>
+  </trigger>
+  <action type="copy_text_to_clipboard">
+    <useDefaultName>true</useDefaultName>
+    <name>Copy Text to Clipboard: {text}</name>
+    <text>{text}</text>
+  </action>
+  <flow type="flow">
+    <name>Copy Shared text to clipboard</name>
+    <group>Auto actions</group>
+    <enabled>true</enabled>
+    <executionPolicy>PARALLEL</executionPolicy>
+    <triggercontainer id="t1" x="70.0" y="52.5">
+      <trigger>Send/Share Intent Received</trigger>
+    </triggercontainer>
+    <actioncontainer id="t2" x="69.99997" y="262.50006">Copy Text to Clipboard: {text}</actioncontainer>
+    <connection from="t1" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+  </flow>
+</data>
