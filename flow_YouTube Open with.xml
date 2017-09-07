@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<data version="1.34.0">
+  <trigger type="view_web_url_intent_received">
+    <useDefaultName>false</useDefaultName>
+    <name>Open with Youtube Gaming</name>
+    <enabled>false</enabled>
+  </trigger>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: _default != null</name>
+    <expression>_default != null</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: matches(data_string, '(?i:^https?://.*(?:youtube.|youtu.be).*)')</name>
+    <expression>matches(data_string, '(?i:^https?://.*(?:youtube.|youtu.be).*)')</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: operation == "ok"</name>
+    <expression>operation == "ok"</expression>
+  </condition>
+  <action type="input_dialog">
+    <useDefaultName>true</useDefaultName>
+    <name>Input Dialog: Select app to play Youtube video with Single Choice Menu Default,Youtube,OGYoutube,Youtube Gaming (15s)</name>
+    <title>Select app to play Youtube video with</title>
+    <inputDialogType>SINGLE_CHOICE_MENU</inputDialogType>
+    <prompt></prompt>
+    <inputValues>Default,Youtube,OGYoutube,Youtube Gaming</inputValues>
+    <defaultValue>Youtube Gaming</defaultValue>
+    <titleFontSize>DEFAULT</titleFontSize>
+    <promptFontSize>DEFAULT</promptFontSize>
+    <fontSize>SP_20</fontSize>
+    <timeoutEnabled>true</timeoutEnabled>
+    <timeout>15000</timeout>
+    <defaultValueOnTimeout>Youtube Gaming</defaultValueOnTimeout>
+    <showWhenLocked>true</showWhenLocked>
+    <turnScreenOn>true</turnScreenOn>
+    <keepScreenOn>false</keepScreenOn>
+    <enlargeDialogWidth>false</enlargeDialogWidth>
+  </action>
+  <action type="open_browser_url">
+    <useDefaultName>true</useDefaultName>
+    <name>Open URL in Browser: {data_string}</name>
+    <url>{data_string}</url>
+    <explicitComponent>false</explicitComponent>
+    <packageName></packageName>
+    <className></className>
+    <appName></appName>
+  </action>
+  <action type="open_browser_url">
+    <useDefaultName>true</useDefaultName>
+    <name>Open URL in Browser: {data_string} (use {app}/{activity})</name>
+    <url>{data_string}</url>
+    <explicitComponent>true</explicitComponent>
+    <packageName>{app}</packageName>
+    <className>{activity}</className>
+    <appName></appName>
+  </action>
+  <action type="script">
+    <useDefaultName>true</useDefaultName>
+    <name>Script: if (value == "Youtube") { app = "com.google.android.youtube"; activity = "com.google.android.apps.youtube.app.WatchWhileActivity"; } else if (value == "OGYoutube") { app = "com.google.android.ogyoutube"; activity = "com.google.android.apps.ogyoutube.app.WatchWhileActivity"; } else if (value == "Youtube Gaming") { app = "com.google.android.apps.youtube.gaming"; activity = "{app}.watchwhile.activity.WatchWhileActivity"; } else if (value == "Default") { _default = true; }</name>
+    <script>if (value == "Youtube") { app = "com.google.android.youtube"; activity = "com.google.android.apps.youtube.app.WatchWhileActivity"; }
+else if (value == "OGYoutube") { app = "com.google.android.ogyoutube"; activity = "com.google.android.apps.ogyoutube.app.WatchWhileActivity"; }
+else if (value == "Youtube Gaming") { app = "com.google.android.apps.youtube.gaming"; activity = "{app}.watchwhile.activity.WatchWhileActivity"; }
+else if (value == "Default") { _default = true; }</script>
+  </action>
+  <flow type="flow">
+    <name>Youtube Open with</name>
+    <group>YouTube</group>
+    <enabled>false</enabled>
+    <executionPolicy>PARALLEL</executionPolicy>
+    <triggercontainer id="t1" x="70.0" y="52.5">
+      <trigger>Open with Youtube Gaming</trigger>
+    </triggercontainer>
+    <conditioncontainer id="t2" x="69.99999" y="472.5">Expression: operation == "ok"</conditioncontainer>
+    <actioncontainer id="t3" x="69.99999" y="612.5">Script: if (value == "Youtube") { app = "com.google.android.youtube"; activity = "com.google.android.apps.youtube.app.WatchWhileActivity"; } else if (value == "OGYoutube") { app = "com.google.android.ogyoutube"; activity = "com.google.android.apps.ogyoutube.app.WatchWhileActivity"; } else if (value == "Youtube Gaming") { app = "com.google.android.apps.youtube.gaming"; activity = "{app}.watchwhile.activity.WatchWhileActivity"; } else if (value == "Default") { _default = true; }</actioncontainer>
+    <actioncontainer id="t4" x="69.99996" y="332.5">Input Dialog: Select app to play Youtube video with Single Choice Menu Default,Youtube,OGYoutube,Youtube Gaming (15s)</actioncontainer>
+    <actioncontainer id="t5" x="174.99998" y="927.5001">Open URL in Browser: {data_string} (use {app}/{activity})</actioncontainer>
+    <actioncontainer id="t6" x="-35.0" y="927.5">Open URL in Browser: {data_string}</actioncontainer>
+    <conditioncontainer id="t7" x="70.00001" y="752.5">Expression: _default != null</conditioncontainer>
+    <conditioncontainer id="t8" x="70.0" y="192.5">Expression: matches(data_string, '(?i:^https?://.*(?:youtube.|youtu.be).*)')</conditioncontainer>
+    <connection from="t1" to="t8" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t2" to="t3" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t3" to="t7" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t4" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t7" to="t5" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t7" to="t6" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t8" to="t4" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+  </flow>
+</data>

@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<data version="1.34.0">
+  <trigger type="view_web_url_intent_received">
+    <useDefaultName>true</useDefaultName>
+    <name>View Web URL Intent Received</name>
+    <enabled>false</enabled>
+  </trigger>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: matches(data_string, "(?i:^https?://(?:www\.)?(?:youtube\.|youtu\.be).*)")</name>
+    <expression>matches(data_string, "(?i:^https?://(?:www\.)?(?:youtube\.|youtu\.be).*)")</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: matches(data_string, "(?i:^https?://gaming.youtube.com.*)")</name>
+    <expression>matches(data_string, "(?i:^https?://gaming.youtube.com.*)")</expression>
+  </condition>
+  <action type="open_browser_url">
+    <useDefaultName>true</useDefaultName>
+    <name>Open URL in Browser: {data_string} (use YouTube Gaming)</name>
+    <url>{data_string}</url>
+    <explicitComponent>true</explicitComponent>
+    <packageName>com.google.android.apps.youtube.gaming</packageName>
+    <className>com.google.android.apps.youtube.gaming.watchwhile.activity.WatchWhileActivity</className>
+    <appName>YouTube Gaming</appName>
+  </action>
+  <action type="open_browser_url">
+    <useDefaultName>true</useDefaultName>
+    <name>Open URL in Browser: {data_string} (use YouTube)</name>
+    <url>{data_string}</url>
+    <explicitComponent>true</explicitComponent>
+    <packageName>com.google.android.youtube</packageName>
+    <className>com.google.android.youtube.app.honeycomb.Shell$HomeActivity</className>
+    <appName>YouTube</appName>
+  </action>
+  <flow type="flow">
+    <name>Youtube Gaming URL Patch</name>
+    <group>YouTube</group>
+    <enabled>false</enabled>
+    <executionPolicy>PARALLEL</executionPolicy>
+    <conditioncontainer id="t1" x="-35.000004" y="192.49994">Expression: matches(data_string, "(?i:^https?://gaming.youtube.com.*)")</conditioncontainer>
+    <actioncontainer id="t2" x="-35.000015" y="367.49994">Open URL in Browser: {data_string} (use YouTube)</actioncontainer>
+    <conditioncontainer id="t3" x="175.0" y="192.49995">Expression: matches(data_string, "(?i:^https?://(?:www\.)?(?:youtube\.|youtu\.be).*)")</conditioncontainer>
+    <actioncontainer id="t4" x="175.0" y="367.50015">Open URL in Browser: {data_string} (use YouTube Gaming)</actioncontainer>
+    <triggercontainer id="t5" x="70.0" y="52.5">
+      <trigger>View Web URL Intent Received</trigger>
+    </triggercontainer>
+    <connection from="t1" to="t2" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t3" to="t4" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t5" to="t1" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t5" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+  </flow>
+</data>

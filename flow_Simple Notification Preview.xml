@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<data version="1.34.0">
+  <trigger type="notification_status_bar_displayed">
+    <useDefaultName>true</useDefaultName>
+    <name>Notification on Statusbar Displayed: * Text matches glob *</name>
+    <enabled>true</enabled>
+    <packageNameFilter>*</packageNameFilter>
+    <textMatchField>TEXT</textMatchField>
+    <textMatchType>GLOB</textMatchType>
+    <textFilter>*</textFilter>
+    <ignoreRegular>false</ignoreRegular>
+    <ignoreOngoing>true</ignoreOngoing>
+  </trigger>
+  <action type="message_dialog">
+    <useDefaultName>true</useDefaultName>
+    <name>Message Dialog:  {notification_text}</name>
+    <title></title>
+    <message>{notification_text}</message>
+    <buttonLabel></buttonLabel>
+    <timeoutEnabled>false</timeoutEnabled>
+    <timeout>60000</timeout>
+  </action>
+  <flow type="flow">
+    <name>Simple Notification Preview</name>
+    <enabled>true</enabled>
+    <executionPolicy>PARALLEL</executionPolicy>
+    <triggercontainer id="t1" x="70.0" y="52.5">
+      <trigger>Notification on Statusbar Displayed: * Text matches glob *</trigger>
+    </triggercontainer>
+    <actioncontainer id="t2" x="70.0" y="297.5">Message Dialog:  {notification_text}</actioncontainer>
+    <connection from="t1" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+  </flow>
+</data>
