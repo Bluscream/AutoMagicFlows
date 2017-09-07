@@ -77,6 +77,42 @@ for (i in [1 to c])
   y = y + 112;
 }</script>
   </action>
+  <action type="control_user_interface">
+    <useDefaultName>false</useDefaultName>
+    <name>Deny all apps to overlay</name>
+    <script>if (getTextById("android:id/text1") != "Apps with permission") {
+  clickById("android:id/text1");
+  sleep(50);
+  click("Apps with permission");
+  sleep(50);
+}
+click("More options");
+sleep(150);
+if (split(getTextInActiveWindow(), "\n")[0] == "Hide system") {
+  back();
+  sleep(100);
+} else {
+  click("Show system");
+  sleep(100);
+}
+x = 1002;y = 299;c = 30;
+for (i in [1 to c])
+{
+  text = getText(x, y);
+  global_3 = x + ", " + y + "\ni: " + i + "/"+ c + "\ntext: " + text;
+  if (text == null or text == "") {
+    scrollForward(x, y);
+    text = getText(x, y);
+  }
+  if (text == "No") {
+    click (x, y);
+    sleep(1000);
+    checkById("android:id/switchWidget");
+    back();
+  }
+  y = y + 112;
+}</script>
+  </action>
   <action type="launch_app">
     <useDefaultName>true</useDefaultName>
     <name>Launch App: com.android.settings/.Settings$AppDrawOverlaySettingsActivity</name>
@@ -163,17 +199,19 @@ for (i in [1 to c])
     </triggercontainer>
     <conditioncontainer id="t2" x="280.0" y="262.5">App Task Running: com.android.settings (most recent)</conditioncontainer>
     <actioncontainer id="t3" x="105.0" y="787.5">Remove Notification on Statusbar: 421 (Automagic)</actioncontainer>
-    <conditioncontainer id="t4" x="-35.0" y="472.5">Expression: contains(trigger, "opened")</conditioncontainer>
-    <actioncontainer id="t5" x="175.0" y="472.5">Launch App: com.android.settings/.Settings$AppDrawOverlaySettingsActivity</actioncontainer>
-    <actioncontainer id="t6" x="-490.0" y="402.5">Notification on Screen: {global_3}</actioncontainer>
-    <conditioncontainer id="t7" x="-420.0" y="192.5">Expression: trigger == "Global Variable"</conditioncontainer>
-    <actioncontainer id="t8" x="-175.0" y="787.5">Notification on Statusbar: Mass allow/deny Notification ID 421</actioncontainer>
-    <connection from="t1" to="t4" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <conditioncontainer id="t4" x="-420.0" y="192.5">Expression: trigger == "Global Variable"</conditioncontainer>
+    <actioncontainer id="t5" x="-490.0" y="402.5">Notification on Screen: {global_3}</actioncontainer>
+    <actioncontainer id="t6" x="-175.0" y="787.5">Notification on Statusbar: Mass allow/deny Notification ID 421</actioncontainer>
+    <conditioncontainer id="t7" x="-35.0" y="472.5">Expression: contains(trigger, "opened")</conditioncontainer>
+    <actioncontainer id="t8" x="-840.0" y="682.5">Allow all apps to overlay</actioncontainer>
+    <actioncontainer id="t9" x="-595.0001" y="682.5">Deny all apps to overlay</actioncontainer>
+    <actioncontainer id="t10" x="175.0" y="472.5">Launch App: com.android.settings/.Settings$AppDrawOverlaySettingsActivity</actioncontainer>
     <connection from="t1" to="t7" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t2" to="t4" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t2" to="t5" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t4" to="t8" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t4" to="t3" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t1" to="t4" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t2" to="t7" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t2" to="t10" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t4" to="t5" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
     <connection from="t7" to="t6" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t7" to="t3" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
   </flow>
 </data>
