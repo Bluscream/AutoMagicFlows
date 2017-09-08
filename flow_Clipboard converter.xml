@@ -7,6 +7,16 @@
   </trigger>
   <condition type="expression">
     <useDefaultName>true</useDefaultName>
+    <name>Expression: contains(clip_data, ".")</name>
+    <expression>contains(clip_data, ".")</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: contains(clip_data, '{"\\n"}')</name>
+    <expression>contains(clip_data, '{"\\n"}')</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
     <name>Expression: matches(clip_data, "https://gyazo.com/.*(?&lt;!.png)$");</name>
     <expression>matches(clip_data, "https://gyazo.com/.*(?&lt;!.png)$");</expression>
   </condition>
@@ -15,17 +25,33 @@
     <name>Copy Text to Clipboard: {clip_data}.png</name>
     <text>{clip_data}.png</text>
   </action>
+  <action type="copy_text_to_clipboard">
+    <useDefaultName>true</useDefaultName>
+    <name>Copy Text to Clipboard: {replace(clip_data, ".", "_")}</name>
+    <text>{replace(clip_data, ".", "_")}</text>
+  </action>
+  <action type="copy_text_to_clipboard">
+    <useDefaultName>true</useDefaultName>
+    <name>Copy Text to Clipboard: {replace(clip_data, '\{"\\n"\}', "\\n")}</name>
+    <text>{replace(clip_data, '\{"\\n"\}', "\\n")}</text>
+  </action>
   <flow type="flow">
     <name>Clipboard converter</name>
     <group>Auto actions</group>
     <enabled>true</enabled>
     <executionPolicy>PARALLEL</executionPolicy>
-    <conditioncontainer id="t1" x="70.0" y="262.49994">Expression: matches(clip_data, "https://gyazo.com/.*(?&lt;!.png)$");</conditioncontainer>
-    <triggercontainer id="t2" x="70.0" y="52.5">
+    <triggercontainer id="t1" x="70.0" y="52.5">
       <trigger>Clipboard Changed</trigger>
     </triggercontainer>
-    <actioncontainer id="t3" x="280.0" y="262.49988">Copy Text to Clipboard: {clip_data}.png</actioncontainer>
-    <connection from="t1" to="t3" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t2" to="t1" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <actioncontainer id="t2" x="350.0" y="437.5">Copy Text to Clipboard: {clip_data}.png</actioncontainer>
+    <conditioncontainer id="t3" x="350.0" y="262.5">Expression: matches(clip_data, "https://gyazo.com/.*(?&lt;!.png)$");</conditioncontainer>
+    <conditioncontainer id="t4" x="-175.0" y="262.5">Expression: contains(clip_data, ".")</conditioncontainer>
+    <actioncontainer id="t5" x="105.0" y="507.5">Copy Text to Clipboard: {replace(clip_data, '\{"\\n"\}', "\\n")}</actioncontainer>
+    <actioncontainer id="t6" x="-175.0" y="437.5">Copy Text to Clipboard: {replace(clip_data, ".", "_")}</actioncontainer>
+    <conditioncontainer id="t7" x="35.0" y="262.5">Expression: contains(clip_data, '{"\\n"}')</conditioncontainer>
+    <connection from="t1" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t3" to="t2" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t4" to="t6" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t7" to="t5" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
   </flow>
 </data>

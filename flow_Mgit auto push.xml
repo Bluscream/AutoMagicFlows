@@ -16,6 +16,13 @@
     <packageNameFilter>com.manichord.mgit</packageNameFilter>
     <classNameFilter>me.sheimi.sgit.activities.RepoDetailActivity</classNameFilter>
   </trigger>
+  <condition type="app_task_running">
+    <useDefaultName>true</useDefaultName>
+    <name>App Task Running: com.manichord.mgit (most recent)</name>
+    <method>USAGE_STATISTICS</method>
+    <packageNameList>com.manichord.mgit</packageNameList>
+    <checkMostRecentAppTaskOnly>true</checkMostRecentAppTaskOnly>
+  </condition>
   <condition type="expression">
     <useDefaultName>true</useDefaultName>
     <name>Expression: contains(trigger, "Started")</name>
@@ -25,32 +32,36 @@
     <useDefaultName>false</useDefaultName>
     <name>Auto stage, commit, push</name>
     <script>clickById("com.manichord.mgit:id/action_toggle_drawer");
-sleep(500);
+sleep(600);
 click(1740, 375);
-sleep(1000);
+sleep(3000);
 clickById("com.manichord.mgit:id/action_toggle_drawer");
-sleep(500);
+sleep(600);
 click(1740, 448);
-sleep(250);
+sleep(350);
 curtime = getDate();
 setText2("Commit message", "Commit at {curtime}");
-//sleep(1000);
 if(!isCheckedById("com.manichord.mgit:id/autoStage"))
 {
   checkById("com.manichord.mgit:id/autoStage");
 }
-//sleep(1000);
 click("Commit");
-sleep(250);
+sleep(350);
 clickById("com.manichord.mgit:id/action_toggle_drawer");
-sleep(500);
+sleep(350);
 click(1740, 302);
-sleep(250);
+sleep(350);
 checkById("com.manichord.mgit:id/pushAll");
-sleep(250);
-focusById("com.manichord.mgit:id/remoteList");
+//sleep(350);
+//focusById("com.manichord.mgit:id/remoteList");
 //clickById("com.manichord.mgit:id/remoteList");
-click(960, 638);</script>
+//click(960, 638);</script>
+  </action>
+  <action type="launch_app">
+    <useDefaultName>true</useDefaultName>
+    <name>Launch App: com.manichord.mgit</name>
+    <packageName>com.manichord.mgit</packageName>
+    <className></className>
   </action>
   <action type="notification_status_bar">
     <useDefaultName>true</useDefaultName>
@@ -107,15 +118,19 @@ click(960, 638);</script>
     <group>Auto actions</group>
     <enabled>true</enabled>
     <executionPolicy>PARALLEL</executionPolicy>
-    <triggercontainer id="t1" x="70.0" y="52.5">
+    <triggercontainer id="t1" x="70.0" y="157.5">
       <trigger>Activity Started: com.manichord.mgit/me.sheimi.sgit.activities.RepoDetailActivity</trigger>
       <trigger>Activity Ended: com.manichord.mgit/me.sheimi.sgit.activities.RepoDetailActivity</trigger>
     </triggercontainer>
-    <conditioncontainer id="t2" x="70.0" y="227.50003">Expression: contains(trigger, "Started")</conditioncontainer>
-    <actioncontainer id="t3" x="-35.00001" y="507.49994">Notification on Statusbar: Push changes? Notification ID 420</actioncontainer>
-    <actioncontainer id="t4" x="174.99998" y="507.50003">Remove Notification on Statusbar: 420 (Automagic)</actioncontainer>
+    <conditioncontainer id="t2" x="70.0" y="297.5">App Task Running: com.manichord.mgit (most recent)</conditioncontainer>
+    <conditioncontainer id="t3" x="-35.0" y="472.5">Expression: contains(trigger, "Started")</conditioncontainer>
+    <actioncontainer id="t4" x="175.0" y="472.5">Launch App: com.manichord.mgit</actioncontainer>
+    <actioncontainer id="t5" x="105.0" y="787.5">Remove Notification on Statusbar: 420 (Automagic)</actioncontainer>
+    <actioncontainer id="t6" x="-175.0" y="787.5">Notification on Statusbar: Push changes? Notification ID 420</actioncontainer>
     <connection from="t1" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
     <connection from="t2" to="t3" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
     <connection from="t2" to="t4" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t3" to="t6" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t3" to="t5" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
   </flow>
 </data>

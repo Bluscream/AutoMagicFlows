@@ -1,0 +1,171 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<data version="1.34.0">
+  <trigger type="system_setting_changed">
+    <useDefaultName>true</useDefaultName>
+    <name>System Setting Changed: Secure accessibility_enabled</name>
+    <enabled>true</enabled>
+    <settingCategory>SECURE</settingCategory>
+    <settingName>accessibility_enabled</settingName>
+    <variable>accessibility_enabled</variable>
+  </trigger>
+  <trigger type="system_setting_changed">
+    <useDefaultName>true</useDefaultName>
+    <name>System Setting Changed: Secure enabled_accessibility_services</name>
+    <enabled>true</enabled>
+    <settingCategory>SECURE</settingCategory>
+    <settingName>enabled_accessibility_services</settingName>
+    <variable>enabled_accessibility_services</variable>
+  </trigger>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: trigger == "Manual"</name>
+    <expression>trigger == "Manual"</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: trigger == "System Setting Changed: Secure accessibility_enabled" and accessibility_enabled == 0</name>
+    <expression>trigger == "System Setting Changed: Secure accessibility_enabled" and accessibility_enabled == 0</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>false</useDefaultName>
+    <name>whitelist</name>
+    <expression>if (!isList(global_accessibility_whitelist)) {
+  global_accessibility_whitelist = newList(
+	  "nl.syntaxa.caffeine/nl.syntaxa.caffeine.service.CaffeineAccessibilityService",
+	  "ch.gridvision.ppam.androidautomagic/ch.gridvision.ppam.androidautomagic.AccessibilityService",
+	  "com.sand.airdroid/com.sand.airdroid.services.NotificationAccessibilityService"
+  );
+}
+trigger == "System Setting Changed: Secure enabled_accessibility_services" and enabled_accessibility_services != global_accessibility_whitelist</expression>
+  </condition>
+  <action type="execute_flows">
+    <useDefaultName>true</useDefaultName>
+    <name>Execute Flows: Debugger</name>
+    <includeFlowNamePatternList>Debugger</includeFlowNamePatternList>
+    <excludeFlowNamePatternList></excludeFlowNamePatternList>
+    <skipDisabledFlowsWithoutError>false</skipDisabledFlowsWithoutError>
+    <waitForFlowsToFinish>false</waitForFlowsToFinish>
+    <returnLocalVariablesToCallingFlow>true</returnLocalVariablesToCallingFlow>
+  </action>
+  <action type="init_variable_system_setting">
+    <useDefaultName>true</useDefaultName>
+    <name>Init Variable System Setting: Secure enabled_accessibility_services to enabled_accessibility_services</name>
+    <settingCategory>SECURE</settingCategory>
+    <settingName>enabled_accessibility_services</settingName>
+    <variable>enabled_accessibility_services</variable>
+  </action>
+  <action type="notification_status_bar">
+    <useDefaultName>false</useDefaultName>
+    <name>Notification on Statusbar: Accessibility settings modified! Settings2</name>
+    <notificationIconType>BUILTIN</notificationIconType>
+    <notificationIcon>SETTINGS</notificationIcon>
+    <customNotificationIcon></customNotificationIcon>
+    <title>Attempted Accessibility services change!</title>
+    <message></message>
+    <sound>true</sound>
+    <vibrate>true</vibrate>
+    <flashLED>true</flashLED>
+    <flashLEDColor>#ffff6900</flashLEDColor>
+    <flashLEDOn>500</flashLEDOn>
+    <flashLEDOff>500</flashLEDOff>
+    <flagLocalOnly>false</flagLocalOnly>
+    <accentColorEnabled>true</accentColorEnabled>
+    <accentColor>#ffff6900</accentColor>
+    <flagOngoing>false</flagOngoing>
+    <flagNoClear>false</flagNoClear>
+    <notificationIDEnabled>false</notificationIDEnabled>
+    <notificationID>1</notificationID>
+    <category>DEFAULT</category>
+    <priority>MAX</priority>
+    <visibility>PRIVATE</visibility>
+    <messageBigEnabled>true</messageBigEnabled>
+    <messageBig>{enabled_accessibility_services}</messageBig>
+    <showProgressbar>true</showProgressbar>
+    <progressbarIndeterminate>true</progressbarIndeterminate>
+    <progressbarValue>0</progressbarValue>
+    <progressbarMaximum>100</progressbarMaximum>
+    <largeIconEnabled>false</largeIconEnabled>
+    <largeIcon></largeIcon>
+    <group></group>
+    <isGroupSummary>false</isGroupSummary>
+    <actionRef text="Review attempted change" icon="WARN" remove="false">Execute Flows: Debugger</actionRef>
+  </action>
+  <action type="notification_status_bar">
+    <useDefaultName>true</useDefaultName>
+    <name>Notification on Statusbar: Attempt to disable accessibility! Settings</name>
+    <notificationIconType>BUILTIN</notificationIconType>
+    <notificationIcon>SETTINGS</notificationIcon>
+    <customNotificationIcon></customNotificationIcon>
+    <title>Attempt to disable accessibility!</title>
+    <message>Restored accessibility service.</message>
+    <sound>true</sound>
+    <vibrate>true</vibrate>
+    <flashLED>true</flashLED>
+    <flashLEDColor>#ffff0000</flashLEDColor>
+    <flashLEDOn>500</flashLEDOn>
+    <flashLEDOff>500</flashLEDOff>
+    <flagLocalOnly>false</flagLocalOnly>
+    <accentColorEnabled>true</accentColorEnabled>
+    <accentColor>#ffff0000</accentColor>
+    <flagOngoing>false</flagOngoing>
+    <flagNoClear>false</flagNoClear>
+    <notificationIDEnabled>false</notificationIDEnabled>
+    <notificationID>1</notificationID>
+    <category>DEFAULT</category>
+    <priority>MAX</priority>
+    <visibility>PRIVATE</visibility>
+    <messageBigEnabled>false</messageBigEnabled>
+    <messageBig></messageBig>
+    <showProgressbar>true</showProgressbar>
+    <progressbarIndeterminate>true</progressbarIndeterminate>
+    <progressbarValue>0</progressbarValue>
+    <progressbarMaximum>100</progressbarMaximum>
+    <largeIconEnabled>false</largeIconEnabled>
+    <largeIcon></largeIcon>
+    <group></group>
+    <isGroupSummary>false</isGroupSummary>
+  </action>
+  <action type="set_system_setting">
+    <useDefaultName>true</useDefaultName>
+    <name>Set System Setting: Secure accessibility_enabled to 1</name>
+    <settingCategory>SECURE</settingCategory>
+    <settingName>accessibility_enabled</settingName>
+    <value>1</value>
+    <verified>true</verified>
+  </action>
+  <action type="set_system_setting">
+    <useDefaultName>true</useDefaultName>
+    <name>Set System Setting: Secure enabled_accessibility_services to {global_accessibility_whitelist}</name>
+    <settingCategory>SECURE</settingCategory>
+    <settingName>enabled_accessibility_services</settingName>
+    <value>{global_accessibility_whitelist}</value>
+    <verified>true</verified>
+  </action>
+  <flow type="flow">
+    <name>Accessibility Guard</name>
+    <group>Protection</group>
+    <enabled>true</enabled>
+    <executionPolicy>PARALLEL</executionPolicy>
+    <triggercontainer id="t1" x="70.0" y="52.5">
+      <trigger>System Setting Changed: Secure enabled_accessibility_services</trigger>
+      <trigger>System Setting Changed: Secure accessibility_enabled</trigger>
+    </triggercontainer>
+    <actioncontainer id="t2" x="560.0" y="262.5">Set System Setting: Secure accessibility_enabled to 1</actioncontainer>
+    <actioncontainer id="t3" x="805.0" y="297.5">Notification on Statusbar: Attempt to disable accessibility! Settings</actioncontainer>
+    <actioncontainer id="t4" x="455.0" y="752.5">Set System Setting: Secure enabled_accessibility_services to {global_accessibility_whitelist}</actioncontainer>
+    <actioncontainer id="t5" x="700.0" y="577.5">Notification on Statusbar: Accessibility settings modified! Settings2</actioncontainer>
+    <actioncontainer id="t6" x="-140.0" y="367.5">Init Variable System Setting: Secure enabled_accessibility_services to enabled_accessibility_services</actioncontainer>
+    <actioncontainer id="t7" x="-140.0" y="472.49988">Execute Flows: Debugger</actioncontainer>
+    <conditioncontainer id="t8" x="385.0" y="122.5">Expression: trigger == "System Setting Changed: Secure accessibility_enabled" and accessibility_enabled == 0</conditioncontainer>
+    <conditioncontainer id="t9" x="-105.0" y="227.5">Expression: trigger == "Manual"</conditioncontainer>
+    <conditioncontainer id="t10" x="175.0" y="542.5">whitelist</conditioncontainer>
+    <connection from="t1" to="t10" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t1" to="t8" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t1" to="t9" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t2" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t6" to="t7" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t8" to="t2" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t9" to="t6" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t10" to="t5" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+  </flow>
+</data>

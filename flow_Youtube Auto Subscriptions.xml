@@ -1,17 +1,64 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
 <data version="1.34.0">
-  <trigger type="app_task_started">
+  <trigger type="plugin_event">
     <useDefaultName>false</useDefaultName>
     <name>Youtube started</name>
-    <enabled>false</enabled>
-    <method>USAGE_STATISTICS</method>
-    <packageNameFilter>com.google.android.ogyoutube,com.google.android.youtube,com.google.android.apps.youtube.gaming</packageNameFilter>
+    <pluginLabel>AppContext</pluginLabel>
+    <pluginBlurb>START 
+
+App(s): OGYouTube, YouTube or YouTube Gaming. 
+
+The Event will trigger when any of the above items start.</pluginBlurb>
+    <pluginPackage>io.shortway.appcontext</pluginPackage>
+    <pluginClass>io.shortway.appcontext.activities.EditActivity</pluginClass>
+    <pluginBundle>AwAAAEgEAABCTkRMBwAAADIAAABpAG8ALgBzAGgAbwByAHQAdwBhAHkALgBhAHAAcABjAG8AbgB0
+AGUAeAB0AC4AdABhAHMAawBlAHIALgBiAHUAbgBkAGwAZQAuAGUAeAB0AHIAYQAuAFQAUgBJAEcA
+RwBFAFIAAAAAAAAAAAAFAAAAUwBUAEEAUgBUAAAALwAAAGkAbwAuAHMAaABvAHIAdAB3AGEAeQAu
+AGEAcABwAGMAbwBuAHQAZQB4AHQALgB0AGEAcwBrAGUAcgAuAGIAdQBuAGQAbABlAC4AZQB4AHQA
+cgBhAC4ATABJAFMAVAAAAA4AAAADAAAAHAAAAGMAbwBtAC4AZwBvAG8AZwBsAGUALgBhAG4AZABy
+AG8AaQBkAC4AbwBnAHkAbwB1AHQAdQBiAGUAAAAAABoAAABjAG8AbQAuAGcAbwBvAGcAbABlAC4A
+YQBuAGQAcgBvAGkAZAAuAHkAbwB1AHQAdQBiAGUAAAAAACYAAABjAG8AbQAuAGcAbwBvAGcAbABl
+AC4AYQBuAGQAcgBvAGkAZAAuAGEAcABwAHMALgB5AG8AdQB0AHUAYgBlAC4AZwBhAG0AaQBuAGcA
+AAAAAC8AAABpAG8ALgBzAGgAbwByAHQAdwBhAHkALgBhAHAAcABjAG8AbgB0AGUAeAB0AC4AdABh
+AHMAawBlAHIALgBiAHUAbgBkAGwAZQAuAGUAeAB0AHIAYQAuAFQAWQBQAEUAAAABAAAAAAAAADwA
+AABpAG8ALgBzAGgAbwByAHQAdwBhAHkALgBhAHAAcABjAG8AbgB0AGUAeAB0AC4AdABhAHMAawBl
+AHIALgBiAHUAbgBkAGwAZQAuAGUAeAB0AHIAYQAuAFAASwBHAF8ATgBBAE0ARQBTAF8ARgBPAFIA
+XwBBAE4AWQAAAAAADgAAAAAAAAA5AAAAaQBvAC4AcwBoAG8AcgB0AHcAYQB5AC4AYQBwAHAAYwBv
+AG4AdABlAHgAdAAuAHQAYQBzAGsAZQByAC4AYgB1AG4AZABsAGUALgBlAHgAdAByAGEALgBJAEcA
+TgBPAFIARQBfAFIARQBDAEUATgBUAFMAAAAJAAAAAAAAAEEAAABpAG8ALgBzAGgAbwByAHQAdwBh
+AHkALgBhAHAAcABjAG8AbgB0AGUAeAB0AC4AdABhAHMAawBlAHIALgBiAHUAbgBkAGwAZQAuAGUA
+eAB0AHIAYQAuAFAASwBHAF8ATgBBAE0ARQBTAF8ARgBPAFIAXwBTAEUAUgBWAEkAQwBFAFMAAAAO
+AAAAAAAAADsAAABpAG8ALgBzAGgAbwByAHQAdwBhAHkALgBhAHAAcABjAG8AbgB0AGUAeAB0AC4A
+dABhAHMAawBlAHIALgBiAHUAbgBkAGwAZQAuAGUAeAB0AHIAYQAuAEkATgBUAF8AVgBFAFIAUwBJ
+AE8ATgBfAEMATwBEAEUAAAABAAAACgAAAA==
+</pluginBundle>
+    <pluginBundleData>rO0ABXNyABFqYXZhLnV0aWwuSGFzaE1hcAUH2sHDFmDRAwABRgAKbG9hZEZhY3RvcnhwP0AAAHcI
+AAAACAAAAAd0AEFpby5zaG9ydHdheS5hcHBjb250ZXh0LnRhc2tlci5idW5kbGUuZXh0cmEuUEtH
+X05BTUVTX0ZPUl9TRVJWSUNFU3VyABNbTGphdmEubGFuZy5TdHJpbmc7rdJW5+kde0cCAAB4cAAA
+AAB0AC9pby5zaG9ydHdheS5hcHBjb250ZXh0LnRhc2tlci5idW5kbGUuZXh0cmEuVFlQRXNyABFq
+YXZhLmxhbmcuSW50ZWdlchLioKT3gYc4AgABSQAFdmFsdWV4cgAQamF2YS5sYW5nLk51bWJlcoas
+lR0LlOCLAgAAeHAAAAAAdAAyaW8uc2hvcnR3YXkuYXBwY29udGV4dC50YXNrZXIuYnVuZGxlLmV4
+dHJhLlRSSUdHRVJ0AAVTVEFSVHQAOWlvLnNob3J0d2F5LmFwcGNvbnRleHQudGFza2VyLmJ1bmRs
+ZS5leHRyYS5JR05PUkVfUkVDRU5UU3NyABFqYXZhLmxhbmcuQm9vbGVhbs0gcoDVnPruAgABWgAF
+dmFsdWV4cAB0ADtpby5zaG9ydHdheS5hcHBjb250ZXh0LnRhc2tlci5idW5kbGUuZXh0cmEuSU5U
+X1ZFUlNJT05fQ09ERXNxAH4ABgAAAAp0ADxpby5zaG9ydHdheS5hcHBjb250ZXh0LnRhc2tlci5i
+dW5kbGUuZXh0cmEuUEtHX05BTUVTX0ZPUl9BTll1cQB+AAMAAAAAdAAvaW8uc2hvcnR3YXkuYXBw
+Y29udGV4dC50YXNrZXIuYnVuZGxlLmV4dHJhLkxJU1R1cQB+AAMAAAADdAAcY29tLmdvb2dsZS5h
+bmRyb2lkLm9neW91dHViZXQAGmNvbS5nb29nbGUuYW5kcm9pZC55b3V0dWJldAAmY29tLmdvb2ds
+ZS5hbmRyb2lkLmFwcHMueW91dHViZS5nYW1pbmd4
+</pluginBundleData>
+    <configured>true</configured>
+    <relevantVariables>"%acapp
+Application Name
+The name of the started app.","%acpackage
+Package Name
+The package name of the started app."</relevantVariables>
   </trigger>
   <action type="control_user_interface">
     <useDefaultName>false</useDefaultName>
     <name>Click on "Subscriptions"/"Channels"</name>
-    <script>if (containsElement(newList("com.google.android.ogyoutube", "com.google.android.youtube"), package_name) ){ click("Subscriptions") }
-else if (package_name == "com.google.android.apps.youtube.gaming"){
+    <script>if (containsElement(newList("com.google.android.ogyoutube", "com.google.android.youtube"), acpackage) ){ click("Subscriptions") }
+else if (acpackage == "com.google.android.apps.youtube.gaming"){
   if ( getText() == "Channels"){ return }
   sleep(5000);
   click("Channels");
@@ -22,7 +69,7 @@ else if (package_name == "com.google.android.apps.youtube.gaming"){
   <flow type="flow">
     <name>Youtube Auto Subscriptions</name>
     <group>YouTube</group>
-    <enabled>false</enabled>
+    <enabled>true</enabled>
     <executionPolicy>PARALLEL</executionPolicy>
     <triggercontainer id="t1" x="35.0" y="52.5">
       <trigger>Youtube started</trigger>

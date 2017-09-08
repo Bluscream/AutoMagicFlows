@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<data version="1.34.0">
+  <trigger type="file_observer">
+    <useDefaultName>true</useDefaultName>
+    <name>Datei Überwacher: /storage/emulated/0 bei Ereignis Unterdatei erstellt</name>
+    <enabled>true</enabled>
+    <pathList>/storage/emulated/0</pathList>
+    <eventTypeAccess>false</eventTypeAccess>
+    <eventTypeAttrib>false</eventTypeAttrib>
+    <eventTypeCloseNowrite>false</eventTypeCloseNowrite>
+    <eventTypeCloseWrite>false</eventTypeCloseWrite>
+    <eventTypeCreate>true</eventTypeCreate>
+    <eventTypeDelete>false</eventTypeDelete>
+    <eventTypeDeleteSelf>false</eventTypeDeleteSelf>
+    <eventTypeModify>false</eventTypeModify>
+    <eventTypeMovedFrom>false</eventTypeMovedFrom>
+    <eventTypeMovedTo>false</eventTypeMovedTo>
+    <eventTypeMoveSelf>false</eventTypeMoveSelf>
+    <eventTypeOpen>false</eventTypeOpen>
+  </trigger>
+  <condition type="debug_dialog">
+    <useDefaultName>false</useDefaultName>
+    <name> Debug Dialog</name>
+  </condition>
+  <action type="script">
+    <useDefaultName>true</useDefaultName>
+    <name>Script: if(global_files==null) {global_files=newList()} addElement(global_files,"{registered_path}\/{path}")</name>
+    <script>if(global_files==null)
+{global_files=newList()}
+
+addElement(global_files,"{registered_path}\/{path}")</script>
+  </action>
+  <flow type="flow">
+    <name>File Observer - part 1</name>
+    <group>File Observer</group>
+    <enabled>true</enabled>
+    <executionPolicy>PARALLEL</executionPolicy>
+    <triggercontainer id="t1" x="70.0" y="122.5">
+      <trigger>Datei Überwacher: /storage/emulated/0 bei Ereignis Unterdatei erstellt</trigger>
+    </triggercontainer>
+    <actioncontainer id="t2" x="70.0" y="367.5">Script: if(global_files==null) {global_files=newList()} addElement(global_files,"{registered_path}\/{path}")</actioncontainer>
+    <conditioncontainer id="t3" x="70.0" y="752.5"> Debug Dialog</conditioncontainer>
+    <connection from="t1" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t2" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+  </flow>
+</data>

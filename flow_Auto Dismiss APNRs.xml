@@ -12,8 +12,9 @@
   </trigger>
   <condition type="expression">
     <useDefaultName>true</useDefaultName>
-    <name>Expression: global_dismiss_anr</name>
-    <expression>global_dismiss_anr</expression>
+    <name>Expression: if (global_dismiss_anr == null) { global_dismiss_anr = false; } global_dismiss_anr</name>
+    <expression>if (global_dismiss_anr == null) { global_dismiss_anr = false; }
+global_dismiss_anr</expression>
   </condition>
   <condition type="expression">
     <useDefaultName>true</useDefaultName>
@@ -25,6 +26,14 @@
     <name>Control UI: clickById("android:id/button1");</name>
     <script>clickById("android:id/button1");</script>
   </action>
+  <action type="control_user_interface">
+    <useDefaultName>true</useDefaultName>
+    <name>Control UI: global_dismiss_anr = true; if (existsElementById("android:id/button1")) { clickById("android:id/button1"); }</name>
+    <script>global_dismiss_anr = true;
+if (existsElementById("android:id/button1")) {
+  clickById("android:id/button1");
+}</script>
+  </action>
   <action type="notification_status_bar">
     <useDefaultName>true</useDefaultName>
     <name>Notification on Statusbar: Auto Dismiss? Notification ID 666</name>
@@ -32,7 +41,7 @@
     <notificationIcon>NOTIFICATION</notificationIcon>
     <customNotificationIcon>app.icon://com.google.android.onetimeinitializer</customNotificationIcon>
     <title>Auto Dismiss?</title>
-    <message>Auto Dismiss ANPR's until next reboot?</message>
+    <message>Auto Dismiss ANR's until next reboot?</message>
     <sound>false</sound>
     <vibrate>false</vibrate>
     <flashLED>false</flashLED>
@@ -59,7 +68,7 @@
     <largeIcon>app.icon://ch.gridvision.ppam.androidautomagic</largeIcon>
     <group></group>
     <isGroupSummary>false</isGroupSummary>
-    <actionRef text="Yes" icon="THUMB_UP" remove="true">Script: global_dismiss_anr = true</actionRef>
+    <actionRef text="Yes" icon="THUMB_UP" remove="true">Control UI: global_dismiss_anr = true; if (existsElementById("android:id/button1")) { clickById("android:id/button1"); }</actionRef>
     <actionRef text="No, don't ask me again" icon="THUMB_DOWN" remove="true">Set Flow State: Disable Auto Dismiss ANR's</actionRef>
   </action>
   <action type="remove_notification_status_bar">
@@ -76,11 +85,6 @@
     <textMatchType>CONTAINS_TEXT</textMatchType>
     <textFilter></textFilter>
   </action>
-  <action type="script">
-    <useDefaultName>true</useDefaultName>
-    <name>Script: global_dismiss_anr = true</name>
-    <script>global_dismiss_anr = true</script>
-  </action>
   <action type="set_flow_state">
     <useDefaultName>true</useDefaultName>
     <name>Set Flow State: Disable Auto Dismiss ANR's</name>
@@ -96,18 +100,18 @@
     <triggercontainer id="t1" x="70.0" y="52.5">
       <trigger>ANR</trigger>
     </triggercontainer>
-    <actioncontainer id="t2" x="210.0" y="787.5">Control UI: clickById("android:id/button1");</actioncontainer>
-    <conditioncontainer id="t3" x="-210.0" y="367.5">Expression: trigger == "ANR"</conditioncontainer>
-    <conditioncontainer id="t4" x="70.0" y="367.5">Expression: trigger == "ANR"</conditioncontainer>
-    <conditioncontainer id="t5" x="420.0" y="367.5">Expression: trigger == "ANR"</conditioncontainer>
-    <conditioncontainer id="t6" x="70.0" y="577.5">Expression: global_dismiss_anr</conditioncontainer>
-    <actioncontainer id="t7" x="420.0" y="577.5">Remove Notification on Statusbar: 666 (Automagic)</actioncontainer>
+    <conditioncontainer id="t2" x="-210.0" y="367.5">Expression: trigger == "ANR"</conditioncontainer>
+    <conditioncontainer id="t3" x="70.0" y="367.5">Expression: trigger == "ANR"</conditioncontainer>
+    <conditioncontainer id="t4" x="420.0" y="367.5">Expression: trigger == "ANR"</conditioncontainer>
+    <actioncontainer id="t5" x="420.0" y="577.5">Remove Notification on Statusbar: 666 (Automagic)</actioncontainer>
+    <conditioncontainer id="t6" x="70.0" y="577.5">Expression: if (global_dismiss_anr == null) { global_dismiss_anr = false; } global_dismiss_anr</conditioncontainer>
+    <actioncontainer id="t7" x="210.0" y="787.5">Control UI: clickById("android:id/button1");</actioncontainer>
     <actioncontainer id="t8" x="-105.0" y="787.5">Notification on Statusbar: Auto Dismiss? Notification ID 666</actioncontainer>
-    <connection from="t1" to="t4" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
     <connection from="t1" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t1" to="t5" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t4" to="t6" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t6" to="t2" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t1" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t1" to="t4" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t3" to="t6" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t6" to="t7" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
     <connection from="t6" to="t8" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
   </flow>
 </data>

@@ -1,0 +1,268 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<data version="1.34.0">
+  <trigger type="shortcut">
+    <useDefaultName>true</useDefaultName>
+    <name>Shortcut: Debug</name>
+    <enabled>true</enabled>
+    <title>Debug</title>
+  </trigger>
+  <condition type="debug_dialog">
+    <useDefaultName>false</useDefaultName>
+    <name> Debug Dialog</name>
+  </condition>
+  <condition type="confirmation_dialog">
+    <useDefaultName>true</useDefaultName>
+    <name>Confirm Dialog: {_result}</name>
+    <title>Error while evaluating!</title>
+    <question>{_result}</question>
+    <falseLabel>Show Stacktrace</falseLabel>
+    <trueLabel>Continue</trueLabel>
+    <backOperation>IGNORE</backOperation>
+    <timeoutEnabled>false</timeoutEnabled>
+    <timeout>60000</timeout>
+    <defaultValueOnTimeout>true</defaultValueOnTimeout>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>false</useDefaultName>
+    <name>Expression: eval</name>
+    <expression>_result = eval(value);
+if (_result == null ) {
+  return false;
+} else if (isString(_result)) {
+  _result_isEmpty = isEmpty(_result);
+  _result_length = length(_result);
+  if (!_result_isEmpty and _result_length &gt; 0) {
+  _result_trimmed = trim(_result);
+  _result_upper = toUpperCase(_result);
+  _result_lower = toLowerCase(_result);
+  if (callJavaStaticMethod("android.webkit.URLUtil", "isValidUrl(java.lang.String)", _result_trimmed)) {
+    addElement(choices, "Open in Browser");
+    uri = callJavaStaticMethod("java.net.URI", "create(java.lang.String)", _result_trimmed);
+    _result_uri_scheme = callJavaMethod(uri, "java.net.URI", "getScheme()");
+    _result_uri_host = callJavaMethod(uri, "java.net.URI", "getHost()");
+    _result_uri_path = callJavaMethod(uri, "java.net.URI", "getPath()");
+    _result_uri_query = callJavaMethod(uri, "java.net.URI", "getQuery()");
+    _result_uri_port = callJavaMethod(uri, "java.net.URI", "getPort()")
+  } else {
+    _result_encoded = encodeURL(_result_trimmed);
+    _result_encodedForm = encodeURLForm(_result_trimmed);
+    if (contains(_result,"\t")) { _result_list_space = split(_result, "\t"); }
+    if (contains(_result," ")) { _result_list_space = split(_result, " "); }
+    if (contains(_result,"\n")) { _result_list_newline = split(_result, "\n"); }
+    if (contains(_result,",")) { _result_list_comma = split(_result, ","); }
+    if (contains(_result,":")) { _result_list_colon = split(_result, ":"); }
+    if (contains(_result,";")) { _result_list_semicolon = split(_result, ";"); }
+  }
+  }
+  return true;
+} else if (isNumber(_result)) { //and (_result &lt;= -1 or _result &gt;= 2)
+  return true;
+} else if (isList(_result)) {
+  _result_isEmpty = isEmpty(_result);
+  _result_length = length(_result);
+  _result_tab = join(_result, "\t");
+  _result_space = join(_result, " ");
+  _result_newline = join(_result, "\n");
+  _result_comma = join(_result, ",");
+  _result_colon = join(_result, ":");
+  _result_semicolon = join(_result, ";");
+  return true;
+} else if (isMap(_result)) {
+  return true;
+} else {
+  return _result;
+}</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: operation == "ok"</name>
+    <expression>operation == "ok"</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: value == "Copy the input to clipboard"</name>
+    <expression>value == "Copy the input to clipboard"</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: value == "Copy the result to clipboard"</name>
+    <expression>value == "Copy the result to clipboard"</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: value == "Open in Browser"</name>
+    <expression>value == "Open in Browser"</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: value == "Review the result in a Debug window"</name>
+    <expression>value == "Review the result in a Debug window"</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: value == "Show Stacktrace"</name>
+    <expression>value == "Show Stacktrace"</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: value == "Show the result again"</name>
+    <expression>value == "Show the result again"</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: value == "Start over"</name>
+    <expression>value == "Start over"</expression>
+  </condition>
+  <action type="copy_text_to_clipboard">
+    <useDefaultName>true</useDefaultName>
+    <name>Copy Text to Clipboard: {_return}</name>
+    <text>{_return}</text>
+  </action>
+  <action type="copy_text_to_clipboard">
+    <useDefaultName>true</useDefaultName>
+    <name>Copy Text to Clipboard: {value}</name>
+    <text>{value}</text>
+  </action>
+  <action type="input_dialog">
+    <useDefaultName>true</useDefaultName>
+    <name>Input Dialog: Eval Multi-line text Enter AutoMagic code:</name>
+    <title>Eval</title>
+    <inputDialogType>TEXT</inputDialogType>
+    <prompt>Enter AutoMagic code:</prompt>
+    <inputValues></inputValues>
+    <defaultValue>{global_lasteval}</defaultValue>
+    <titleFontSize>DEFAULT</titleFontSize>
+    <promptFontSize>DEFAULT</promptFontSize>
+    <fontSize>DEFAULT</fontSize>
+    <timeoutEnabled>false</timeoutEnabled>
+    <timeout>60000</timeout>
+    <defaultValueOnTimeout></defaultValueOnTimeout>
+    <showWhenLocked>false</showWhenLocked>
+    <turnScreenOn>false</turnScreenOn>
+    <keepScreenOn>false</keepScreenOn>
+    <enlargeDialogWidth>true</enlargeDialogWidth>
+  </action>
+  <action type="input_dialog">
+    <useDefaultName>true</useDefaultName>
+    <name>Input Dialog: What do you want to do now? Single Choice Menu {choices,listformat,comma}</name>
+    <title>What do you want to do now?</title>
+    <inputDialogType>SINGLE_CHOICE_MENU</inputDialogType>
+    <prompt></prompt>
+    <inputValues>{choices,listformat,comma}</inputValues>
+    <defaultValue>Nothing</defaultValue>
+    <titleFontSize>DEFAULT</titleFontSize>
+    <promptFontSize>DEFAULT</promptFontSize>
+    <fontSize>DEFAULT</fontSize>
+    <timeoutEnabled>false</timeoutEnabled>
+    <timeout>60000</timeout>
+    <defaultValueOnTimeout></defaultValueOnTimeout>
+    <showWhenLocked>false</showWhenLocked>
+    <turnScreenOn>false</turnScreenOn>
+    <keepScreenOn>false</keepScreenOn>
+    <enlargeDialogWidth>false</enlargeDialogWidth>
+  </action>
+  <action type="message_dialog">
+    <useDefaultName>true</useDefaultName>
+    <name>Message Dialog: Successfully evaluated! {_result}</name>
+    <title>Successfully evaluated!</title>
+    <message>{_result}</message>
+    <buttonLabel>Continue</buttonLabel>
+    <timeoutEnabled>false</timeoutEnabled>
+    <timeout>60000</timeout>
+  </action>
+  <action type="message_dialog">
+    <useDefaultName>true</useDefaultName>
+    <name>Message Dialog: {exception_message} {exception_stacktrace}</name>
+    <title>{exception_message}</title>
+    <message>{exception_stacktrace}</message>
+    <buttonLabel></buttonLabel>
+    <timeoutEnabled>false</timeoutEnabled>
+    <timeout>60000</timeout>
+  </action>
+  <action type="open_browser_url">
+    <useDefaultName>true</useDefaultName>
+    <name>Open URL in Browser: {_result}</name>
+    <url>{_result}</url>
+    <explicitComponent>false</explicitComponent>
+    <packageName></packageName>
+    <className></className>
+    <appName></appName>
+  </action>
+  <action type="script">
+    <useDefaultName>true</useDefaultName>
+    <name>Script: _input = value; global_lasteval = value; choices = newList( //"Show the result again", "Review the result in a Debug window", "Copy the result to clipboard", "Copy the input to clipboard", "Start over", "Nothing" );</name>
+    <script>_input = value;
+global_lasteval = value;
+choices = newList(
+//"Show the result again",
+"Review the result in a Debug window",
+"Copy the result to clipboard",
+"Copy the input to clipboard",
+"Start over",
+"Nothing"
+);</script>
+  </action>
+  <action type="script">
+    <useDefaultName>true</useDefaultName>
+    <name>Script: addElement(choices, "Show stacktrace");</name>
+    <script>addElement(choices, "Show stacktrace");</script>
+  </action>
+  <flow type="flow">
+    <name>Debugger</name>
+    <enabled>true</enabled>
+    <executionPolicy>PARALLEL</executionPolicy>
+    <emergencyStopCount>65512</emergencyStopCount>
+    <triggercontainer id="t1" x="70.0" y="52.5">
+      <trigger>Shortcut: Debug</trigger>
+    </triggercontainer>
+    <conditioncontainer id="t2" x="70.0" y="612.5">Expression: operation == "ok"</conditioncontainer>
+    <actioncontainer id="t3" x="315.0" y="1837.5">Copy Text to Clipboard: {value}</actioncontainer>
+    <conditioncontainer id="t4" x="140.0" y="1837.5"> Debug Dialog</conditioncontainer>
+    <conditioncontainer id="t5" x="140.0" y="1697.5">Expression: value == "Review the result in a Debug window"</conditioncontainer>
+    <actioncontainer id="t6" x="-140.0" y="1837.5">Copy Text to Clipboard: {_return}</actioncontainer>
+    <conditioncontainer id="t7" x="-420.0" y="1382.5">Expression: value == "Show the result again"</conditioncontainer>
+    <actioncontainer id="t8" x="-70.0" y="1277.5">Message Dialog: Successfully evaluated! {_result}</actioncontainer>
+    <conditioncontainer id="t9" x="315.0" y="1697.5">Expression: value == "Copy the input to clipboard"</conditioncontainer>
+    <conditioncontainer id="t10" x="490.0" y="1592.5">Expression: value == "Show Stacktrace"</conditioncontainer>
+    <actioncontainer id="t11" x="630.0" y="1732.5">Message Dialog: {exception_message} {exception_stacktrace}</actioncontainer>
+    <conditioncontainer id="t12" x="210.0" y="1277.5">Confirm Dialog: {_result}</conditioncontainer>
+    <actioncontainer id="t13" x="70.0" y="472.5">Input Dialog: Eval Multi-line text Enter AutoMagic code:</actioncontainer>
+    <conditioncontainer id="t14" x="665.0" y="1347.5">Expression: value == "Start over"</conditioncontainer>
+    <actioncontainer id="t15" x="210.0" y="1102.5">Script: addElement(choices, "Show stacktrace");</actioncontainer>
+    <conditioncontainer id="t16" x="-140.0" y="1697.5">Expression: value == "Copy the result to clipboard"</conditioncontainer>
+    <actioncontainer id="t17" x="70.0" y="1452.5">Input Dialog: What do you want to do now? Single Choice Menu {choices,listformat,comma}</actioncontainer>
+    <conditioncontainer id="t18" x="-350.0" y="1592.5">Expression: value == "Open in Browser"</conditioncontainer>
+    <actioncontainer id="t19" x="-350.0" y="1732.5">Open URL in Browser: {_result}</actioncontainer>
+    <conditioncontainer id="t20" x="70.0" y="262.5"> Debug Dialog</conditioncontainer>
+    <actioncontainer id="t21" x="70.0" y="752.5">Script: _input = value; global_lasteval = value; choices = newList( //"Show the result again", "Review the result in a Debug window", "Copy the result to clipboard", "Copy the input to clipboard", "Start over", "Nothing" );</actioncontainer>
+    <conditioncontainer id="t22" x="70.0" y="892.5">Expression: eval</conditioncontainer>
+    <connection from="t1" to="t20" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t2" to="t21" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t4" to="t17" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t5" to="t4" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t7" to="t8" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t8" to="t17" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t9" to="t3" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t10" to="t11" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t11" to="t17" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t12" to="t17" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t12" to="t11" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t13" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t14" to="t13" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t15" to="t12" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t16" to="t6" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t17" to="t9" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t17" to="t16" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t17" to="t5" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t17" to="t7" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t17" to="t14" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t17" to="t10" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t17" to="t18" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t18" to="t19" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t20" to="t13" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t21" to="t22" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t22" to="t15" type="EXCEPTION" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t22" to="t8" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t22" to="t8" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
+  </flow>
+</data>

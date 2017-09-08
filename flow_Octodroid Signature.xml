@@ -32,8 +32,8 @@
   </condition>
   <action type="control_user_interface">
     <useDefaultName>true</useDefaultName>
-    <name>Control UI: signature = '\n\n---\nSent from my '+ global_device_model +' running Android '+ global_device_version +' via '+ global_octodroid_name +' v'+ global_octodroid_version; /*if (text == null){ text = getTextById("com.gh4a:id/basic_editor_scroll"); }*/ sendText(signature); //setText2ById("com.gh4a:id/basi</name>
-    <script>signature = '\n\n---\nSent from my '+ global_device_model +' running Android '+ global_device_version +' via '+ global_octodroid_name +' v'+ global_octodroid_version;
+    <name>Control UI: signature = '\n---\nSent from my '+ global_device_model +' running Android '+ global_android_version +' via '+ global_octodroid_name +' v'+ global_octodroid_version; /*if (text == null){ text = getTextById("com.gh4a:id/basic_editor_scroll"); }*/ sendText(signature); //setText2ById("com.gh4a:id/basic</name>
+    <script>signature = '\n---\nSent from my '+ global_device_model +' running Android '+ global_android_version +' via '+ global_octodroid_name +' v'+ global_octodroid_version;
 /*if (text == null){
   text = getTextById("com.gh4a:id/basic_editor_scroll");
 }*/
@@ -89,8 +89,8 @@ global_octodroid_name = package_info["com.gh4a"]["application_info"]["label"];
 global_octodroid_version = package_info["com.gh4a"]["version_name"];</script>
   </action>
   <action type="set_default_input_method">
-    <useDefaultName>true</useDefaultName>
-    <name>Set Default Input Method: Automagic Premium</name>
+    <useDefaultName>false</useDefaultName>
+    <name>Set Default Input Method: Automagic Premium in octo</name>
     <inputMethod>ch.gridvision.ppam.androidautomagic/.keyboard.AutotypeInputMethodService</inputMethod>
   </action>
   <action type="set_default_input_method">
@@ -113,39 +113,48 @@ global_octodroid_version = package_info["com.gh4a"]["version_name"];</script>
     <clickable>true</clickable>
     <stretchToFillArea>false</stretchToFillArea>
   </action>
+  <action type="sleep">
+    <useDefaultName>true</useDefaultName>
+    <name>Sleep: 50ms (keep device awake)</name>
+    <duration>50ms</duration>
+    <keepDeviceAwake>true</keepDeviceAwake>
+    <allowWakeupFromDeviceIdle>false</allowWakeupFromDeviceIdle>
+  </action>
   <flow type="flow">
     <name>Octodroid Signature</name>
     <group>Auto actions</group>
     <enabled>true</enabled>
     <executionPolicy>STOP</executionPolicy>
     <emergencyStopCount>150</emergencyStopCount>
-    <actioncontainer id="t1" x="35.00001" y="262.5">Hide Custom Widget Overlay: Intercept Octodroid message</actioncontainer>
-    <actioncontainer id="t2" x="35.00002" y="437.50012">Set Default Input Method: Automagic Premium</actioncontainer>
-    <actioncontainer id="t3" x="34.99998" y="787.5">Set Default Input Method: Hacker's Keyboard</actioncontainer>
-    <actioncontainer id="t4" x="245.0" y="437.49994">Get Device model</actioncontainer>
-    <actioncontainer id="t5" x="-175.0" y="262.49994">Show Custom Widget Overlay: Intercept Octodroid message, Octodroid send message (60*120) Center Right</actioncontainer>
-    <actioncontainer id="t6" x="245.00008" y="612.5">Get Android version</actioncontainer>
-    <actioncontainer id="t7" x="245.00002" y="262.50006">Init Variable Package Info: com.gh4a into package_info</actioncontainer>
-    <actioncontainer id="t8" x="35.0" y="612.5">Control UI: signature = '\n\n---\nSent from my '+ global_device_model +' running Android '+ global_device_version +' via '+ global_octodroid_name +' v'+ global_octodroid_version; /*if (text == null){ text = getTextById("com.gh4a:id/basic_editor_scroll"); }*/ sendText(signature); //setText2ById("com.gh4a:id/basi</actioncontainer>
-    <triggercontainer id="t9" x="35.0" y="-87.5">
-      <trigger>Octodroid input detected</trigger>
+    <actioncontainer id="t1" x="35.0" y="262.5">Hide Custom Widget Overlay: Intercept Octodroid message</actioncontainer>
+    <actioncontainer id="t2" x="-175.0" y="262.5">Show Custom Widget Overlay: Intercept Octodroid message, Octodroid send message (60*120) Center Right</actioncontainer>
+    <actioncontainer id="t3" x="245.0" y="612.5">Get Android version</actioncontainer>
+    <actioncontainer id="t4" x="245.0" y="262.5">Init Variable Package Info: com.gh4a into package_info</actioncontainer>
+    <conditioncontainer id="t5" x="35.0" y="87.5">Expression: contains(trigger, 'Click') and global_octodroid_version != null</conditioncontainer>
+    <conditioncontainer id="t6" x="-175.0" y="87.5">Expression: trigger == 'Octodroid input detected' and source_class_name == "android.widget.MultiAutoCompleteTextView" and before_text == "" and global_octodroid_version != null</conditioncontainer>
+    <conditioncontainer id="t7" x="245.0" y="87.5">Expression: containsElement(newList('Automagic Startup', 'Manual'), trigger) or global_octodroid_name == null</conditioncontainer>
+    <triggercontainer id="t8" x="35.0" y="-87.5">
       <trigger>Automagic Startup</trigger>
+      <trigger>Octodroid input detected</trigger>
     </triggercontainer>
+    <actioncontainer id="t9" x="245.0" y="437.5">Get Device model</actioncontainer>
     <actioncontainer id="t10" x="245.0" y="787.5">Script: global_device_model = trim(device_model); global_android_version = trim(android_version); global_octodroid_name = package_info["com.gh4a"]["application_info"]["label"]; global_octodroid_version = package_info["com.gh4a"]["version_name"];</actioncontainer>
-    <conditioncontainer id="t11" x="245.00003" y="87.49999">Expression: containsElement(newList('Automagic Startup', 'Manual'), trigger) or global_octodroid_name == null</conditioncontainer>
-    <conditioncontainer id="t12" x="35.0" y="87.5">Expression: contains(trigger, 'Click') and global_octodroid_version != null</conditioncontainer>
-    <conditioncontainer id="t13" x="-175.0" y="87.5">Expression: trigger == 'Octodroid input detected' and source_class_name == "android.widget.MultiAutoCompleteTextView" and before_text == "" and global_octodroid_version != null</conditioncontainer>
-    <connection from="t1" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t2" to="t8" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t4" to="t6" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t6" to="t10" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t7" to="t4" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t8" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t9" to="t13" type="NORMAL" sourcePosition="WEST" targetPosition="NORTH" />
-    <connection from="t9" to="t12" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t9" to="t11" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t11" to="t7" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t12" to="t1" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t13" to="t5" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <actioncontainer id="t11" x="35.0" y="437.5">Set Default Input Method: Automagic Premium in octo</actioncontainer>
+    <actioncontainer id="t12" x="34.99999" y="857.5">Set Default Input Method: Hacker's Keyboard</actioncontainer>
+    <actioncontainer id="t13" x="35.0" y="577.5">Sleep: 50ms (keep device awake)</actioncontainer>
+    <actioncontainer id="t14" x="34.999992" y="717.5">Control UI: signature = '\n---\nSent from my '+ global_device_model +' running Android '+ global_android_version +' via '+ global_octodroid_name +' v'+ global_octodroid_version; /*if (text == null){ text = getTextById("com.gh4a:id/basic_editor_scroll"); }*/ sendText(signature); //setText2ById("com.gh4a:id/basic</actioncontainer>
+    <connection from="t1" to="t11" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t3" to="t10" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t4" to="t9" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t5" to="t1" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t6" to="t2" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t7" to="t4" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t8" to="t6" type="NORMAL" sourcePosition="WEST" targetPosition="NORTH" />
+    <connection from="t8" to="t5" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t8" to="t7" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t9" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t11" to="t13" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t13" to="t14" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t14" to="t12" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
   </flow>
 </data>

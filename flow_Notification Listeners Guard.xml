@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<data version="1.34.0">
+  <trigger type="system_setting_changed">
+    <useDefaultName>true</useDefaultName>
+    <name>System Setting Changed: Secure enabled_notification_listeners</name>
+    <enabled>true</enabled>
+    <settingCategory>SECURE</settingCategory>
+    <settingName>enabled_notification_listeners</settingName>
+    <variable>enabled_notification_listeners</variable>
+  </trigger>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: trigger == "Manual"</name>
+    <expression>trigger == "Manual"</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>false</useDefaultName>
+    <name>Notification Listeners Whitelist</name>
+    <expression>if (!isList(global_notification_whitelist)) {
+  global_notification_whitelist = newList(
+	  "com.sand.airdroid/com.sand.airdroid.services.NotificationService",
+	  "com.fjsoft.myphoneexplorer.client/com.fjsoft.myphoneexplorer.client.NotifyListenerService",
+	  "com.avast.android.mobilesecurity/com.avast.android.sdk.antitheft.internal.notifications.CancelNotificationService"
+  );
+}
+trigger == "System Setting Changed: Secure enabled_accessibility_services" and enabled_accessibility_services != global_accessibility_whitelist</expression>
+  </condition>
+  <action type="execute_flows">
+    <useDefaultName>true</useDefaultName>
+    <name>Execute Flows: Debugger</name>
+    <includeFlowNamePatternList>Debugger</includeFlowNamePatternList>
+    <excludeFlowNamePatternList></excludeFlowNamePatternList>
+    <skipDisabledFlowsWithoutError>false</skipDisabledFlowsWithoutError>
+    <waitForFlowsToFinish>false</waitForFlowsToFinish>
+    <returnLocalVariablesToCallingFlow>true</returnLocalVariablesToCallingFlow>
+  </action>
+  <action type="init_variable_system_setting">
+    <useDefaultName>true</useDefaultName>
+    <name>Init Variable System Setting: Secure enabled_notification_listeners to enabled_notification_listeners</name>
+    <settingCategory>SECURE</settingCategory>
+    <settingName>enabled_notification_listeners</settingName>
+    <variable>enabled_notification_listeners</variable>
+  </action>
+  <action type="notification_status_bar">
+    <useDefaultName>true</useDefaultName>
+    <name>Notification on Statusbar: Attempted Notification Listeners change! Settings</name>
+    <notificationIconType>BUILTIN</notificationIconType>
+    <notificationIcon>SETTINGS</notificationIcon>
+    <customNotificationIcon></customNotificationIcon>
+    <title>Attempted Notification Listeners change!</title>
+    <message></message>
+    <sound>true</sound>
+    <vibrate>true</vibrate>
+    <flashLED>true</flashLED>
+    <flashLEDColor>#ffff6900</flashLEDColor>
+    <flashLEDOn>500</flashLEDOn>
+    <flashLEDOff>500</flashLEDOff>
+    <flagLocalOnly>false</flagLocalOnly>
+    <accentColorEnabled>true</accentColorEnabled>
+    <accentColor>#ffff6900</accentColor>
+    <flagOngoing>false</flagOngoing>
+    <flagNoClear>false</flagNoClear>
+    <notificationIDEnabled>false</notificationIDEnabled>
+    <notificationID>1</notificationID>
+    <category>DEFAULT</category>
+    <priority>MAX</priority>
+    <visibility>PRIVATE</visibility>
+    <messageBigEnabled>true</messageBigEnabled>
+    <messageBig>{enabled_accessibility_services}</messageBig>
+    <showProgressbar>true</showProgressbar>
+    <progressbarIndeterminate>true</progressbarIndeterminate>
+    <progressbarValue>0</progressbarValue>
+    <progressbarMaximum>100</progressbarMaximum>
+    <largeIconEnabled>false</largeIconEnabled>
+    <largeIcon></largeIcon>
+    <group></group>
+    <isGroupSummary>false</isGroupSummary>
+    <actionRef text="Review attempted change" icon="WARN" remove="false">Execute Flows: Debugger</actionRef>
+  </action>
+  <action type="set_system_setting">
+    <useDefaultName>true</useDefaultName>
+    <name>Set System Setting: Secure enabled_notification_listeners to com.sand.airdroid/com.sand.airdroid.services.Notif</name>
+    <settingCategory>SECURE</settingCategory>
+    <settingName>enabled_notification_listeners</settingName>
+    <value>com.sand.airdroid/com.sand.airdroid.services.NotificationService:com.fjsoft.myphoneexplorer.client/com.fjsoft.myphoneexplorer.client.NotifyListenerService:com.avast.android.mobilesecurity/com.avast.android.sdk.antitheft.internal.notifications.CancelNotificationService</value>
+    <verified>true</verified>
+  </action>
+  <flow type="flow">
+    <name>Notification Listeners Guard</name>
+    <group>Protection</group>
+    <enabled>true</enabled>
+    <executionPolicy>PARALLEL</executionPolicy>
+    <conditioncontainer id="t1" x="-105.0" y="227.5">Expression: trigger == "Manual"</conditioncontainer>
+    <actioncontainer id="t2" x="-140.0" y="472.5">Execute Flows: Debugger</actioncontainer>
+    <conditioncontainer id="t3" x="139.99997" y="332.5">Notification Listeners Whitelist</conditioncontainer>
+    <actioncontainer id="t4" x="140.00003" y="822.5">Notification on Statusbar: Attempted Notification Listeners change! Settings</actioncontainer>
+    <actioncontainer id="t5" x="280.00003" y="577.5">Set System Setting: Secure enabled_notification_listeners to com.sand.airdroid/com.sand.airdroid.services.Notif</actioncontainer>
+    <actioncontainer id="t6" x="-140.0" y="367.5">Init Variable System Setting: Secure enabled_notification_listeners to enabled_notification_listeners</actioncontainer>
+    <triggercontainer id="t7" x="70.0" y="52.5">
+      <trigger>System Setting Changed: Secure enabled_notification_listeners</trigger>
+    </triggercontainer>
+    <connection from="t1" to="t6" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t3" to="t4" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t6" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t7" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t7" to="t1" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+  </flow>
+</data>

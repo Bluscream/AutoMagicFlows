@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<data version="1.34.0">
+  <trigger type="system_setting_changed">
+    <useDefaultName>true</useDefaultName>
+    <name>System Setting Changed: System com.baidu.deviceid</name>
+    <enabled>false</enabled>
+    <settingCategory>SYSTEM</settingCategory>
+    <settingName>com.baidu.deviceid</settingName>
+    <variable>com_baidu_deviceid</variable>
+  </trigger>
+  <trigger type="system_setting_changed">
+    <useDefaultName>true</useDefaultName>
+    <name>System Setting Changed: System com.baidu.deviceid.v2</name>
+    <enabled>false</enabled>
+    <settingCategory>SYSTEM</settingCategory>
+    <settingName>com.baidu.deviceid.v2</settingName>
+    <variable>com_baidu_deviceid_v2</variable>
+  </trigger>
+  <trigger type="system_setting_changed">
+    <useDefaultName>true</useDefaultName>
+    <name>System Setting Changed: System com.estrongs.android.popfi</name>
+    <enabled>false</enabled>
+    <settingCategory>SYSTEM</settingCategory>
+    <settingName>com.estrongs.android.popfi</settingName>
+    <variable>setting</variable>
+  </trigger>
+  <trigger type="system_setting_changed">
+    <useDefaultName>true</useDefaultName>
+    <name>System Setting Changed: System com.estrongs.android.poprt</name>
+    <enabled>false</enabled>
+    <settingCategory>SYSTEM</settingCategory>
+    <settingName>com.estrongs.android.poprt</settingName>
+    <variable>setting</variable>
+  </trigger>
+  <trigger type="system_setting_changed">
+    <useDefaultName>true</useDefaultName>
+    <name>System Setting Changed: System com.estrongs.android.popvc</name>
+    <enabled>false</enabled>
+    <settingCategory>SYSTEM</settingCategory>
+    <settingName>com.estrongs.android.popvc</settingName>
+    <variable>setting</variable>
+  </trigger>
+  <trigger type="system_setting_changed">
+    <useDefaultName>true</useDefaultName>
+    <name>System Setting Changed: System gravitybox_unc_trial_countdown</name>
+    <enabled>false</enabled>
+    <settingCategory>SYSTEM</settingCategory>
+    <settingName>gravitybox_unc_trial_countdown</settingName>
+    <variable>setting</variable>
+  </trigger>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: others = newList( "System Setting Changed: Secure enabled_accessibility_services", "System Setting Changed: Secure accessibility_enabled" ); !containsElement(others, trigger)</name>
+    <expression>others = newList(
+  "System Setting Changed: Secure enabled_accessibility_services",
+  "System Setting Changed: Secure accessibility_enabled"
+);
+!containsElement(others, trigger)</expression>
+  </condition>
+  <action type="script">
+    <useDefaultName>true</useDefaultName>
+    <name>Script: if (trigger == "null") { "do something"; } else if (trigger == "null") { "do something"; } else if (trigger == "null") { "do something"; } else if (trigger == "null") { "do something"; } else if (trigger == "null") { "do something"; } else if (trigger == "null") { "do something"; }</name>
+    <script>if (trigger == "null") {
+  "do something";
+} else if (trigger == "null") {
+  "do something";
+} else if (trigger == "null") {
+  "do something";
+} else if (trigger == "null") {
+  "do something";
+} else if (trigger == "null") {
+  "do something";
+} else if (trigger == "null") {
+  "do something";
+}</script>
+  </action>
+  <action type="set_system_setting">
+    <useDefaultName>true</useDefaultName>
+    <name>Set System Setting: Global {name} to {value}</name>
+    <settingCategory>GLOBAL</settingCategory>
+    <settingName>{name}</settingName>
+    <value>{value}</value>
+    <verified>false</verified>
+  </action>
+  <flow type="flow">
+    <name>Settings guard</name>
+    <enabled>false</enabled>
+    <executionPolicy>PARALLEL</executionPolicy>
+    <triggercontainer id="t1" x="70.0" y="52.5">
+      <trigger>System Setting Changed: System com.baidu.deviceid</trigger>
+      <trigger>System Setting Changed: System gravitybox_unc_trial_countdown</trigger>
+      <trigger>System Setting Changed: System com.baidu.deviceid.v2</trigger>
+      <trigger>System Setting Changed: System com.estrongs.android.popvc</trigger>
+      <trigger>System Setting Changed: System com.estrongs.android.popfi</trigger>
+      <trigger>System Setting Changed: System com.estrongs.android.poprt</trigger>
+    </triggercontainer>
+    <conditioncontainer id="t2" x="69.999985" y="332.49997">Expression: others = newList( "System Setting Changed: Secure enabled_accessibility_services", "System Setting Changed: Secure accessibility_enabled" ); !containsElement(others, trigger)</conditioncontainer>
+    <actioncontainer id="t3" x="70.0" y="682.5">Set System Setting: Global {name} to {value}</actioncontainer>
+    <actioncontainer id="t4" x="70.0" y="507.49994">Script: if (trigger == "null") { "do something"; } else if (trigger == "null") { "do something"; } else if (trigger == "null") { "do something"; } else if (trigger == "null") { "do something"; } else if (trigger == "null") { "do something"; } else if (trigger == "null") { "do something"; }</actioncontainer>
+    <connection from="t1" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t2" to="t4" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t4" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+  </flow>
+</data>

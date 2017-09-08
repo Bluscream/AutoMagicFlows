@@ -1,0 +1,249 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<data version="1.34.0">
+  <trigger type="plugin_event">
+    <useDefaultName>true</useDefaultName>
+    <name>Plugin Event: AppContext START 
+
+App(s): WhatsApp. 
+
+The Event will trigger when any of the above items start.</name>
+    <pluginLabel>AppContext</pluginLabel>
+    <pluginBlurb>START 
+
+App(s): WhatsApp. 
+
+The Event will trigger when any of the above items start.</pluginBlurb>
+    <pluginPackage>io.shortway.appcontext</pluginPackage>
+    <pluginClass>io.shortway.appcontext.activities.EditActivity</pluginClass>
+    <pluginBundle>AwAAAJgDAABCTkRMBwAAADIAAABpAG8ALgBzAGgAbwByAHQAdwBhAHkALgBhAHAAcABjAG8AbgB0
+AGUAeAB0AC4AdABhAHMAawBlAHIALgBiAHUAbgBkAGwAZQAuAGUAeAB0AHIAYQAuAFQAUgBJAEcA
+RwBFAFIAAAAAAAAAAAAFAAAAUwBUAEEAUgBUAAAALwAAAGkAbwAuAHMAaABvAHIAdAB3AGEAeQAu
+AGEAcABwAGMAbwBuAHQAZQB4AHQALgB0AGEAcwBrAGUAcgAuAGIAdQBuAGQAbABlAC4AZQB4AHQA
+cgBhAC4ATABJAFMAVAAAAA4AAAABAAAADAAAAGMAbwBtAC4AdwBoAGEAdABzAGEAcABwAAAAAAAv
+AAAAaQBvAC4AcwBoAG8AcgB0AHcAYQB5AC4AYQBwAHAAYwBvAG4AdABlAHgAdAAuAHQAYQBzAGsA
+ZQByAC4AYgB1AG4AZABsAGUALgBlAHgAdAByAGEALgBUAFkAUABFAAAAAQAAAAAAAAA8AAAAaQBv
+AC4AcwBoAG8AcgB0AHcAYQB5AC4AYQBwAHAAYwBvAG4AdABlAHgAdAAuAHQAYQBzAGsAZQByAC4A
+YgB1AG4AZABsAGUALgBlAHgAdAByAGEALgBQAEsARwBfAE4AQQBNAEUAUwBfAEYATwBSAF8AQQBO
+AFkAAAAAAA4AAAAAAAAAOQAAAGkAbwAuAHMAaABvAHIAdAB3AGEAeQAuAGEAcABwAGMAbwBuAHQA
+ZQB4AHQALgB0AGEAcwBrAGUAcgAuAGIAdQBuAGQAbABlAC4AZQB4AHQAcgBhAC4ASQBHAE4ATwBS
+AEUAXwBSAEUAQwBFAE4AVABTAAAACQAAAAAAAABBAAAAaQBvAC4AcwBoAG8AcgB0AHcAYQB5AC4A
+YQBwAHAAYwBvAG4AdABlAHgAdAAuAHQAYQBzAGsAZQByAC4AYgB1AG4AZABsAGUALgBlAHgAdABy
+AGEALgBQAEsARwBfAE4AQQBNAEUAUwBfAEYATwBSAF8AUwBFAFIAVgBJAEMARQBTAAAADgAAAAAA
+AAA7AAAAaQBvAC4AcwBoAG8AcgB0AHcAYQB5AC4AYQBwAHAAYwBvAG4AdABlAHgAdAAuAHQAYQBz
+AGsAZQByAC4AYgB1AG4AZABsAGUALgBlAHgAdAByAGEALgBJAE4AVABfAFYARQBSAFMASQBPAE4A
+XwBDAE8ARABFAAAAAQAAAAoAAAA=
+</pluginBundle>
+    <pluginBundleData>rO0ABXNyABFqYXZhLnV0aWwuSGFzaE1hcAUH2sHDFmDRAwABRgAKbG9hZEZhY3RvcnhwP0AAAHcI
+AAAACAAAAAd0AEFpby5zaG9ydHdheS5hcHBjb250ZXh0LnRhc2tlci5idW5kbGUuZXh0cmEuUEtH
+X05BTUVTX0ZPUl9TRVJWSUNFU3VyABNbTGphdmEubGFuZy5TdHJpbmc7rdJW5+kde0cCAAB4cAAA
+AAB0AC9pby5zaG9ydHdheS5hcHBjb250ZXh0LnRhc2tlci5idW5kbGUuZXh0cmEuVFlQRXNyABFq
+YXZhLmxhbmcuSW50ZWdlchLioKT3gYc4AgABSQAFdmFsdWV4cgAQamF2YS5sYW5nLk51bWJlcoas
+lR0LlOCLAgAAeHAAAAAAdAAyaW8uc2hvcnR3YXkuYXBwY29udGV4dC50YXNrZXIuYnVuZGxlLmV4
+dHJhLlRSSUdHRVJ0AAVTVEFSVHQAOWlvLnNob3J0d2F5LmFwcGNvbnRleHQudGFza2VyLmJ1bmRs
+ZS5leHRyYS5JR05PUkVfUkVDRU5UU3NyABFqYXZhLmxhbmcuQm9vbGVhbs0gcoDVnPruAgABWgAF
+dmFsdWV4cAB0ADtpby5zaG9ydHdheS5hcHBjb250ZXh0LnRhc2tlci5idW5kbGUuZXh0cmEuSU5U
+X1ZFUlNJT05fQ09ERXNxAH4ABgAAAAp0ADxpby5zaG9ydHdheS5hcHBjb250ZXh0LnRhc2tlci5i
+dW5kbGUuZXh0cmEuUEtHX05BTUVTX0ZPUl9BTll1cQB+AAMAAAAAdAAvaW8uc2hvcnR3YXkuYXBw
+Y29udGV4dC50YXNrZXIuYnVuZGxlLmV4dHJhLkxJU1R1cQB+AAMAAAABdAAMY29tLndoYXRzYXBw
+eA==
+</pluginBundleData>
+    <configured>true</configured>
+    <relevantVariables>"%acapp
+Application Name
+The name of the started app.","%acpackage
+Package Name
+The package name of the started app."</relevantVariables>
+  </trigger>
+  <trigger type="plugin_event">
+    <useDefaultName>true</useDefaultName>
+    <name>Plugin Event: AppContext STOP 
+
+App(s): WhatsApp. 
+
+The Event will trigger when any of the above items stop.</name>
+    <pluginLabel>AppContext</pluginLabel>
+    <pluginBlurb>STOP 
+
+App(s): WhatsApp. 
+
+The Event will trigger when any of the above items stop.</pluginBlurb>
+    <pluginPackage>io.shortway.appcontext</pluginPackage>
+    <pluginClass>io.shortway.appcontext.activities.EditActivity</pluginClass>
+    <pluginBundle>AwAAAJgDAABCTkRMBwAAADIAAABpAG8ALgBzAGgAbwByAHQAdwBhAHkALgBhAHAAcABjAG8AbgB0
+AGUAeAB0AC4AdABhAHMAawBlAHIALgBiAHUAbgBkAGwAZQAuAGUAeAB0AHIAYQAuAFQAUgBJAEcA
+RwBFAFIAAAAAAAAAAAAEAAAAUwBUAE8AUAAAAAAALwAAAGkAbwAuAHMAaABvAHIAdAB3AGEAeQAu
+AGEAcABwAGMAbwBuAHQAZQB4AHQALgB0AGEAcwBrAGUAcgAuAGIAdQBuAGQAbABlAC4AZQB4AHQA
+cgBhAC4ATABJAFMAVAAAAA4AAAABAAAADAAAAGMAbwBtAC4AdwBoAGEAdABzAGEAcABwAAAAAAAv
+AAAAaQBvAC4AcwBoAG8AcgB0AHcAYQB5AC4AYQBwAHAAYwBvAG4AdABlAHgAdAAuAHQAYQBzAGsA
+ZQByAC4AYgB1AG4AZABsAGUALgBlAHgAdAByAGEALgBUAFkAUABFAAAAAQAAAAAAAAA8AAAAaQBv
+AC4AcwBoAG8AcgB0AHcAYQB5AC4AYQBwAHAAYwBvAG4AdABlAHgAdAAuAHQAYQBzAGsAZQByAC4A
+YgB1AG4AZABsAGUALgBlAHgAdAByAGEALgBQAEsARwBfAE4AQQBNAEUAUwBfAEYATwBSAF8AQQBO
+AFkAAAAAAA4AAAAAAAAAOQAAAGkAbwAuAHMAaABvAHIAdAB3AGEAeQAuAGEAcABwAGMAbwBuAHQA
+ZQB4AHQALgB0AGEAcwBrAGUAcgAuAGIAdQBuAGQAbABlAC4AZQB4AHQAcgBhAC4ASQBHAE4ATwBS
+AEUAXwBSAEUAQwBFAE4AVABTAAAACQAAAAAAAABBAAAAaQBvAC4AcwBoAG8AcgB0AHcAYQB5AC4A
+YQBwAHAAYwBvAG4AdABlAHgAdAAuAHQAYQBzAGsAZQByAC4AYgB1AG4AZABsAGUALgBlAHgAdABy
+AGEALgBQAEsARwBfAE4AQQBNAEUAUwBfAEYATwBSAF8AUwBFAFIAVgBJAEMARQBTAAAADgAAAAAA
+AAA7AAAAaQBvAC4AcwBoAG8AcgB0AHcAYQB5AC4AYQBwAHAAYwBvAG4AdABlAHgAdAAuAHQAYQBz
+AGsAZQByAC4AYgB1AG4AZABsAGUALgBlAHgAdAByAGEALgBJAE4AVABfAFYARQBSAFMASQBPAE4A
+XwBDAE8ARABFAAAAAQAAAAoAAAA=
+</pluginBundle>
+    <pluginBundleData>rO0ABXNyABFqYXZhLnV0aWwuSGFzaE1hcAUH2sHDFmDRAwABRgAKbG9hZEZhY3RvcnhwP0AAAHcI
+AAAACAAAAAd0AEFpby5zaG9ydHdheS5hcHBjb250ZXh0LnRhc2tlci5idW5kbGUuZXh0cmEuUEtH
+X05BTUVTX0ZPUl9TRVJWSUNFU3VyABNbTGphdmEubGFuZy5TdHJpbmc7rdJW5+kde0cCAAB4cAAA
+AAB0AC9pby5zaG9ydHdheS5hcHBjb250ZXh0LnRhc2tlci5idW5kbGUuZXh0cmEuVFlQRXNyABFq
+YXZhLmxhbmcuSW50ZWdlchLioKT3gYc4AgABSQAFdmFsdWV4cgAQamF2YS5sYW5nLk51bWJlcoas
+lR0LlOCLAgAAeHAAAAAAdAAyaW8uc2hvcnR3YXkuYXBwY29udGV4dC50YXNrZXIuYnVuZGxlLmV4
+dHJhLlRSSUdHRVJ0AARTVE9QdAA5aW8uc2hvcnR3YXkuYXBwY29udGV4dC50YXNrZXIuYnVuZGxl
+LmV4dHJhLklHTk9SRV9SRUNFTlRTc3IAEWphdmEubGFuZy5Cb29sZWFuzSBygNWc+u4CAAFaAAV2
+YWx1ZXhwAHQAO2lvLnNob3J0d2F5LmFwcGNvbnRleHQudGFza2VyLmJ1bmRsZS5leHRyYS5JTlRf
+VkVSU0lPTl9DT0RFc3EAfgAGAAAACnQAPGlvLnNob3J0d2F5LmFwcGNvbnRleHQudGFza2VyLmJ1
+bmRsZS5leHRyYS5QS0dfTkFNRVNfRk9SX0FOWXVxAH4AAwAAAAB0AC9pby5zaG9ydHdheS5hcHBj
+b250ZXh0LnRhc2tlci5idW5kbGUuZXh0cmEuTElTVHVxAH4AAwAAAAF0AAxjb20ud2hhdHNhcHB4
+</pluginBundleData>
+    <configured>true</configured>
+    <relevantVariables>"%acapp
+Application Name
+The name of the stopped app.","%acpackage
+Package Name
+The package name of the stopped app."</relevantVariables>
+  </trigger>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: index == 0</name>
+    <expression>index == 0</expression>
+  </condition>
+  <condition type="plugin">
+    <useDefaultName>true</useDefaultName>
+    <name>Plugin: AppContext RUNNING 
+
+App(s): WhatsApp. 
+
+The State will be satisfied when any of the above items is running.</name>
+    <pluginLabel>AppContext</pluginLabel>
+    <pluginBlurb>RUNNING 
+
+App(s): WhatsApp. 
+
+The State will be satisfied when any of the above items is running.</pluginBlurb>
+    <pluginPackage>io.shortway.appcontext</pluginPackage>
+    <pluginClass>io.shortway.appcontext.activities.EditActivityCondition</pluginClass>
+    <pluginBundle>AwAAAJgDAABCTkRMBwAAADIAAABpAG8ALgBzAGgAbwByAHQAdwBhAHkALgBhAHAAcABjAG8AbgB0
+AGUAeAB0AC4AdABhAHMAawBlAHIALgBiAHUAbgBkAGwAZQAuAGUAeAB0AHIAYQAuAFQAUgBJAEcA
+RwBFAFIAAAAAAAAAAAAFAAAAUwBUAEEAUgBUAAAALwAAAGkAbwAuAHMAaABvAHIAdAB3AGEAeQAu
+AGEAcABwAGMAbwBuAHQAZQB4AHQALgB0AGEAcwBrAGUAcgAuAGIAdQBuAGQAbABlAC4AZQB4AHQA
+cgBhAC4ATABJAFMAVAAAAA4AAAABAAAADAAAAGMAbwBtAC4AdwBoAGEAdABzAGEAcABwAAAAAAAv
+AAAAaQBvAC4AcwBoAG8AcgB0AHcAYQB5AC4AYQBwAHAAYwBvAG4AdABlAHgAdAAuAHQAYQBzAGsA
+ZQByAC4AYgB1AG4AZABsAGUALgBlAHgAdAByAGEALgBUAFkAUABFAAAAAQAAAAEAAAA8AAAAaQBv
+AC4AcwBoAG8AcgB0AHcAYQB5AC4AYQBwAHAAYwBvAG4AdABlAHgAdAAuAHQAYQBzAGsAZQByAC4A
+YgB1AG4AZABsAGUALgBlAHgAdAByAGEALgBQAEsARwBfAE4AQQBNAEUAUwBfAEYATwBSAF8AQQBO
+AFkAAAAAAA4AAAAAAAAAOQAAAGkAbwAuAHMAaABvAHIAdAB3AGEAeQAuAGEAcABwAGMAbwBuAHQA
+ZQB4AHQALgB0AGEAcwBrAGUAcgAuAGIAdQBuAGQAbABlAC4AZQB4AHQAcgBhAC4ASQBHAE4ATwBS
+AEUAXwBSAEUAQwBFAE4AVABTAAAACQAAAAAAAABBAAAAaQBvAC4AcwBoAG8AcgB0AHcAYQB5AC4A
+YQBwAHAAYwBvAG4AdABlAHgAdAAuAHQAYQBzAGsAZQByAC4AYgB1AG4AZABsAGUALgBlAHgAdABy
+AGEALgBQAEsARwBfAE4AQQBNAEUAUwBfAEYATwBSAF8AUwBFAFIAVgBJAEMARQBTAAAADgAAAAAA
+AAA7AAAAaQBvAC4AcwBoAG8AcgB0AHcAYQB5AC4AYQBwAHAAYwBvAG4AdABlAHgAdAAuAHQAYQBz
+AGsAZQByAC4AYgB1AG4AZABsAGUALgBlAHgAdAByAGEALgBJAE4AVABfAFYARQBSAFMASQBPAE4A
+XwBDAE8ARABFAAAAAQAAAAoAAAA=
+</pluginBundle>
+    <pluginBundleData>rO0ABXNyABFqYXZhLnV0aWwuSGFzaE1hcAUH2sHDFmDRAwABRgAKbG9hZEZhY3RvcnhwP0AAAHcI
+AAAACAAAAAd0AEFpby5zaG9ydHdheS5hcHBjb250ZXh0LnRhc2tlci5idW5kbGUuZXh0cmEuUEtH
+X05BTUVTX0ZPUl9TRVJWSUNFU3VyABNbTGphdmEubGFuZy5TdHJpbmc7rdJW5+kde0cCAAB4cAAA
+AAB0AC9pby5zaG9ydHdheS5hcHBjb250ZXh0LnRhc2tlci5idW5kbGUuZXh0cmEuVFlQRXNyABFq
+YXZhLmxhbmcuSW50ZWdlchLioKT3gYc4AgABSQAFdmFsdWV4cgAQamF2YS5sYW5nLk51bWJlcoas
+lR0LlOCLAgAAeHAAAAABdAAyaW8uc2hvcnR3YXkuYXBwY29udGV4dC50YXNrZXIuYnVuZGxlLmV4
+dHJhLlRSSUdHRVJ0AAVTVEFSVHQAOWlvLnNob3J0d2F5LmFwcGNvbnRleHQudGFza2VyLmJ1bmRs
+ZS5leHRyYS5JR05PUkVfUkVDRU5UU3NyABFqYXZhLmxhbmcuQm9vbGVhbs0gcoDVnPruAgABWgAF
+dmFsdWV4cAB0ADtpby5zaG9ydHdheS5hcHBjb250ZXh0LnRhc2tlci5idW5kbGUuZXh0cmEuSU5U
+X1ZFUlNJT05fQ09ERXNxAH4ABgAAAAp0ADxpby5zaG9ydHdheS5hcHBjb250ZXh0LnRhc2tlci5i
+dW5kbGUuZXh0cmEuUEtHX05BTUVTX0ZPUl9BTll1cQB+AAMAAAAAdAAvaW8uc2hvcnR3YXkuYXBw
+Y29udGV4dC50YXNrZXIuYnVuZGxlLmV4dHJhLkxJU1R1cQB+AAMAAAABdAAMY29tLndoYXRzYXBw
+eA==
+</pluginBundleData>
+    <configured>true</configured>
+    <passExtras>false</passExtras>
+    <extras></extras>
+    <relevantVariables>"%acapp
+Application Name
+The name of the app that triggered the state.","%acpackage
+Package Name
+The package name of the app that triggered the state."</relevantVariables>
+  </condition>
+  <action type="notification_screen">
+    <useDefaultName>true</useDefaultName>
+    <name>Benachrichtigung auf Bildschirm: WhatsApp Aktivität sichtbar. (lange)</name>
+    <showText>true</showText>
+    <text>WhatsApp Aktivität sichtbar.</text>
+    <widgetName></widgetName>
+    <width>200</width>
+    <height>250</height>
+    <stretchToFillArea>false</stretchToFillArea>
+    <opacity>1</opacity>
+    <durationLong>true</durationLong>
+    <customPosition>false</customPosition>
+    <gravityType>TOP_LEFT</gravityType>
+    <xOffset>0</xOffset>
+    <yOffset>0</yOffset>
+  </action>
+  <action type="notification_screen">
+    <useDefaultName>true</useDefaultName>
+    <name>Benachrichtigung auf Bildschirm: WhatsApp Aktivität verborgen. (lange)</name>
+    <showText>true</showText>
+    <text>WhatsApp Aktivität verborgen.</text>
+    <widgetName></widgetName>
+    <width>200</width>
+    <height>250</height>
+    <stretchToFillArea>false</stretchToFillArea>
+    <opacity>1</opacity>
+    <durationLong>true</durationLong>
+    <customPosition>false</customPosition>
+    <gravityType>TOP_LEFT</gravityType>
+    <xOffset>0</xOffset>
+    <yOffset>0</yOffset>
+  </action>
+  <action type="set_airplane_mode">
+    <useDefaultName>true</useDefaultName>
+    <name>Flugmodus ein-/ausschalten: Aus</name>
+    <method>SYSTEM_SETTING</method>
+    <enable>false</enable>
+  </action>
+  <action type="set_airplane_mode">
+    <useDefaultName>true</useDefaultName>
+    <name>Flugmodus ein-/ausschalten: Ein</name>
+    <method>SYSTEM_SETTING</method>
+    <enable>true</enable>
+  </action>
+  <flow type="flow">
+    <name>HideWhatsApp</name>
+    <enabled>false</enabled>
+    <executionPolicy>PARALLEL</executionPolicy>
+    <triggercontainer id="t1" x="0.0" y="-17.5">
+      <trigger>Plugin Event: AppContext START 
+
+App(s): WhatsApp. 
+
+The Event will trigger when any of the above items start.</trigger>
+      <trigger>Plugin Event: AppContext STOP 
+
+App(s): WhatsApp. 
+
+The Event will trigger when any of the above items stop.</trigger>
+    </triggercontainer>
+    <actioncontainer id="t2" x="210.0" y="507.5">Benachrichtigung auf Bildschirm: WhatsApp Aktivität verborgen. (lange)</actioncontainer>
+    <conditioncontainer id="t3" x="-210.0" y="157.5">Plugin: AppContext RUNNING 
+
+App(s): WhatsApp. 
+
+The State will be satisfied when any of the above items is running.</conditioncontainer>
+    <conditioncontainer id="t4" x="210.0" y="157.5">Expression: index == 0</conditioncontainer>
+    <actioncontainer id="t5" x="-210.0" y="367.5">Flugmodus ein-/ausschalten: Aus</actioncontainer>
+    <actioncontainer id="t6" x="-210.0" y="507.5">Benachrichtigung auf Bildschirm: WhatsApp Aktivität sichtbar. (lange)</actioncontainer>
+    <actioncontainer id="t7" x="210.0" y="367.5">Flugmodus ein-/ausschalten: Ein</actioncontainer>
+    <connection from="t1" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t3" to="t4" type="TRUE" sourcePosition="EAST" targetPosition="WEST" />
+    <connection from="t3" to="t5" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t4" to="t7" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t4" to="t5" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t5" to="t6" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t7" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+  </flow>
+</data>
