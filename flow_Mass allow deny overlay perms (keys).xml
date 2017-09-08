@@ -1,5 +1,13 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
 <data version="1.34.0">
+  <trigger type="activity_ended">
+    <useDefaultName>true</useDefaultName>
+    <name>Activity Ended: com.android.settings/.SubSettings</name>
+    <enabled>true</enabled>
+    <method>CLASSIC</method>
+    <packageNameFilter>com.android.settings</packageNameFilter>
+    <classNameFilter>com.android.settings.SubSettings</classNameFilter>
+  </trigger>
   <trigger type="user_interface_event">
     <useDefaultName>false</useDefaultName>
     <name>App overlay permissions opened</name>
@@ -10,15 +18,12 @@
     <textFilter>Draw over other apps</textFilter>
     <removeNonPrintableCharacters>false</removeNonPrintableCharacters>
   </trigger>
-  <condition type="debug_dialog">
+  <trigger type="global_variable">
     <useDefaultName>false</useDefaultName>
-    <name> Debug Dialog</name>
-  </condition>
-  <condition type="expression">
-    <useDefaultName>true</useDefaultName>
-    <name>Expression: trigger != "App overlay permissions opened"</name>
-    <expression>trigger != "App overlay permissions opened"</expression>
-  </condition>
+    <name>Global Variable</name>
+    <enabled>true</enabled>
+    <variable>global_3</variable>
+  </trigger>
   <condition type="expression">
     <useDefaultName>true</useDefaultName>
     <name>Expression: trigger == "Global Variable"</name>
@@ -30,32 +35,77 @@
     <expression>if (global_permission_whitelist == null) { global_permission_whitelist = newList("Automagic Premium"); }
 trigger == "App overlay permissions opened"</expression>
   </condition>
-  <action type="execute_flows">
+  <action type="control_user_interface">
     <useDefaultName>false</useDefaultName>
     <name>Allow all apps to overlay (keys)</name>
-    <includeFlowNamePatternList>Mass allow/deny overlay perms (keys)</includeFlowNamePatternList>
-    <excludeFlowNamePatternList></excludeFlowNamePatternList>
-    <skipDisabledFlowsWithoutError>false</skipDisabledFlowsWithoutError>
-    <waitForFlowsToFinish>false</waitForFlowsToFinish>
-    <returnLocalVariablesToCallingFlow>false</returnLocalVariablesToCallingFlow>
+    <script>if (getTextById("android:id/text1") != "Apps with permission") {
+  clickById("android:id/text1");
+  sleep(50);
+  click("Apps with permission");
+  sleep(50);
+}
+click("More options");
+sleep(150);
+if (split(getTextInActiveWindow(), "\n")[0] == "Hide system") {
+  back();
+  sleep(100);
+} else {
+  click("Show system");
+  sleep(100);
+}
+c = 60;
+inst = callJavaConstructor("android.app.Instrumentation", "Instrumentation()");
+for (i in [1 to c])
+{
+  global_3 = "i: " + i + "/"+ c;
+  callJavaMethod(inst, "android.app.Instrumentation", "sendKeyDownUpSync(int)", 20);
+  sleep(50);
+  callJavaMethod(inst, "android.app.Instrumentation", "sendKeyDownUpSync(int)", 66);
+  sleep(750);
+  if (!containsElement(global_permission_whitelist, getTextById("com.android.settings:id/app_name"))){
+    checkById("android:id/switchWidget");
+  }
+  back();
+  sleep(750);
+}
+removeVariable(inst);
+removeVariable(global_3);</script>
   </action>
-  <action type="execute_flows">
+  <action type="control_user_interface">
     <useDefaultName>false</useDefaultName>
     <name>Deny all apps to overlay (keys)</name>
-    <includeFlowNamePatternList>Mass allow/deny overlay perms (keys)</includeFlowNamePatternList>
-    <excludeFlowNamePatternList></excludeFlowNamePatternList>
-    <skipDisabledFlowsWithoutError>false</skipDisabledFlowsWithoutError>
-    <waitForFlowsToFinish>false</waitForFlowsToFinish>
-    <returnLocalVariablesToCallingFlow>false</returnLocalVariablesToCallingFlow>
-  </action>
-  <action type="execute_flows">
-    <useDefaultName>true</useDefaultName>
-    <name>Execute Flows: Mass allow/deny overlay perms (keys)</name>
-    <includeFlowNamePatternList>Mass allow/deny overlay perms (keys)</includeFlowNamePatternList>
-    <excludeFlowNamePatternList></excludeFlowNamePatternList>
-    <skipDisabledFlowsWithoutError>false</skipDisabledFlowsWithoutError>
-    <waitForFlowsToFinish>true</waitForFlowsToFinish>
-    <returnLocalVariablesToCallingFlow>false</returnLocalVariablesToCallingFlow>
+    <script>if (getTextById("android:id/text1") != "Apps with permission") {
+  clickById("android:id/text1");
+  sleep(50);
+  click("Apps with permission");
+  sleep(50);
+}
+click("More options");
+sleep(150);
+if (split(getTextInActiveWindow(), "\n")[0] == "Hide system") {
+  back();
+  sleep(100);
+} else {
+  click("Show system");
+  sleep(100);
+}
+c = 60;
+inst = callJavaConstructor("android.app.Instrumentation", "Instrumentation()");
+for (i in [1 to c])
+{
+  global_3 = "i: " + i + "/"+ c;
+  callJavaMethod(inst, "android.app.Instrumentation", "sendKeyDownUpSync(int)", 20);
+  sleep(50);
+  callJavaMethod(inst, "android.app.Instrumentation", "sendKeyDownUpSync(int)", 66);
+  sleep(750);
+  if (!containsElement(global_permission_whitelist, getTextById("com.android.settings:id/app_name"))){
+    uncheckById("android:id/switchWidget");
+  }
+  back();
+  sleep(750);
+}
+removeVariable(inst);
+removeVariable(global_3);</script>
   </action>
   <action type="notification_screen">
     <useDefaultName>true</useDefaultName>
@@ -75,7 +125,7 @@ trigger == "App overlay permissions opened"</expression>
   </action>
   <action type="notification_status_bar">
     <useDefaultName>true</useDefaultName>
-    <name>Notification on Statusbar: Mass allow/deny Notification ID 422</name>
+    <name>Notification on Statusbar: Mass allow/deny Notification ID 421</name>
     <notificationIconType>CUSTOM</notificationIconType>
     <notificationIcon>NOTIFICATION</notificationIcon>
     <customNotificationIcon>app.icon://com.android.settings</customNotificationIcon>
@@ -93,7 +143,7 @@ trigger == "App overlay permissions opened"</expression>
     <flagOngoing>false</flagOngoing>
     <flagNoClear>false</flagNoClear>
     <notificationIDEnabled>true</notificationIDEnabled>
-    <notificationID>422</notificationID>
+    <notificationID>421</notificationID>
     <category>DEFAULT</category>
     <priority>DEFAULT</priority>
     <visibility>PRIVATE</visibility>
@@ -107,15 +157,15 @@ trigger == "App overlay permissions opened"</expression>
     <largeIcon>app.icon://ch.gridvision.ppam.androidautomagic</largeIcon>
     <group></group>
     <isGroupSummary>false</isGroupSummary>
-    <actionRef text="Allow all" icon="THUMB_UP" remove="true">Execute Flows: Mass allow/deny overlay perms (keys)</actionRef>
-    <actionRef text="Deny all" icon="THUMB_DOWN" remove="true">Execute Flows: Mass allow/deny overlay perms (keys)</actionRef>
+    <actionRef text="Allow all" icon="THUMB_UP" remove="true">Allow all apps to overlay (keys)</actionRef>
+    <actionRef text="Deny all" icon="THUMB_DOWN" remove="true">Deny all apps to overlay (keys)</actionRef>
   </action>
   <action type="remove_notification_status_bar">
     <useDefaultName>true</useDefaultName>
-    <name>Remove Notification on Statusbar: 422 (Automagic)</name>
+    <name>Remove Notification on Statusbar: 421 (Automagic)</name>
     <automagicNotifications>true</automagicNotifications>
     <all>false</all>
-    <notificationID>422</notificationID>
+    <notificationID>421</notificationID>
     <overall>true</overall>
     <packageName></packageName>
     <allOfApp>true</allOfApp>
@@ -130,24 +180,22 @@ trigger == "App overlay permissions opened"</expression>
     <enabled>true</enabled>
     <executionPolicy>SKIP</executionPolicy>
     <emergencyStopCount>250</emergencyStopCount>
-    <conditioncontainer id="t1" x="-420.0" y="192.5">Expression: trigger == "Global Variable"</conditioncontainer>
-    <actioncontainer id="t2" x="-490.0" y="402.5">Notification on Screen: {global_3}</actioncontainer>
-    <actioncontainer id="t3" x="105.0" y="787.5">Remove Notification on Statusbar: 422 (Automagic)</actioncontainer>
-    <conditioncontainer id="t4" x="-35.0" y="472.5">trigger == "App overlay permissions opened"</conditioncontainer>
-    <actioncontainer id="t5" x="-840.0" y="682.5">Allow all apps to overlay (keys)</actioncontainer>
-    <actioncontainer id="t6" x="-595.0001" y="682.5">Deny all apps to overlay (keys)</actioncontainer>
-    <triggercontainer id="t7" x="70.0" y="157.5">
+    <triggercontainer id="t1" x="70.0" y="157.5">
+      <trigger>Activity Ended: com.android.settings/.SubSettings</trigger>
+      <trigger>Global Variable</trigger>
       <trigger>App overlay permissions opened</trigger>
     </triggercontainer>
-    <conditioncontainer id="t8" x="280.0" y="787.5"> Debug Dialog</conditioncontainer>
-    <conditioncontainer id="t9" x="280.0" y="402.5">Expression: trigger != "App overlay permissions opened"</conditioncontainer>
-    <actioncontainer id="t10" x="-175.0" y="787.5">Notification on Statusbar: Mass allow/deny Notification ID 422</actioncontainer>
-    <connection from="t1" to="t2" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t4" to="t10" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t4" to="t3" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t4" to="t8" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t7" to="t4" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t7" to="t9" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t9" to="t8" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <actioncontainer id="t2" x="105.0" y="787.5">Remove Notification on Statusbar: 421 (Automagic)</actioncontainer>
+    <conditioncontainer id="t3" x="-35.0" y="472.5">trigger == "App overlay permissions opened"</conditioncontainer>
+    <conditioncontainer id="t4" x="-175.00002" y="157.49997">Expression: trigger == "Global Variable"</conditioncontainer>
+    <actioncontainer id="t5" x="-420.00006" y="157.49997">Notification on Screen: {global_3}</actioncontainer>
+    <actioncontainer id="t6" x="-175.0" y="787.5">Notification on Statusbar: Mass allow/deny Notification ID 421</actioncontainer>
+    <actioncontainer id="t7" x="-840.0" y="682.5">Allow all apps to overlay (keys)</actioncontainer>
+    <actioncontainer id="t8" x="-595.0" y="682.5">Deny all apps to overlay (keys)</actioncontainer>
+    <connection from="t1" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t1" to="t4" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t3" to="t6" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t3" to="t2" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t4" to="t5" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
   </flow>
 </data>
