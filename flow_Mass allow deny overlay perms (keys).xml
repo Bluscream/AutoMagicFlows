@@ -1,0 +1,153 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<data version="1.34.0">
+  <trigger type="user_interface_event">
+    <useDefaultName>false</useDefaultName>
+    <name>App overlay permissions opened</name>
+    <enabled>true</enabled>
+    <accessibilityEventType>TYPE_WINDOW_STATE_CHANGED</accessibilityEventType>
+    <packageNameFilter>com.android.settings</packageNameFilter>
+    <textMatchType>GLOB</textMatchType>
+    <textFilter>Draw over other apps</textFilter>
+    <removeNonPrintableCharacters>false</removeNonPrintableCharacters>
+  </trigger>
+  <condition type="debug_dialog">
+    <useDefaultName>false</useDefaultName>
+    <name> Debug Dialog</name>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: trigger != "App overlay permissions opened"</name>
+    <expression>trigger != "App overlay permissions opened"</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: trigger == "Global Variable"</name>
+    <expression>trigger == "Global Variable"</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>false</useDefaultName>
+    <name>trigger == "App overlay permissions opened"</name>
+    <expression>if (global_permission_whitelist == null) { global_permission_whitelist = newList("Automagic Premium"); }
+trigger == "App overlay permissions opened"</expression>
+  </condition>
+  <action type="execute_flows">
+    <useDefaultName>false</useDefaultName>
+    <name>Allow all apps to overlay (keys)</name>
+    <includeFlowNamePatternList>Mass allow/deny overlay perms (keys)</includeFlowNamePatternList>
+    <excludeFlowNamePatternList></excludeFlowNamePatternList>
+    <skipDisabledFlowsWithoutError>false</skipDisabledFlowsWithoutError>
+    <waitForFlowsToFinish>false</waitForFlowsToFinish>
+    <returnLocalVariablesToCallingFlow>false</returnLocalVariablesToCallingFlow>
+  </action>
+  <action type="execute_flows">
+    <useDefaultName>false</useDefaultName>
+    <name>Deny all apps to overlay (keys)</name>
+    <includeFlowNamePatternList>Mass allow/deny overlay perms (keys)</includeFlowNamePatternList>
+    <excludeFlowNamePatternList></excludeFlowNamePatternList>
+    <skipDisabledFlowsWithoutError>false</skipDisabledFlowsWithoutError>
+    <waitForFlowsToFinish>false</waitForFlowsToFinish>
+    <returnLocalVariablesToCallingFlow>false</returnLocalVariablesToCallingFlow>
+  </action>
+  <action type="execute_flows">
+    <useDefaultName>true</useDefaultName>
+    <name>Execute Flows: Mass allow/deny overlay perms (keys)</name>
+    <includeFlowNamePatternList>Mass allow/deny overlay perms (keys)</includeFlowNamePatternList>
+    <excludeFlowNamePatternList></excludeFlowNamePatternList>
+    <skipDisabledFlowsWithoutError>false</skipDisabledFlowsWithoutError>
+    <waitForFlowsToFinish>true</waitForFlowsToFinish>
+    <returnLocalVariablesToCallingFlow>false</returnLocalVariablesToCallingFlow>
+  </action>
+  <action type="notification_screen">
+    <useDefaultName>true</useDefaultName>
+    <name>Notification on Screen: {global_3}</name>
+    <showText>true</showText>
+    <text>{global_3}</text>
+    <widgetName></widgetName>
+    <width>200</width>
+    <height>250</height>
+    <stretchToFillArea>false</stretchToFillArea>
+    <opacity>1.00</opacity>
+    <durationLong>false</durationLong>
+    <customPosition>false</customPosition>
+    <gravityType>TOP_LEFT</gravityType>
+    <xOffset>0</xOffset>
+    <yOffset>0</yOffset>
+  </action>
+  <action type="notification_status_bar">
+    <useDefaultName>true</useDefaultName>
+    <name>Notification on Statusbar: Mass allow/deny Notification ID 422</name>
+    <notificationIconType>CUSTOM</notificationIconType>
+    <notificationIcon>NOTIFICATION</notificationIcon>
+    <customNotificationIcon>app.icon://com.android.settings</customNotificationIcon>
+    <title>Mass allow/deny</title>
+    <message>Do you want to allow or deny all apps?</message>
+    <sound>false</sound>
+    <vibrate>false</vibrate>
+    <flashLED>false</flashLED>
+    <flashLEDColor>#ff00ff00</flashLEDColor>
+    <flashLEDOn>500</flashLEDOn>
+    <flashLEDOff>500</flashLEDOff>
+    <flagLocalOnly>false</flagLocalOnly>
+    <accentColorEnabled>false</accentColorEnabled>
+    <accentColor>#ffff0000</accentColor>
+    <flagOngoing>false</flagOngoing>
+    <flagNoClear>false</flagNoClear>
+    <notificationIDEnabled>true</notificationIDEnabled>
+    <notificationID>422</notificationID>
+    <category>DEFAULT</category>
+    <priority>DEFAULT</priority>
+    <visibility>PRIVATE</visibility>
+    <messageBigEnabled>false</messageBigEnabled>
+    <messageBig></messageBig>
+    <showProgressbar>false</showProgressbar>
+    <progressbarIndeterminate>false</progressbarIndeterminate>
+    <progressbarValue>0</progressbarValue>
+    <progressbarMaximum>100</progressbarMaximum>
+    <largeIconEnabled>true</largeIconEnabled>
+    <largeIcon>app.icon://ch.gridvision.ppam.androidautomagic</largeIcon>
+    <group></group>
+    <isGroupSummary>false</isGroupSummary>
+    <actionRef text="Allow all" icon="THUMB_UP" remove="true">Execute Flows: Mass allow/deny overlay perms (keys)</actionRef>
+    <actionRef text="Deny all" icon="THUMB_DOWN" remove="true">Execute Flows: Mass allow/deny overlay perms (keys)</actionRef>
+  </action>
+  <action type="remove_notification_status_bar">
+    <useDefaultName>true</useDefaultName>
+    <name>Remove Notification on Statusbar: 422 (Automagic)</name>
+    <automagicNotifications>true</automagicNotifications>
+    <all>false</all>
+    <notificationID>422</notificationID>
+    <overall>true</overall>
+    <packageName></packageName>
+    <allOfApp>true</allOfApp>
+    <filterNotificationID></filterNotificationID>
+    <textMatchField>TEXT</textMatchField>
+    <textMatchType>CONTAINS_TEXT</textMatchType>
+    <textFilter></textFilter>
+  </action>
+  <flow type="flow">
+    <name>Mass allow/deny overlay perms (keys)</name>
+    <group>Auto actions</group>
+    <enabled>true</enabled>
+    <executionPolicy>SKIP</executionPolicy>
+    <emergencyStopCount>250</emergencyStopCount>
+    <conditioncontainer id="t1" x="-420.0" y="192.5">Expression: trigger == "Global Variable"</conditioncontainer>
+    <actioncontainer id="t2" x="-490.0" y="402.5">Notification on Screen: {global_3}</actioncontainer>
+    <actioncontainer id="t3" x="105.0" y="787.5">Remove Notification on Statusbar: 422 (Automagic)</actioncontainer>
+    <conditioncontainer id="t4" x="-35.0" y="472.5">trigger == "App overlay permissions opened"</conditioncontainer>
+    <actioncontainer id="t5" x="-840.0" y="682.5">Allow all apps to overlay (keys)</actioncontainer>
+    <actioncontainer id="t6" x="-595.0001" y="682.5">Deny all apps to overlay (keys)</actioncontainer>
+    <triggercontainer id="t7" x="70.0" y="157.5">
+      <trigger>App overlay permissions opened</trigger>
+    </triggercontainer>
+    <conditioncontainer id="t8" x="280.0" y="787.5"> Debug Dialog</conditioncontainer>
+    <conditioncontainer id="t9" x="280.0" y="402.5">Expression: trigger != "App overlay permissions opened"</conditioncontainer>
+    <actioncontainer id="t10" x="-175.0" y="787.5">Notification on Statusbar: Mass allow/deny Notification ID 422</actioncontainer>
+    <connection from="t1" to="t2" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t4" to="t10" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t4" to="t3" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t4" to="t8" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t7" to="t4" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t7" to="t9" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t9" to="t8" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+  </flow>
+</data>
