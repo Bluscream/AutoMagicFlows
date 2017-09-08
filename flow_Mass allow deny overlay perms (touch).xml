@@ -1,0 +1,230 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<data version="1.34.0">
+  <trigger type="activity_ended">
+    <useDefaultName>true</useDefaultName>
+    <name>Activity Ended: com.android.settings/.SubSettings</name>
+    <enabled>true</enabled>
+    <method>CLASSIC</method>
+    <packageNameFilter>com.android.settings</packageNameFilter>
+    <classNameFilter>com.android.settings.SubSettings</classNameFilter>
+  </trigger>
+  <trigger type="global_variable">
+    <useDefaultName>false</useDefaultName>
+    <name>Global Variable</name>
+    <enabled>true</enabled>
+    <variable>global_3</variable>
+  </trigger>
+  <trigger type="user_interface_event">
+    <useDefaultName>true</useDefaultName>
+    <name>UI Event: Window opened package com.android.settings matches glob Draw over other apps</name>
+    <enabled>true</enabled>
+    <accessibilityEventType>TYPE_WINDOW_STATE_CHANGED</accessibilityEventType>
+    <packageNameFilter>com.android.settings</packageNameFilter>
+    <textMatchType>GLOB</textMatchType>
+    <textFilter>Draw over other apps</textFilter>
+    <removeNonPrintableCharacters>false</removeNonPrintableCharacters>
+  </trigger>
+  <condition type="app_task_running">
+    <useDefaultName>true</useDefaultName>
+    <name>App Task Running: com.android.settings (most recent)</name>
+    <method>USAGE_STATISTICS</method>
+    <packageNameList>com.android.settings</packageNameList>
+    <checkMostRecentAppTaskOnly>true</checkMostRecentAppTaskOnly>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>false</useDefaultName>
+    <name>contains(trigger, "opened")</name>
+    <expression>if (global_permission_whitelist == null) { global_permission_whitelist = newList("Automagic Premium"); }
+contains(trigger, "opened")</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: trigger == "Global Variable"</name>
+    <expression>trigger == "Global Variable"</expression>
+  </condition>
+  <action type="control_user_interface">
+    <useDefaultName>false</useDefaultName>
+    <name>Allow all apps to overlay</name>
+    <script>if (getTextById("android:id/text1") != "Apps with permission") {
+  clickById("android:id/text1");
+  sleep(50);
+  click("Apps with permission");
+  sleep(50);
+}
+click("More options");
+sleep(150);
+if (split(getTextInActiveWindow(), "\n")[0] == "Hide system") {
+  back();
+  sleep(100);
+} else {
+  click("Show system");
+  sleep(100);
+}
+x = 1002;y = 299;c = 10;
+for (i in [1 to c])
+{
+  text = getText(x, y);
+  global_3 = x + ", " + y + "\ni: " + i + "/"+ c + "\ntext: " + text;
+  if (text == null) {
+    //touchGesture(0, 1, 150, 200);
+    scrollForward(x, y);
+    //scrollBackward(x, y);
+    sleep(100);
+    text = getText(x, y);
+  }
+  if (text == "No") {
+    click (x, y);
+    sleep(1000);
+    if (!containsElement(global_permission_whitelist, getTextById("com.android.settings:id/app_name"))){
+      checkById("android:id/switchWidget");
+    }
+    back();
+    sleep(500);
+  }
+  y = y + 112;
+}</script>
+  </action>
+  <action type="control_user_interface">
+    <useDefaultName>false</useDefaultName>
+    <name>Deny all apps to overlay</name>
+    <script>if (getTextById("android:id/text1") != "Apps with permission") {
+  clickById("android:id/text1");
+  sleep(50);
+  click("Apps with permission");
+  sleep(50);
+}
+click("More options");
+sleep(150);
+if (split(getTextInActiveWindow(), "\n")[0] == "Hide system") {
+  back();
+  sleep(100);
+} else {
+  click("Show system");
+  sleep(100);
+}
+x = 1002;y = 299;c = 10;
+for (i in [1 to c])
+{
+  text = getText(x, y);
+  global_3 = x + ", " + y + "\ni: " + i + "/"+ c + "\ntext: " + text;
+  if (text == null) {
+    //touchGesture(0, 1, 150, 200);
+    scrollForward(x, y);
+    //scrollBackward(x, y);
+    sleep(100);
+    text = getText(x, y);
+  }
+  if (text == "Yes") {
+    click (x, y);
+    sleep(1000);
+    if (!containsElement(global_permission_whitelist, getTextById("com.android.settings:id/app_name"))){
+      uncheckById("android:id/switchWidget");
+    }
+    back();
+    sleep(500);
+  }
+  y = y + 112;
+}</script>
+  </action>
+  <action type="launch_app">
+    <useDefaultName>true</useDefaultName>
+    <name>Launch App: com.android.settings/.Settings$AppDrawOverlaySettingsActivity</name>
+    <packageName>com.android.settings</packageName>
+    <className>com.android.settings.Settings$AppDrawOverlaySettingsActivity</className>
+  </action>
+  <action type="notification_screen">
+    <useDefaultName>true</useDefaultName>
+    <name>Notification on Screen: {global_3}</name>
+    <showText>true</showText>
+    <text>{global_3}</text>
+    <widgetName></widgetName>
+    <width>200</width>
+    <height>250</height>
+    <stretchToFillArea>false</stretchToFillArea>
+    <opacity>1.00</opacity>
+    <durationLong>false</durationLong>
+    <customPosition>false</customPosition>
+    <gravityType>TOP_LEFT</gravityType>
+    <xOffset>0</xOffset>
+    <yOffset>0</yOffset>
+  </action>
+  <action type="notification_status_bar">
+    <useDefaultName>true</useDefaultName>
+    <name>Notification on Statusbar: Mass allow/deny Notification ID 421</name>
+    <notificationIconType>CUSTOM</notificationIconType>
+    <notificationIcon>NOTIFICATION</notificationIcon>
+    <customNotificationIcon>app.icon://com.android.settings</customNotificationIcon>
+    <title>Mass allow/deny</title>
+    <message>Do you want to allow or deny all apps?</message>
+    <sound>false</sound>
+    <vibrate>false</vibrate>
+    <flashLED>false</flashLED>
+    <flashLEDColor>#ff00ff00</flashLEDColor>
+    <flashLEDOn>500</flashLEDOn>
+    <flashLEDOff>500</flashLEDOff>
+    <flagLocalOnly>false</flagLocalOnly>
+    <accentColorEnabled>false</accentColorEnabled>
+    <accentColor>#ffff0000</accentColor>
+    <flagOngoing>false</flagOngoing>
+    <flagNoClear>false</flagNoClear>
+    <notificationIDEnabled>true</notificationIDEnabled>
+    <notificationID>421</notificationID>
+    <category>DEFAULT</category>
+    <priority>DEFAULT</priority>
+    <visibility>PRIVATE</visibility>
+    <messageBigEnabled>false</messageBigEnabled>
+    <messageBig></messageBig>
+    <showProgressbar>false</showProgressbar>
+    <progressbarIndeterminate>false</progressbarIndeterminate>
+    <progressbarValue>0</progressbarValue>
+    <progressbarMaximum>100</progressbarMaximum>
+    <largeIconEnabled>true</largeIconEnabled>
+    <largeIcon>app.icon://ch.gridvision.ppam.androidautomagic</largeIcon>
+    <group></group>
+    <isGroupSummary>false</isGroupSummary>
+    <actionRef text="Allow all" icon="THUMB_UP" remove="true">Allow all apps to overlay</actionRef>
+    <actionRef text="Deny all" icon="THUMB_DOWN" remove="true">Deny all apps to overlay</actionRef>
+  </action>
+  <action type="remove_notification_status_bar">
+    <useDefaultName>true</useDefaultName>
+    <name>Remove Notification on Statusbar: 421 (Automagic)</name>
+    <automagicNotifications>true</automagicNotifications>
+    <all>false</all>
+    <notificationID>421</notificationID>
+    <overall>true</overall>
+    <packageName></packageName>
+    <allOfApp>true</allOfApp>
+    <filterNotificationID></filterNotificationID>
+    <textMatchField>TEXT</textMatchField>
+    <textMatchType>CONTAINS_TEXT</textMatchType>
+    <textFilter></textFilter>
+  </action>
+  <flow type="flow">
+    <name>Mass allow/deny overlay perms (touch)</name>
+    <group>Auto actions</group>
+    <enabled>true</enabled>
+    <executionPolicy>SKIP</executionPolicy>
+    <emergencyStopCount>250</emergencyStopCount>
+    <triggercontainer id="t1" x="70.0" y="157.5">
+      <trigger>Activity Ended: com.android.settings/.SubSettings</trigger>
+      <trigger>UI Event: Window opened package com.android.settings matches glob Draw over other apps</trigger>
+      <trigger>Global Variable</trigger>
+    </triggercontainer>
+    <conditioncontainer id="t2" x="280.0" y="262.5">App Task Running: com.android.settings (most recent)</conditioncontainer>
+    <actioncontainer id="t3" x="105.0" y="787.5">Remove Notification on Statusbar: 421 (Automagic)</actioncontainer>
+    <conditioncontainer id="t4" x="-420.0" y="192.5">Expression: trigger == "Global Variable"</conditioncontainer>
+    <actioncontainer id="t5" x="-490.0" y="402.5">Notification on Screen: {global_3}</actioncontainer>
+    <actioncontainer id="t6" x="175.0" y="472.5">Launch App: com.android.settings/.Settings$AppDrawOverlaySettingsActivity</actioncontainer>
+    <actioncontainer id="t7" x="-175.0" y="787.5">Notification on Statusbar: Mass allow/deny Notification ID 421</actioncontainer>
+    <conditioncontainer id="t8" x="-35.0" y="472.5">contains(trigger, "opened")</conditioncontainer>
+    <actioncontainer id="t9" x="-840.0" y="682.5">Allow all apps to overlay</actioncontainer>
+    <actioncontainer id="t10" x="-595.0001" y="682.5">Deny all apps to overlay</actioncontainer>
+    <connection from="t1" to="t8" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t1" to="t4" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t2" to="t8" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t2" to="t6" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t4" to="t5" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t8" to="t7" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t8" to="t3" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
+  </flow>
+</data>
