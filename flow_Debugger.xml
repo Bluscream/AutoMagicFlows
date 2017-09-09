@@ -50,7 +50,7 @@ if (_result == null ) {
     if (contains(_result," ")) { _result_list_space = split(_result, " "); }
     if (contains(_result,"\n")) { _result_list_newline = split(_result, "\n"); }
     if (contains(_result,",")) { _result_list_comma = split(_result, ","); }
-    if (contains(_result,":")) { _result_list_colon = split(_result, ":"); }
+    if (contains(_result,":")) { _result_list_colon = split(_result, ":"); addElement(choices, "Make service whitelist"); }
     if (contains(_result,";")) { _result_list_semicolon = split(_result, ";"); }
   }
   }
@@ -87,6 +87,11 @@ if (_result == null ) {
     <useDefaultName>true</useDefaultName>
     <name>Expression: value == "Copy the result to clipboard"</name>
     <expression>value == "Copy the result to clipboard"</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: value == "Make service whitelist"</name>
+    <expression>value == "Make service whitelist"</expression>
   </condition>
   <condition type="expression">
     <useDefaultName>true</useDefaultName>
@@ -207,62 +212,73 @@ choices = newList(
     <name>Script: addElement(choices, "Show stacktrace");</name>
     <script>addElement(choices, "Show stacktrace");</script>
   </action>
+  <action type="script">
+    <useDefaultName>true</useDefaultName>
+    <name>Script: value = 'global_service_whitelist = newList(\n\t"' + join(_result_list_colon, '",\n\t"') + '"\n);'</name>
+    <script>value = 'global_service_whitelist = newList(\n\t"' + join(_result_list_colon, '",\n\t"') + '"\n);'</script>
+  </action>
   <flow type="flow">
     <name>Debugger</name>
+    <group>. Utilities AM</group>
     <enabled>true</enabled>
     <executionPolicy>PARALLEL</executionPolicy>
     <emergencyStopCount>65512</emergencyStopCount>
     <triggercontainer id="t1" x="70.0" y="52.5">
       <trigger>Shortcut: Debug</trigger>
     </triggercontainer>
-    <conditioncontainer id="t2" x="70.0" y="612.5">Expression: operation == "ok"</conditioncontainer>
-    <actioncontainer id="t3" x="315.0" y="1837.5">Copy Text to Clipboard: {value}</actioncontainer>
-    <conditioncontainer id="t4" x="140.0" y="1837.5"> Debug Dialog</conditioncontainer>
-    <conditioncontainer id="t5" x="140.0" y="1697.5">Expression: value == "Review the result in a Debug window"</conditioncontainer>
-    <actioncontainer id="t6" x="-140.0" y="1837.5">Copy Text to Clipboard: {_return}</actioncontainer>
-    <conditioncontainer id="t7" x="-420.0" y="1382.5">Expression: value == "Show the result again"</conditioncontainer>
-    <actioncontainer id="t8" x="-70.0" y="1277.5">Message Dialog: Successfully evaluated! {_result}</actioncontainer>
-    <conditioncontainer id="t9" x="315.0" y="1697.5">Expression: value == "Copy the input to clipboard"</conditioncontainer>
-    <conditioncontainer id="t10" x="490.0" y="1592.5">Expression: value == "Show Stacktrace"</conditioncontainer>
-    <actioncontainer id="t11" x="630.0" y="1732.5">Message Dialog: {exception_message} {exception_stacktrace}</actioncontainer>
-    <conditioncontainer id="t12" x="210.0" y="1277.5">Confirm Dialog: {_result}</conditioncontainer>
-    <actioncontainer id="t13" x="70.0" y="472.5">Input Dialog: Eval Multi-line text Enter AutoMagic code:</actioncontainer>
-    <conditioncontainer id="t14" x="665.0" y="1347.5">Expression: value == "Start over"</conditioncontainer>
-    <actioncontainer id="t15" x="210.0" y="1102.5">Script: addElement(choices, "Show stacktrace");</actioncontainer>
-    <conditioncontainer id="t16" x="-140.0" y="1697.5">Expression: value == "Copy the result to clipboard"</conditioncontainer>
-    <actioncontainer id="t17" x="70.0" y="1452.5">Input Dialog: What do you want to do now? Single Choice Menu {choices,listformat,comma}</actioncontainer>
-    <conditioncontainer id="t18" x="-350.0" y="1592.5">Expression: value == "Open in Browser"</conditioncontainer>
-    <actioncontainer id="t19" x="-350.0" y="1732.5">Open URL in Browser: {_result}</actioncontainer>
-    <conditioncontainer id="t20" x="70.0" y="262.5"> Debug Dialog</conditioncontainer>
-    <actioncontainer id="t21" x="70.0" y="752.5">Script: _input = value; global_lasteval = value; choices = newList( //"Show the result again", "Review the result in a Debug window", "Copy the result to clipboard", "Copy the input to clipboard", "Start over", "Nothing" );</actioncontainer>
-    <conditioncontainer id="t22" x="70.0" y="892.5">Expression: eval</conditioncontainer>
-    <connection from="t1" to="t20" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t2" to="t21" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t4" to="t17" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t5" to="t4" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t7" to="t8" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t8" to="t17" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t9" to="t3" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t10" to="t11" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t11" to="t17" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t12" to="t17" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t12" to="t11" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t13" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t14" to="t13" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t15" to="t12" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t16" to="t6" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t17" to="t9" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t17" to="t16" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t17" to="t5" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t17" to="t7" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t17" to="t14" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t17" to="t10" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t17" to="t18" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t18" to="t19" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t20" to="t13" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t21" to="t22" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t22" to="t15" type="EXCEPTION" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t22" to="t8" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t22" to="t8" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <actioncontainer id="t2" x="315.0" y="1837.5">Copy Text to Clipboard: {value}</actioncontainer>
+    <conditioncontainer id="t3" x="140.0" y="1837.5"> Debug Dialog</conditioncontainer>
+    <conditioncontainer id="t4" x="140.0" y="1697.5">Expression: value == "Review the result in a Debug window"</conditioncontainer>
+    <actioncontainer id="t5" x="-140.0" y="1837.5">Copy Text to Clipboard: {_return}</actioncontainer>
+    <conditioncontainer id="t6" x="-420.0" y="1382.5">Expression: value == "Show the result again"</conditioncontainer>
+    <actioncontainer id="t7" x="-70.0" y="1277.5">Message Dialog: Successfully evaluated! {_result}</actioncontainer>
+    <conditioncontainer id="t8" x="490.0" y="1592.5">Expression: value == "Show Stacktrace"</conditioncontainer>
+    <actioncontainer id="t9" x="630.0" y="1732.5">Message Dialog: {exception_message} {exception_stacktrace}</actioncontainer>
+    <conditioncontainer id="t10" x="210.0" y="1277.5">Confirm Dialog: {_result}</conditioncontainer>
+    <actioncontainer id="t11" x="70.0" y="472.5">Input Dialog: Eval Multi-line text Enter AutoMagic code:</actioncontainer>
+    <conditioncontainer id="t12" x="665.0" y="1347.5">Expression: value == "Start over"</conditioncontainer>
+    <actioncontainer id="t13" x="210.0" y="1102.5">Script: addElement(choices, "Show stacktrace");</actioncontainer>
+    <conditioncontainer id="t14" x="-350.0" y="1592.5">Expression: value == "Open in Browser"</conditioncontainer>
+    <actioncontainer id="t15" x="-350.0" y="1732.5">Open URL in Browser: {_result}</actioncontainer>
+    <conditioncontainer id="t16" x="70.0" y="262.5"> Debug Dialog</conditioncontainer>
+    <actioncontainer id="t17" x="70.0" y="752.5">Script: _input = value; global_lasteval = value; choices = newList( //"Show the result again", "Review the result in a Debug window", "Copy the result to clipboard", "Copy the input to clipboard", "Start over", "Nothing" );</actioncontainer>
+    <conditioncontainer id="t18" x="70.0" y="612.5">Expression: operation == "ok"</conditioncontainer>
+    <conditioncontainer id="t19" x="315.0" y="1627.5">Expression: value == "Copy the input to clipboard"</conditioncontainer>
+    <actioncontainer id="t20" x="70.0" y="1452.5">Input Dialog: What do you want to do now? Single Choice Menu {choices,listformat,comma}</actioncontainer>
+    <conditioncontainer id="t21" x="70.0" y="892.5">Expression: eval</conditioncontainer>
+    <conditioncontainer id="t22" x="35.000015" y="2012.4998">Expression: value == "Make service whitelist"</conditioncontainer>
+    <conditioncontainer id="t23" x="-140.0" y="1697.5">Expression: value == "Copy the result to clipboard"</conditioncontainer>
+    <actioncontainer id="t24" x="245.0" y="2047.4998">Script: value = 'global_service_whitelist = newList(\n\t"' + join(_result_list_colon, '",\n\t"') + '"\n);'</actioncontainer>
+    <connection from="t1" to="t16" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t3" to="t20" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t4" to="t3" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t6" to="t7" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t7" to="t20" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t8" to="t9" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t9" to="t20" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t10" to="t20" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t10" to="t9" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t11" to="t18" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t12" to="t11" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t13" to="t10" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t14" to="t15" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t16" to="t11" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t17" to="t21" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t18" to="t17" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t19" to="t2" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t20" to="t19" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t20" to="t23" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t20" to="t4" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t20" to="t6" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t20" to="t12" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t20" to="t8" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t20" to="t14" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t20" to="t22" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t21" to="t13" type="EXCEPTION" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t21" to="t7" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t21" to="t7" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t22" to="t24" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t23" to="t5" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t24" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
   </flow>
 </data>

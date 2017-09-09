@@ -27,17 +27,46 @@
     <expression>trigger == "System Setting Changed: Secure accessibility_enabled" and accessibility_enabled == 0</expression>
   </condition>
   <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: trigger == "System Setting Changed: Secure enabled_accessibility_services"</name>
+    <expression>trigger == "System Setting Changed: Secure enabled_accessibility_services"</expression>
+  </condition>
+  <condition type="expression">
     <useDefaultName>false</useDefaultName>
     <name>whitelist</name>
     <expression>if (!isList(global_accessibility_whitelist)) {
-  global_accessibility_whitelist = newList(
-	  "nl.syntaxa.caffeine/nl.syntaxa.caffeine.service.CaffeineAccessibilityService",
-	  "ch.gridvision.ppam.androidautomagic/ch.gridvision.ppam.androidautomagic.AccessibilityService",
-	  "com.sand.airdroid/com.sand.airdroid.services.NotificationAccessibilityService"
-  );
+global_accessibility_whitelist = newList(
+	"nl.syntaxa.caffeine/nl.syntaxa.caffeine.service.CaffeineAccessibilityService",
+	"com.oasisfeng.greenify/com.oasisfeng.greenify.AccessibilityDispatcher",
+	"com.joaomgcd.autoinput/com.joaomgcd.autoinput.service.ServiceAccessibility",
+	"ch.gridvision.ppam.androidautomagic/ch.gridvision.ppam.androidautomagic.AccessibilityService",
+	"com.sand.airdroid/com.sand.airdroid.services.NotificationAccessibilityService",
+	//"com.piriform.ccleaner/com.piriform.ccleaner.cleaning.AdvancedCacheCleaningService",
+  "com.oasisfeng.greenify/com.oasisfeng.greenify.AccessibilityDispatcher",
+  "com.avast.android.mobilesecurity/com.avast.android.mobilesecurity.scanner.engine.shields.WebShieldAccessibilityService"
+);
 }
-trigger == "System Setting Changed: Secure enabled_accessibility_services" and enabled_accessibility_services != global_accessibility_whitelist</expression>
+enabled_accessibility_services != global_accessibility_whitelist</expression>
   </condition>
+  <action type="control_user_interface">
+    <useDefaultName>true</useDefaultName>
+    <name>Control UI: _tmp = split(enabled_accessibility_services, ":");</name>
+    <script>_tmp = split(enabled_accessibility_services, ":");</script>
+  </action>
+  <action type="copy_text_to_clipboard">
+    <useDefaultName>true</useDefaultName>
+    <name>Copy Text to Clipboard: {_tmp,listformat}</name>
+    <text>{_tmp,listformat}</text>
+  </action>
+  <action type="execute_flows">
+    <useDefaultName>true</useDefaultName>
+    <name>Execute Flows: API</name>
+    <includeFlowNamePatternList>API</includeFlowNamePatternList>
+    <excludeFlowNamePatternList></excludeFlowNamePatternList>
+    <skipDisabledFlowsWithoutError>false</skipDisabledFlowsWithoutError>
+    <waitForFlowsToFinish>true</waitForFlowsToFinish>
+    <returnLocalVariablesToCallingFlow>true</returnLocalVariablesToCallingFlow>
+  </action>
   <action type="execute_flows">
     <useDefaultName>true</useDefaultName>
     <name>Execute Flows: Debugger</name>
@@ -53,6 +82,15 @@ trigger == "System Setting Changed: Secure enabled_accessibility_services" and e
     <settingCategory>SECURE</settingCategory>
     <settingName>enabled_accessibility_services</settingName>
     <variable>enabled_accessibility_services</variable>
+  </action>
+  <action type="message_dialog">
+    <useDefaultName>true</useDefaultName>
+    <name>Message Dialog:  {_tmp,listformat}</name>
+    <title></title>
+    <message>{_tmp,listformat}</message>
+    <buttonLabel></buttonLabel>
+    <timeoutEnabled>false</timeoutEnabled>
+    <timeout>60000</timeout>
   </action>
   <action type="notification_status_bar">
     <useDefaultName>false</useDefaultName>
@@ -88,7 +126,9 @@ trigger == "System Setting Changed: Secure enabled_accessibility_services" and e
     <largeIcon></largeIcon>
     <group></group>
     <isGroupSummary>false</isGroupSummary>
-    <actionRef text="Review attempted change" icon="WARN" remove="false">Execute Flows: Debugger</actionRef>
+    <actionRef text="Review attempted change" icon="WARN" remove="false">Control UI: _tmp = split(enabled_accessibility_services, ":");</actionRef>
+    <actionRef text="2" icon="NOTIFICATION" remove="false">Message Dialog:  {_tmp,listformat}</actionRef>
+    <actionRef text="copy" icon="NOTIFICATION" remove="false">Copy Text to Clipboard: {_tmp,listformat}</actionRef>
   </action>
   <action type="notification_status_bar">
     <useDefaultName>true</useDefaultName>
@@ -125,6 +165,17 @@ trigger == "System Setting Changed: Secure enabled_accessibility_services" and e
     <group></group>
     <isGroupSummary>false</isGroupSummary>
   </action>
+  <action type="script">
+    <useDefaultName>true</useDefaultName>
+    <name>Script: _newlist = join(global_accessibility_whitelist, ":")</name>
+    <script>_newlist = join(global_accessibility_whitelist, ":")</script>
+  </action>
+  <action type="script">
+    <useDefaultName>true</useDefaultName>
+    <name>Script: api_openSettings = true; api_openSettings_action = "ACCESSIBILITY_SETTINGS"</name>
+    <script>api_openSettings = true;
+api_openSettings_action = "ACCESSIBILITY_SETTINGS"</script>
+  </action>
   <action type="set_system_setting">
     <useDefaultName>true</useDefaultName>
     <name>Set System Setting: Secure accessibility_enabled to 1</name>
@@ -135,10 +186,10 @@ trigger == "System Setting Changed: Secure enabled_accessibility_services" and e
   </action>
   <action type="set_system_setting">
     <useDefaultName>true</useDefaultName>
-    <name>Set System Setting: Secure enabled_accessibility_services to {global_accessibility_whitelist}</name>
+    <name>Set System Setting: Secure enabled_accessibility_services to {_newlist}</name>
     <settingCategory>SECURE</settingCategory>
     <settingName>enabled_accessibility_services</settingName>
-    <value>{global_accessibility_whitelist}</value>
+    <value>{_newlist}</value>
     <verified>true</verified>
   </action>
   <flow type="flow">
@@ -150,22 +201,30 @@ trigger == "System Setting Changed: Secure enabled_accessibility_services" and e
       <trigger>System Setting Changed: Secure enabled_accessibility_services</trigger>
       <trigger>System Setting Changed: Secure accessibility_enabled</trigger>
     </triggercontainer>
-    <actioncontainer id="t2" x="560.0" y="262.5">Set System Setting: Secure accessibility_enabled to 1</actioncontainer>
-    <actioncontainer id="t3" x="805.0" y="297.5">Notification on Statusbar: Attempt to disable accessibility! Settings</actioncontainer>
-    <actioncontainer id="t4" x="455.0" y="752.5">Set System Setting: Secure enabled_accessibility_services to {global_accessibility_whitelist}</actioncontainer>
-    <actioncontainer id="t5" x="700.0" y="577.5">Notification on Statusbar: Accessibility settings modified! Settings2</actioncontainer>
-    <actioncontainer id="t6" x="-140.0" y="367.5">Init Variable System Setting: Secure enabled_accessibility_services to enabled_accessibility_services</actioncontainer>
-    <actioncontainer id="t7" x="-140.0" y="472.49988">Execute Flows: Debugger</actioncontainer>
-    <conditioncontainer id="t8" x="385.0" y="122.5">Expression: trigger == "System Setting Changed: Secure accessibility_enabled" and accessibility_enabled == 0</conditioncontainer>
-    <conditioncontainer id="t9" x="-105.0" y="227.5">Expression: trigger == "Manual"</conditioncontainer>
-    <conditioncontainer id="t10" x="175.0" y="542.5">whitelist</conditioncontainer>
-    <connection from="t1" to="t10" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t1" to="t8" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t1" to="t9" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t2" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t6" to="t7" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t8" to="t2" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t9" to="t6" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t10" to="t5" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <conditioncontainer id="t2" x="280.0" y="52.5">Expression: trigger == "System Setting Changed: Secure accessibility_enabled" and accessibility_enabled == 0</conditioncontainer>
+    <actioncontainer id="t3" x="490.0" y="52.5">Set System Setting: Secure accessibility_enabled to 1</actioncontainer>
+    <actioncontainer id="t4" x="700.0" y="52.5">Notification on Statusbar: Attempt to disable accessibility! Settings</actioncontainer>
+    <actioncontainer id="t5" x="700.0" y="297.5">Set System Setting: Secure enabled_accessibility_services to {_newlist}</actioncontainer>
+    <conditioncontainer id="t6" x="-105.0" y="227.5">Expression: trigger == "Manual"</conditioncontainer>
+    <actioncontainer id="t7" x="-105.0" y="892.5">Init Variable System Setting: Secure enabled_accessibility_services to enabled_accessibility_services</actioncontainer>
+    <actioncontainer id="t8" x="-105.0" y="787.5">Execute Flows: Debugger</actioncontainer>
+    <actioncontainer id="t9" x="-105.0" y="542.5">Execute Flows: API</actioncontainer>
+    <actioncontainer id="t10" x="-105.0" y="437.5">Script: api_openSettings = true; api_openSettings_action = "ACCESSIBILITY_SETTINGS"</actioncontainer>
+    <conditioncontainer id="t11" x="70.0" y="297.5">Expression: trigger == "System Setting Changed: Secure enabled_accessibility_services"</conditioncontainer>
+    <actioncontainer id="t12" x="910.0" y="297.5">Notification on Statusbar: Accessibility settings modified! Settings2</actioncontainer>
+    <actioncontainer id="t13" x="490.0" y="297.5">Script: _newlist = join(global_accessibility_whitelist, ":")</actioncontainer>
+    <conditioncontainer id="t14" x="280.0" y="297.5">whitelist</conditioncontainer>
+    <connection from="t1" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t1" to="t6" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t1" to="t11" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t2" to="t3" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t3" to="t4" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t5" to="t12" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t6" to="t10" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t7" to="t8" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t10" to="t9" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t11" to="t14" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t13" to="t5" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t14" to="t13" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
   </flow>
 </data>

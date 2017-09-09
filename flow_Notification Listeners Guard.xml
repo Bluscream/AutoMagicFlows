@@ -90,19 +90,19 @@ trigger == "System Setting Changed: Secure enabled_accessibility_services" and e
     <group>Protection</group>
     <enabled>true</enabled>
     <executionPolicy>PARALLEL</executionPolicy>
-    <conditioncontainer id="t1" x="-105.0" y="227.5">Expression: trigger == "Manual"</conditioncontainer>
-    <actioncontainer id="t2" x="-140.0" y="472.5">Execute Flows: Debugger</actioncontainer>
-    <conditioncontainer id="t3" x="139.99997" y="332.5">Notification Listeners Whitelist</conditioncontainer>
-    <actioncontainer id="t4" x="140.00003" y="822.5">Notification on Statusbar: Attempted Notification Listeners change! Settings</actioncontainer>
-    <actioncontainer id="t5" x="280.00003" y="577.5">Set System Setting: Secure enabled_notification_listeners to com.sand.airdroid/com.sand.airdroid.services.Notif</actioncontainer>
-    <actioncontainer id="t6" x="-140.0" y="367.5">Init Variable System Setting: Secure enabled_notification_listeners to enabled_notification_listeners</actioncontainer>
-    <triggercontainer id="t7" x="70.0" y="52.5">
+    <triggercontainer id="t1" x="70.0" y="52.5">
       <trigger>System Setting Changed: Secure enabled_notification_listeners</trigger>
     </triggercontainer>
-    <connection from="t1" to="t6" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t3" to="t4" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t6" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <conditioncontainer id="t2" x="-105.0" y="227.5">Expression: trigger == "Manual"</conditioncontainer>
+    <actioncontainer id="t3" x="-140.0" y="472.5">Execute Flows: Debugger</actioncontainer>
+    <conditioncontainer id="t4" x="139.99997" y="332.5">Notification Listeners Whitelist</conditioncontainer>
+    <actioncontainer id="t5" x="140.00003" y="822.5">Notification on Statusbar: Attempted Notification Listeners change! Settings</actioncontainer>
+    <actioncontainer id="t6" x="280.00003" y="577.5">Set System Setting: Secure enabled_notification_listeners to com.sand.airdroid/com.sand.airdroid.services.Notif</actioncontainer>
+    <actioncontainer id="t7" x="-140.0" y="367.5">Init Variable System Setting: Secure enabled_notification_listeners to enabled_notification_listeners</actioncontainer>
+    <connection from="t1" to="t4" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t1" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t2" to="t7" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t4" to="t5" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
     <connection from="t7" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t7" to="t1" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
   </flow>
 </data>
