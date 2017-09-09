@@ -172,9 +172,8 @@ enabled_accessibility_services != global_accessibility_whitelist</expression>
   </action>
   <action type="script">
     <useDefaultName>true</useDefaultName>
-    <name>Script: api_openSettings = true; api_openSettings_action = "ACCESSIBILITY_SETTINGS"</name>
-    <script>api_openSettings = true;
-api_openSettings_action = "ACCESSIBILITY_SETTINGS"</script>
+    <name>Script: api_openSettings = "ACCESSIBILITY_SETTINGS"</name>
+    <script>api_openSettings = "ACCESSIBILITY_SETTINGS"</script>
   </action>
   <action type="set_system_setting">
     <useDefaultName>true</useDefaultName>
@@ -209,22 +208,22 @@ api_openSettings_action = "ACCESSIBILITY_SETTINGS"</script>
     <actioncontainer id="t7" x="-105.0" y="892.5">Init Variable System Setting: Secure enabled_accessibility_services to enabled_accessibility_services</actioncontainer>
     <actioncontainer id="t8" x="-105.0" y="787.5">Execute Flows: Debugger</actioncontainer>
     <actioncontainer id="t9" x="-105.0" y="542.5">Execute Flows: API</actioncontainer>
-    <actioncontainer id="t10" x="-105.0" y="437.5">Script: api_openSettings = true; api_openSettings_action = "ACCESSIBILITY_SETTINGS"</actioncontainer>
-    <conditioncontainer id="t11" x="70.0" y="297.5">Expression: trigger == "System Setting Changed: Secure enabled_accessibility_services"</conditioncontainer>
-    <actioncontainer id="t12" x="910.0" y="297.5">Notification on Statusbar: Accessibility settings modified! Settings2</actioncontainer>
-    <actioncontainer id="t13" x="490.0" y="297.5">Script: _newlist = join(global_accessibility_whitelist, ":")</actioncontainer>
-    <conditioncontainer id="t14" x="280.0" y="297.5">whitelist</conditioncontainer>
+    <conditioncontainer id="t10" x="70.0" y="297.5">Expression: trigger == "System Setting Changed: Secure enabled_accessibility_services"</conditioncontainer>
+    <actioncontainer id="t11" x="910.0" y="297.5">Notification on Statusbar: Accessibility settings modified! Settings2</actioncontainer>
+    <actioncontainer id="t12" x="490.0" y="297.5">Script: _newlist = join(global_accessibility_whitelist, ":")</actioncontainer>
+    <conditioncontainer id="t13" x="280.0" y="297.5">whitelist</conditioncontainer>
+    <actioncontainer id="t14" x="-105.0" y="437.5">Script: api_openSettings = "ACCESSIBILITY_SETTINGS"</actioncontainer>
     <connection from="t1" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
     <connection from="t1" to="t6" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t1" to="t11" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t1" to="t10" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
     <connection from="t2" to="t3" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
     <connection from="t3" to="t4" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t5" to="t12" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t6" to="t10" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t5" to="t11" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t6" to="t14" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
     <connection from="t7" to="t8" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t10" to="t9" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t11" to="t14" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t13" to="t5" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t14" to="t13" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t10" to="t13" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t12" to="t5" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t13" to="t12" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t14" to="t9" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
   </flow>
 </data>

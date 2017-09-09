@@ -6,10 +6,26 @@
     <enabled>true</enabled>
     <title>API</title>
   </trigger>
+  <condition type="debug_dialog">
+    <useDefaultName>false</useDefaultName>
+    <name> Debug Dialog</name>
+  </condition>
   <condition type="expression">
     <useDefaultName>true</useDefaultName>
     <name>Expression: </name>
     <expression></expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: _api_t = convertNull(api_openSettings, false); if (_api_t!=false){return true;}else{return false}</name>
+    <expression>_api_t = convertNull(api_openSettings, false);
+if (_api_t!=false){return true;}else{return false}</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: _api_t = convertNull(api_splitURL, false); if (_api_t!=false){return true;}else{return false}</name>
+    <expression>_api_t = convertNull(api_splitURL, false);
+if (_api_t!=false){return true;}else{return false}</expression>
   </condition>
   <condition type="expression">
     <useDefaultName>true</useDefaultName>
@@ -23,19 +39,23 @@
   </condition>
   <condition type="expression">
     <useDefaultName>true</useDefaultName>
-    <name>Expression: convertNull(api_openSettings, false);</name>
-    <expression>convertNull(api_openSettings, false);</expression>
-  </condition>
-  <condition type="expression">
-    <useDefaultName>true</useDefaultName>
     <name>Expression: global_api_loader_spinner_rotate</name>
     <expression>global_api_loader_spinner_rotate</expression>
   </condition>
   <condition type="expression">
     <useDefaultName>true</useDefaultName>
-    <name>Expression: if (convertNull(value, false)) { setValue(_tmp_value, value); } convertNull(api_getApps, false);</name>
+    <name>Expression: if (convertNull(value, false)) { setValue(__api_tmp_value, value); } if (convertNull(operation, false)) { setValue(__api_tmp_operation, operation); } if (convertNull(index, false)) { setValue(__api_tmp_index, index); } if (convertNull(indices, false)) { setValue(__api_tmp_indices, indices); } convertNull(api_getApps, false);</name>
     <expression>if (convertNull(value, false)) {
-  setValue(_tmp_value, value);
+  setValue(__api_tmp_value, value);
+}
+if (convertNull(operation, false)) {
+  setValue(__api_tmp_operation, operation);
+}
+if (convertNull(index, false)) {
+  setValue(__api_tmp_index, index);
+}
+if (convertNull(indices, false)) {
+  setValue(__api_tmp_indices, indices);
 }
 convertNull(api_getApps, false);</expression>
   </condition>
@@ -54,6 +74,17 @@ convertNull(api_getApps, false);</expression>
     <name>Function: api_getPixel</name>
     <expression>convertNull(api_getPixel, false);</expression>
   </condition>
+  <action type="script">
+    <useDefaultName>false</useDefaultName>
+    <name>Common Garbage Collector</name>
+    <script>for (_api_i in getVariableNames())
+{
+  if (startsWith(_api_i, "_api_")) {
+    removeVariable(_api_i);
+  }
+}
+removeVariable("_api_i");</script>
+  </action>
   <action type="control_user_interface">
     <useDefaultName>true</useDefaultName>
     <name>Control UI: convertNull(global_pixeltracker, newList()); addElement(global_pixeltracker, api_getPixel_pixe);</name>
@@ -131,8 +162,8 @@ addElement(global_pixeltracker, api_getPixel_pixe);</script>
   </action>
   <action type="init_variable_package_info">
     <useDefaultName>true</useDefaultName>
-    <name>Init Variable Package Info: All Packages into _package_info</name>
-    <variable>_package_info</variable>
+    <name>Init Variable Package Info: All Packages into _api_package_info</name>
+    <variable>_api_package_info</variable>
     <all>true</all>
     <packageNames></packageNames>
     <permissionInfo>false</permissionInfo>
@@ -143,11 +174,11 @@ addElement(global_pixeltracker, api_getPixel_pixe);</script>
   </action>
   <action type="input_dialog">
     <useDefaultName>true</useDefaultName>
-    <name>Input Dialog: {api_getApp_title} Single Choice {_names,listformat,comma}</name>
+    <name>Input Dialog: {api_getApp_title} Single Choice {_api_names,listformat,comma}</name>
     <title>{api_getApp_title}</title>
     <inputDialogType>SINGLE_CHOICE</inputDialogType>
     <prompt></prompt>
-    <inputValues>{_names,listformat,comma}</inputValues>
+    <inputValues>{_api_names,listformat,comma}</inputValues>
     <defaultValue>{api_getApp_default}</defaultValue>
     <titleFontSize>DEFAULT</titleFontSize>
     <promptFontSize>DEFAULT</promptFontSize>
@@ -162,11 +193,11 @@ addElement(global_pixeltracker, api_getPixel_pixe);</script>
   </action>
   <action type="input_dialog">
     <useDefaultName>true</useDefaultName>
-    <name>Input Dialog: {api_getApps_title} Multi Choice {_names,listformat,comma}</name>
+    <name>Input Dialog: {api_getApps_title} Multi Choice {_api_names,listformat,comma}</name>
     <title>{api_getApps_title}</title>
     <inputDialogType>MULTI_CHOICE</inputDialogType>
     <prompt></prompt>
-    <inputValues>{_names,listformat,comma}</inputValues>
+    <inputValues>{_api_names,listformat,comma}</inputValues>
     <defaultValue>{api_getApps_default}</defaultValue>
     <titleFontSize>DEFAULT</titleFontSize>
     <promptFontSize>DEFAULT</promptFontSize>
@@ -183,20 +214,25 @@ addElement(global_pixeltracker, api_getPixel_pixe);</script>
     <useDefaultName>false</useDefaultName>
     <name>Read screenshot from file</name>
     <path>/storage/emulated/0/tmp/screenshot</path>
-    <variable>_screenshot</variable>
+    <variable>_api_screenshot</variable>
   </action>
   <action type="script">
     <useDefaultName>true</useDefaultName>
-    <name>Script: _keys = getMapKeys(_package_info); _packages = newMap(); _names = newList(); for (k in _keys) { _name = getAppName(k); addElement(_names, _name); addMapEntry(_packages, _name, k); } sort(_names);</name>
-    <script>_keys = getMapKeys(_package_info);
-_packages = newMap();
-_names = newList();
-for (k in _keys) {
-  _name = getAppName(k);
-  addElement(_names, _name);
-  addMapEntry(_packages, _name, k);
+    <name>Script: _api_keys = getMapKeys(_api_package_info); _api_packages = newMap(); _api_names = newList(); for (_api_k in _api_keys) { _api_name = getAppName(_api_k); addElement(_api_names, _api_name); addMapEntry(_api_packages, _api_name, _api_k); } sort(_api_names);</name>
+    <script>_api_keys = getMapKeys(_api_package_info);
+_api_packages = newMap();
+_api_names = newList();
+for (_api_k in _api_keys) {
+  _api_name = getAppName(_api_k);
+  addElement(_api_names, _api_name);
+  addMapEntry(_api_packages, _api_name, _api_k);
 }
-sort(_names);</script>
+sort(_api_names);</script>
+  </action>
+  <action type="script">
+    <useDefaultName>true</useDefaultName>
+    <name>Script: api_openSettings = "ACCESSIBILITY_SETTINGS"</name>
+    <script>api_openSettings = "ACCESSIBILITY_SETTINGS"</script>
   </action>
   <action type="script">
     <useDefaultName>false</useDefaultName>
@@ -208,28 +244,78 @@ setWidgetElementProperty("Loader", "Spinning Gear", "path", "app.icon://com.andr
   <action type="script">
     <useDefaultName>false</useDefaultName>
     <name>Script: get and return pixel</name>
-    <script>_pixel = getPixelColor(_screenshot, getValue('api_getPixel_x', 0), getValue('api_getPixel_y', 0));
-setValue('api_getPixel_pixel', _pixel)</script>
+    <script>_api_pixel = getPixelColor(_api_screenshot, getValue('api_getPixel_x', 0), getValue('api_getPixel_y', 0));
+setValue('api_getPixel_pixel', _api_pixel)</script>
   </action>
   <action type="script">
     <useDefaultName>true</useDefaultName>
-    <name>Script: if (convertNull(_tmp_value, false)) { setValue(value, getValue(_tmp_value)); }</name>
-    <script>if (convertNull(_tmp_value, false)) { 
-  setValue(value, getValue(_tmp_value));
+    <name>Script: if (_api_tmp_image_height != null) { setValue(image_height, getValue(_api_tmp_image_height)); } else { removeVariable('image_height'); } if (_api_tmp_image_width != null) { setValue(image_width, getValue(_api_tmp_image_width)); } else { removeVariable('image_width'); }</name>
+    <script>if (_api_tmp_image_height != null) {
+  setValue(image_height, getValue(_api_tmp_image_height));
+} else {
+  removeVariable('image_height');
+}
+if (_api_tmp_image_width != null) { 
+  setValue(image_width, getValue(_api_tmp_image_width));
+} else {
+  removeVariable('image_width');
 }</script>
   </action>
   <action type="script">
     <useDefaultName>true</useDefaultName>
-    <name>Script: if (isList(value)) { _apps = newList(); for (i in value) { addElement(_apps, getMapValue(_packages, value)); } setValue('api_getApps_apps', _apps); } else if (isString(value)) { setValue('api_getApp_app', getMapValue(_packages, value)); }</name>
+    <name>Script: if (_api_tmp_value != null) { setValue(value, getValue(_api_tmp_value)); } else { removeVariable('value'); } if (_api_tmp_operation != null) { setValue(operation, getValue(_api_tmp_operation)); } else { removeVariable('operation'); } if (_api_tmp_index != null) { setValue(index, getValue(_api_tmp_index)); } else { removeVariable('index'); } if (_api_tmp_indices != null) { setValue(indices, getValue(_api_tmp_indices)); } else { removeVariable('indices'); }</name>
+    <script>if (_api_tmp_value != null) {
+  setValue(value, getValue(_api_tmp_value));
+} else {
+  removeVariable('value');
+}
+if (_api_tmp_operation != null) { 
+  setValue(operation, getValue(_api_tmp_operation));
+} else {
+  removeVariable('operation');
+}
+if (_api_tmp_index != null) {
+  setValue(index, getValue(_api_tmp_index));
+} else {
+  removeVariable('index');
+}
+if (_api_tmp_indices != null) { 
+  setValue(indices, getValue(_api_tmp_indices));
+} else {
+  removeVariable('indices');
+}
+</script>
+  </action>
+  <action type="script">
+    <useDefaultName>true</useDefaultName>
+    <name>Script: if (convertNull(image_height, false)) { setValue(__api_tmp_image_height, image_height); } if (convertNull(image_width, false)) { setValue(__api_tmp_image_width, image_width); }</name>
+    <script>if (convertNull(image_height, false)) {
+  setValue(__api_tmp_image_height, image_height);
+}
+if (convertNull(image_width, false)) {
+  setValue(__api_tmp_image_width, image_width);
+}</script>
+  </action>
+  <action type="script">
+    <useDefaultName>true</useDefaultName>
+    <name>Script: if (isList(value)) { _api_apps = newList(); for (i in value) { addElement(_api_apps, getMapValue(_api_packages, value)); } setValue('api_getApps_apps', _api_apps); } else if (isString(value)) { setValue('api_getApp_app', getMapValue(_api_packages, value)); }</name>
     <script>if (isList(value)) {
-  _apps = newList();
+  _api_apps = newList();
   for (i in value) {
-    addElement(_apps, getMapValue(_packages, value));
+    addElement(_api_apps, getMapValue(_api_packages, value));
   }
-  setValue('api_getApps_apps', _apps);
+  setValue('api_getApps_apps', _api_apps);
 } else if (isString(value)) {
-  setValue('api_getApp_app', getMapValue(_packages, value));
+  setValue('api_getApp_app', getMapValue(_api_packages, value));
 }</script>
+  </action>
+  <action type="script">
+    <useDefaultName>true</useDefaultName>
+    <name>Script: operation = "im important"; setValue("api_getApp", true); setValue("api_getApp_title", "Choose a app"); setValue("api_getApp_default", "Automagic Premium");</name>
+    <script>operation = "im important";
+setValue("api_getApp", true);
+setValue("api_getApp_title", "Choose a app");
+setValue("api_getApp_default", "Automagic Premium");</script>
   </action>
   <action type="script">
     <useDefaultName>false</useDefaultName>
@@ -250,13 +336,6 @@ global_api_loader_spinner_rotate = true;</script>
   </action>
   <action type="script">
     <useDefaultName>true</useDefaultName>
-    <name>Script: setValue("api_getApp", true); setValue("api_getApp_title", "Choose a app"); setValue("api_getApp_default", "Automagic Premium");</name>
-    <script>setValue("api_getApp", true);
-setValue("api_getApp_title", "Choose a app");
-setValue("api_getApp_default", "Automagic Premium");</script>
-  </action>
-  <action type="script">
-    <useDefaultName>true</useDefaultName>
     <name>Script: setValue("api_getApps", true); setValue("api_getApps_title", "Choose some apps"); setValue("api_getApps_default", "Automagic Premium,pizza.de,Adguard");</name>
     <script>setValue("api_getApps", true);
 setValue("api_getApps_title", "Choose some apps");
@@ -268,6 +347,11 @@ setValue("api_getApps_default", "Automagic Premium,pizza.de,Adguard");</script>
     <script>setValue("api_getPixel", true);
 setValue("api_getPixel_x", 50);
 setValue("api_getPixel_y", 100);</script>
+  </action>
+  <action type="script">
+    <useDefaultName>true</useDefaultName>
+    <name>Script: setValue("api_splitURL", "https://www.youtube.com/path/to/file.html?key1=value1&amp;key2=value2&amp;key3=value3#body");</name>
+    <script>setValue("api_splitURL", "https://www.youtube.com/path/to/file.html?key1=value1&amp;key2=value2&amp;key3=value3#body");</script>
   </action>
   <action type="script">
     <useDefaultName>true</useDefaultName>
@@ -309,13 +393,56 @@ setValue("api_getPixel_y", 100);</script>
   </action>
   <action type="script">
     <useDefaultName>false</useDefaultName>
+    <name>Split URL</name>
+    <script>_api_url = trim(api_splitURL);
+api_splitURL = newMap();
+api_splitURL['url'] = _api_url;
+api_splitURL['valid'] = callJavaStaticMethod("android.webkit.URLUtil", "isValidUrl(java.lang.String)", api_splitURL['url']);
+_api_url = callJavaStaticMethod("java.net.URI", "create(java.lang.String)", api_splitURL['url']);
+api_splitURL['scheme'] = callJavaMethod(_api_url, "java.net.URI", "getScheme()");
+_api_host = callJavaMethod(_api_url, "java.net.URI", "getHost()");
+if (_api_host != null) {
+  api_splitURL['fullhost'] = _api_host;
+  api_splitURL['host'] = newMap();
+  _api_host_split = split(_api_host, "\\.");
+  if (length(_api_host_split) == 3) {
+    api_splitURL['host']['sub'] = _api_host_split[0];
+    api_splitURL['host']['main'] = _api_host_split[1];
+    api_splitURL['host']['tld'] = _api_host_split[2];
+  } else if (length(_api_host_split) == 2) {
+    api_splitURL['host']['main'] = _api_host_split[1];
+    api_splitURL['host']['tld'] = _api_host_split[2];
+  }
+}
+api_splitURL['port'] = callJavaMethod(_api_url, "java.net.URI", "getPort()");
+if (api_splitURL['port'] == -1) {
+  api_splitURL['port'] = callJavaMethod(_api_url, "java.net.URI", "getEffectivePort()");
+}
+_api_path = callJavaMethod(_api_url, "java.net.URI", "getPath()");
+if (_api_path != null) {
+  api_splitURL['fullpath'] = _api_path;
+  api_splitURL['path'] = split(_api_path, "/");
+}
+_api_query = callJavaMethod(_api_url, "java.net.URI", "getQuery()");
+if (_api_query != null) {
+  api_splitURL['fullquery'] = _api_query;
+  _api_queries = split(_api_query, "\&amp;");
+  api_splitURL['query'] = newMap();
+  for (_api_query in _api_queries) {
+    _api_query = split(_api_query, "=");
+    addMapEntry(api_splitURL['query'], _api_query[0], _api_query[1]);
+  }
+}
+api_splitURL['fragment'] = callJavaMethod(_api_url, "java.net.URI", "getFragment()");</script>
+  </action>
+  <action type="script">
+    <useDefaultName>false</useDefaultName>
     <name>Start desired action</name>
-    <script>if (!startsWith(toUpperCase(api_openSettings_action), "ACTION_")) { api_openSettings_action = "ACTION_" + api_openSettings_action }
-_action = getJavaStaticField("android.provider.Settings", api_openSettings_action);
-_intent = callJavaConstructor("android.content.Intent", "Intent(java.lang.String)", _action);
-callJavaMethod(_intent, "android.content.Intent", "addFlags(int)",  268435456);
-_context = getContext();
-callJavaMethod(_context, "android.content.Context", "startActivity(android.content.Intent)", _intent);</script>
+    <script>if (!startsWith(toUpperCase(api_openSettings), "ACTION_")) { api_openSettings = "ACTION_" + toUpperCase(api_openSettings) }
+_api_action = getJavaStaticField("android.provider.Settings", api_openSettings);
+_api_intent = callJavaConstructor("android.content.Intent", "Intent(java.lang.String)", _api_action);
+callJavaMethod(_api_intent, "android.content.Intent", "addFlags(int)",  268435456);
+callJavaMethod(getContext(), "android.content.Context", "startActivity(android.content.Intent)", _api_intent);</script>
   </action>
   <action type="take_screenshot">
     <useDefaultName>false</useDefaultName>
@@ -353,116 +480,137 @@ callJavaMethod(_context, "android.content.Context", "startActivity(android.conte
     <enabled>true</enabled>
     <executionPolicy>PARALLEL</executionPolicy>
     <triggercontainer id="t1" x="105.0" y="-332.5" />
-    <actioncontainer id="t2" x="-350.0" y="892.5">Input Dialog: {api_getApp_title} Single Choice {_names,listformat,comma}</actioncontainer>
-    <actioncontainer id="t3" x="-140.0" y="892.5">Input Dialog: {api_getApps_title} Multi Choice {_names,listformat,comma}</actioncontainer>
-    <conditioncontainer id="t4" x="-245.0" y="1067.5">Expression: operation == "ok"</conditioncontainer>
-    <actioncontainer id="t5" x="-140.0" y="1207.5">Script: if (isList(value)) { _apps = newList(); for (i in value) { addElement(_apps, getMapValue(_packages, value)); } setValue('api_getApps_apps', _apps); } else if (isString(value)) { setValue('api_getApp_app', getMapValue(_packages, value)); }</actioncontainer>
-    <actioncontainer id="t6" x="-245.0" y="87.5">Show Custom Widget Overlay: Loader, Loader (634*800) Center</actioncontainer>
-    <conditioncontainer id="t7" x="-245.0" y="752.5">Expression: if (convertNull(value, false)) { setValue(_tmp_value, value); } convertNull(api_getApps, false);</conditioncontainer>
-    <actioncontainer id="t8" x="-245.0" y="1347.5">Script: if (convertNull(_tmp_value, false)) { setValue(value, getValue(_tmp_value)); }</actioncontainer>
-    <actioncontainer id="t9" x="-420.0" y="507.5">Hide Custom Widget Overlay: Loader</actioncontainer>
-    <actioncontainer id="t10" x="-245.0" y="227.5">Init Variable Package Info: All Packages into _package_info</actioncontainer>
-    <actioncontainer id="t11" x="-245.0" y="402.5">Script: _keys = getMapKeys(_package_info); _packages = newMap(); _names = newList(); for (k in _keys) { _name = getAppName(k); addElement(_names, _name); addMapEntry(_packages, _name, k); } sort(_names);</actioncontainer>
-    <actioncontainer id="t12" x="-455.0" y="87.5">Execute Flows: Rotate Loader</actioncontainer>
-    <actioncontainer id="t13" x="630.0" y="472.5">Temp Screenshot: 1280*720</actioncontainer>
-    <actioncontainer id="t14" x="735.0" y="612.5">Temp Screenshot: 960*600</actioncontainer>
-    <actioncontainer id="t15" x="315.0" y="1172.5">Execute Flows: Cleanup</actioncontainer>
-    <actioncontainer id="t16" x="315.0" y="1067.5">Script: get and return pixel</actioncontainer>
-    <actioncontainer id="t17" x="315.0" y="962.5">Read screenshot from file</actioncontainer>
-    <actioncontainer id="t18" x="525.0" y="332.5">Temp Screenshot: 1920*1080</actioncontainer>
-    <actioncontainer id="t19" x="420.0" y="192.5">Temp Screenshot: 1920*1200</actioncontainer>
-    <actioncontainer id="t20" x="315.0" y="52.5">Execute Root Command: screencap -p /storage/emulated/0/tmp/screenshot in </actioncontainer>
-    <actioncontainer id="t21" x="-455.0" y="-87.5">Script: Prepare Loader</actioncontainer>
-    <actioncontainer id="t22" x="-245.0" y="612.5">Script: Destruct Loader</actioncontainer>
-    <actioncontainer id="t23" x="910.0" y="752.5">Temp Screenshot: 480*300</actioncontainer>
-    <conditioncontainer id="t24" x="-245.0" y="-122.5">Expression: convertNull(api_getApp, false) or convertNull(api_getApps, false)</conditioncontainer>
-    <notecontainer id="t25" x="-367.5" y="-332.5" w="245.0" h="105.0">Function: api_getApps
+    <notecontainer id="t2" x="-367.5" y="-332.5" w="245.0" h="105.0">Function: api_getApps
 param: str: api_getApps_title
 param: str: api_getApps_default
 return: str: api_getApps_apps</notecontainer>
-    <conditioncontainer id="t26" x="315.0" y="-122.5">Expression: convertNull(api_getPixel, false);</conditioncontainer>
-    <notecontainer id="t27" x="315.0" y="-332.5" w="140.0" h="105.0">Function: api_getPixel</notecontainer>
-    <notecontainer id="t28" x="-122.5" y="-332.5" w="245.0" h="105.0">Function: api_getApp
+    <conditioncontainer id="t3" x="315.0" y="-122.5">Expression: convertNull(api_getPixel, false);</conditioncontainer>
+    <notecontainer id="t4" x="-122.5" y="-332.5" w="245.0" h="105.0">Function: api_getApp
 param: str: api_getApp_title
 param: str: api_getApp_default
 return: str: api_getApp_app</notecontainer>
-    <actioncontainer id="t29" x="1260.0" y="52.5">Start desired action</actioncontainer>
-    <notecontainer id="t30" x="1260.0" y="-332.5" w="140.0" h="105.0">Function: api_openSettings
-Param: str: api_openSettings_action</notecontainer>
-    <conditioncontainer id="t31" x="1260.0" y="-122.5">Expression: convertNull(api_openSettings, false);</conditioncontainer>
+    <notecontainer id="t5" x="332.5" y="-332.5" w="175.0" h="105.0">Function: api_getPixel</notecontainer>
+    <conditioncontainer id="t6" x="-245.0" y="-122.5">Expression: convertNull(api_getApp, false) or convertNull(api_getApps, false)</conditioncontainer>
+    <actioncontainer id="t7" x="-455.0" y="-87.5">Script: Prepare Loader</actioncontainer>
+    <actioncontainer id="t8" x="-245.0" y="87.5">Show Custom Widget Overlay: Loader, Loader (634*800) Center</actioncontainer>
+    <actioncontainer id="t9" x="-455.0" y="87.5">Execute Flows: Rotate Loader</actioncontainer>
+    <actioncontainer id="t10" x="-420.0" y="507.5">Hide Custom Widget Overlay: Loader</actioncontainer>
+    <actioncontainer id="t11" x="-350.0" y="892.5">Input Dialog: {api_getApp_title} Single Choice {_api_names,listformat,comma}</actioncontainer>
+    <actioncontainer id="t12" x="-245.0" y="612.5">Script: Destruct Loader</actioncontainer>
+    <actioncontainer id="t13" x="-245.0" y="227.5">Init Variable Package Info: All Packages into _api_package_info</actioncontainer>
+    <actioncontainer id="t14" x="-245.0" y="402.5">Script: _api_keys = getMapKeys(_api_package_info); _api_packages = newMap(); _api_names = newList(); for (_api_k in _api_keys) { _api_name = getAppName(_api_k); addElement(_api_names, _api_name); addMapEntry(_api_packages, _api_name, _api_k); } sort(_api_names);</actioncontainer>
+    <conditioncontainer id="t15" x="-245.0" y="1067.5">Expression: operation == "ok"</conditioncontainer>
+    <actioncontainer id="t16" x="-140.0" y="1207.5">Script: if (isList(value)) { _api_apps = newList(); for (i in value) { addElement(_api_apps, getMapValue(_api_packages, value)); } setValue('api_getApps_apps', _api_apps); } else if (isString(value)) { setValue('api_getApp_app', getMapValue(_api_packages, value)); }</actioncontainer>
+    <actioncontainer id="t17" x="105.0" y="1347.5">Common Garbage Collector</actioncontainer>
+    <actioncontainer id="t18" x="-140.0" y="892.5">Input Dialog: {api_getApps_title} Multi Choice {_api_names,listformat,comma}</actioncontainer>
+    <conditioncontainer id="t19" x="-245.0" y="752.5">Expression: if (convertNull(value, false)) { setValue(__api_tmp_value, value); } if (convertNull(operation, false)) { setValue(__api_tmp_operation, operation); } if (convertNull(index, false)) { setValue(__api_tmp_index, index); } if (convertNull(indices, false)) { setValue(__api_tmp_indices, indices); } convertNull(api_getApps, false);</conditioncontainer>
+    <actioncontainer id="t20" x="-245.0" y="1347.5">Script: if (_api_tmp_value != null) { setValue(value, getValue(_api_tmp_value)); } else { removeVariable('value'); } if (_api_tmp_operation != null) { setValue(operation, getValue(_api_tmp_operation)); } else { removeVariable('operation'); } if (_api_tmp_index != null) { setValue(index, getValue(_api_tmp_index)); } else { removeVariable('index'); } if (_api_tmp_indices != null) { setValue(indices, getValue(_api_tmp_indices)); } else { removeVariable('indices'); }</actioncontainer>
+    <actioncontainer id="t21" x="315.0" y="52.5">Execute Root Command: screencap -p /storage/emulated/0/tmp/screenshot in </actioncontainer>
+    <actioncontainer id="t22" x="420.0" y="192.5">Temp Screenshot: 1920*1200</actioncontainer>
+    <actioncontainer id="t23" x="630.0" y="472.5">Temp Screenshot: 1280*720</actioncontainer>
+    <actioncontainer id="t24" x="735.0" y="612.5">Temp Screenshot: 960*600</actioncontainer>
+    <actioncontainer id="t25" x="840.0" y="752.5">Temp Screenshot: 480*300</actioncontainer>
+    <conditioncontainer id="t26" x="-735.0001" y="-122.5">Expression: _api_t = convertNull(api_splitURL, false); if (_api_t!=false){return true;}else{return false}</conditioncontainer>
+    <notecontainer id="t27" x="-717.5" y="-332.5" w="245.0" h="105.0">Function: api_splitURL
+Param: str: api_splitURL
+Return: map: api_splitURL</notecontainer>
+    <actioncontainer id="t28" x="525.0" y="332.5">Temp Screenshot: 1920*1080</actioncontainer>
+    <actioncontainer id="t29" x="314.99988" y="962.5002">Script: if (convertNull(image_height, false)) { setValue(__api_tmp_image_height, image_height); } if (convertNull(image_width, false)) { setValue(__api_tmp_image_width, image_width); }</actioncontainer>
+    <actioncontainer id="t30" x="594.9999" y="962.50024">Script: if (_api_tmp_image_height != null) { setValue(image_height, getValue(_api_tmp_image_height)); } else { removeVariable('image_height'); } if (_api_tmp_image_width != null) { setValue(image_width, getValue(_api_tmp_image_width)); } else { removeVariable('image_width'); }</actioncontainer>
+    <actioncontainer id="t31" x="455.00006" y="1172.5">Execute Flows: Cleanup</actioncontainer>
+    <actioncontainer id="t32" x="455.00006" y="962.49994">Read screenshot from file</actioncontainer>
+    <actioncontainer id="t33" x="455.00006" y="1067.5">Script: get and return pixel</actioncontainer>
+    <notecontainer id="t34" x="-1137.5" y="-332.5" w="245.0" h="105.0">Function: api_openSettings
+Param: str: api_openSettings</notecontainer>
+    <conditioncontainer id="t35" x="-1155.0" y="-122.5">Expression: _api_t = convertNull(api_openSettings, false); if (_api_t!=false){return true;}else{return false}</conditioncontainer>
+    <actioncontainer id="t36" x="-1155.0" y="52.500023">Start desired action</actioncontainer>
+    <actioncontainer id="t37" x="-735.0001" y="52.500015">Split URL</actioncontainer>
+    <connection from="t1" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t1" to="t6" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t1" to="t35" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
     <connection from="t1" to="t26" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t1" to="t24" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t1" to="t31" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t2" to="t4" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t3" to="t4" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t4" to="t5" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t4" to="t8" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t5" to="t8" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t6" to="t10" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t7" to="t3" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t7" to="t2" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t9" to="t22" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t10" to="t11" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t11" to="t9" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t12" to="t6" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t13" to="t14" type="EXCEPTION" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t13" to="t17" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t14" to="t23" type="EXCEPTION" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t14" to="t17" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t16" to="t15" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t17" to="t16" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t18" to="t17" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t18" to="t13" type="EXCEPTION" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t19" to="t17" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t19" to="t18" type="EXCEPTION" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t20" to="t17" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t20" to="t19" type="EXCEPTION" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t21" to="t6" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t22" to="t7" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t23" to="t17" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t24" to="t21" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t24" to="t25" type="NOTE" sourcePosition="NORTH" targetPosition="SOUTH" />
-    <connection from="t24" to="t28" type="NOTE" sourcePosition="NORTH" targetPosition="SOUTH" />
-    <connection from="t26" to="t20" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t3" to="t21" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t3" to="t5" type="NOTE" sourcePosition="NORTH" targetPosition="SOUTH" />
+    <connection from="t6" to="t7" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t6" to="t2" type="NOTE" sourcePosition="WEST" targetPosition="SOUTH" />
+    <connection from="t6" to="t4" type="NOTE" sourcePosition="EAST" targetPosition="SOUTH" />
+    <connection from="t7" to="t8" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t8" to="t13" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t9" to="t8" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t10" to="t12" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t11" to="t15" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t12" to="t19" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t13" to="t14" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t14" to="t10" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t15" to="t16" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t15" to="t20" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t16" to="t20" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t18" to="t15" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t19" to="t18" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t19" to="t11" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t20" to="t17" type="NORMAL" sourcePosition="EAST" targetPosition="WEST" />
+    <connection from="t21" to="t22" type="EXCEPTION" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t21" to="t29" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t22" to="t28" type="EXCEPTION" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t22" to="t29" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t23" to="t24" type="EXCEPTION" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t23" to="t29" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t24" to="t25" type="EXCEPTION" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t24" to="t29" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t25" to="t29" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t26" to="t37" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
     <connection from="t26" to="t27" type="NOTE" sourcePosition="NORTH" targetPosition="SOUTH" />
-    <connection from="t31" to="t29" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t31" to="t30" type="NOTE" sourcePosition="NORTH" targetPosition="SOUTH" />
+    <connection from="t28" to="t23" type="EXCEPTION" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t28" to="t29" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t29" to="t32" type="NORMAL" sourcePosition="EAST" targetPosition="WEST" />
+    <connection from="t30" to="t33" type="NORMAL" sourcePosition="SOUTH" targetPosition="EAST" />
+    <connection from="t31" to="t17" type="NORMAL" sourcePosition="SOUTH" targetPosition="EAST" />
+    <connection from="t33" to="t31" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t35" to="t36" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t35" to="t34" type="NOTE" sourcePosition="NORTH" targetPosition="SOUTH" />
+    <connection from="t36" to="t17" type="NORMAL" sourcePosition="SOUTH" targetPosition="WEST" />
+    <connection from="t37" to="t17" type="NORMAL" sourcePosition="SOUTH" targetPosition="WEST" />
   </flow>
   <flow type="flow">
     <name>API Test</name>
     <group>. API</group>
     <enabled>true</enabled>
     <executionPolicy>PARALLEL</executionPolicy>
-    <triggercontainer id="t1" x="70.0" y="-157.49997">
+    <triggercontainer id="t1" x="35.000015" y="-297.5">
       <trigger>Shortcut: API</trigger>
     </triggercontainer>
-    <actioncontainer id="t2" x="244.99997" y="192.50003">Script: setValue("api_getApps", true); setValue("api_getApps_title", "Choose some apps"); setValue("api_getApps_default", "Automagic Premium,pizza.de,Adguard");</actioncontainer>
-    <actioncontainer id="t3" x="-35.000015" y="262.5">Script: setValue("api_getPixel", true); setValue("api_getPixel_x", 50); setValue("api_getPixel_y", 100);</actioncontainer>
-    <actioncontainer id="t4" x="69.99997" y="962.5001">Execute Flows: Debugger </actioncontainer>
-    <actioncontainer id="t5" x="209.99997" y="52.500015">Script: setValue("api_getApp", true); setValue("api_getApp_title", "Choose a app"); setValue("api_getApp_default", "Automagic Premium");</actioncontainer>
-    <actioncontainer id="t6" x="70.0" y="612.5">Execute Flows: API</actioncontainer>
-    <actioncontainer id="t7" x="69.999985" y="787.5">Control UI: convertNull(global_pixeltracker, newList()); addElement(global_pixeltracker, api_getPixel_pixe);</actioncontainer>
-    <connection from="t1" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t2" to="t6" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t3" to="t6" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t5" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <actioncontainer id="t2" x="70.0" y="787.5">Control UI: convertNull(global_pixeltracker, newList()); addElement(global_pixeltracker, api_getPixel_pixe);</actioncontainer>
+    <actioncontainer id="t3" x="560.0" y="927.5">Execute Flows: Debugger </actioncontainer>
+    <conditioncontainer id="t4" x="630.0" y="682.5"> Debug Dialog</conditioncontainer>
+    <actioncontainer id="t5" x="70.0" y="612.5">Execute Flows: API</actioncontainer>
+    <actioncontainer id="t6" x="35.0" y="227.5">Script: setValue("api_getPixel", true); setValue("api_getPixel_x", 50); setValue("api_getPixel_y", 100);</actioncontainer>
+    <actioncontainer id="t7" x="70.0" y="437.5">Script: setValue("api_splitURL", "https://www.youtube.com/path/to/file.html?key1=value1&amp;key2=value2&amp;key3=value3#body");</actioncontainer>
+    <actioncontainer id="t8" x="665.00006" y="17.499977">Script: setValue("api_getApps", true); setValue("api_getApps_title", "Choose some apps"); setValue("api_getApps_default", "Automagic Premium,pizza.de,Adguard");</actioncontainer>
+    <actioncontainer id="t9" x="244.99997" y="-122.5">Script: operation = "im important"; setValue("api_getApp", true); setValue("api_getApp_title", "Choose a app"); setValue("api_getApp_default", "Automagic Premium");</actioncontainer>
+    <actioncontainer id="t10" x="-105.000015" y="52.5">Script: api_openSettings = "ACCESSIBILITY_SETTINGS"</actioncontainer>
+    <connection from="t1" to="t7" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t2" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t5" to="t4" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
     <connection from="t6" to="t7" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t7" to="t4" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t7" to="t5" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t8" to="t6" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t9" to="t10" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t10" to="t6" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
   </flow>
   <flow type="flow">
     <name>Cleanup</name>
     <group>. API</group>
     <enabled>true</enabled>
     <executionPolicy>PARALLEL</executionPolicy>
-    <conditioncontainer id="t1" x="385.0" y="-157.5">Function: api_getPixel</conditioncontainer>
-    <actioncontainer id="t2" x="385.0" y="-17.499998">Script: removeVariable(_screenshot);</actioncontainer>
-    <actioncontainer id="t3" x="385.0" y="122.49998">Delete Files: /storage/emulated/0/tmp/screenshot</actioncontainer>
-    <conditioncontainer id="t4" x="385.0" y="262.50006">Expression: </conditioncontainer>
-    <triggercontainer id="t5" x="385.0" y="-297.49994" />
-    <connection from="t1" to="t2" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t2" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t3" to="t4" type="EXCEPTION" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t5" to="t1" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <triggercontainer id="t1" x="385.0" y="-297.49994" />
+    <conditioncontainer id="t2" x="385.0" y="-157.5">Function: api_getPixel</conditioncontainer>
+    <actioncontainer id="t3" x="385.0" y="-17.5">Script: removeVariable(_screenshot);</actioncontainer>
+    <actioncontainer id="t4" x="385.0" y="122.49997">Delete Files: /storage/emulated/0/tmp/screenshot</actioncontainer>
+    <conditioncontainer id="t5" x="385.0" y="262.50006">Expression: </conditioncontainer>
+    <connection from="t1" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t2" to="t3" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t3" to="t4" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t4" to="t5" type="EXCEPTION" sourcePosition="SOUTH" targetPosition="NORTH" />
   </flow>
   <flow type="flow">
     <name>Rotate Loader</name>
@@ -487,230 +635,4 @@ Param: str: api_openSettings_action</notecontainer>
     <connection from="t8" to="t5" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
     <connection from="t9" to="t6" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
   </flow>
-  <widget type="custom">
-    <name>Loader</name>
-    <width>200</width>
-    <height>275</height>
-    <bitmapScalingFactor>2</bitmapScalingFactor>
-    <autoRefresh>false</autoRefresh>
-    <autoRefreshFrequency>3600000</autoRefreshFrequency>
-    <clickable />
-    <clickableFeedback>false</clickableFeedback>
-    <widgetIds></widgetIds>
-    <elements>
-      <element type="background">
-        <properties>
-          <property name="cornerradiusx" type="double">20.0</property>
-          <property name="cornerradiusy" type="double">20.0</property>
-          <property name="fill" type="boolean">true</property>
-          <property name="fillcolor" type="integer">-1090519040</property>
-          <property name="marginbottom" type="double">0.0</property>
-          <property name="marginleft" type="double">0.0</property>
-          <property name="marginright" type="double">0.0</property>
-          <property name="margintop" type="double">0.0</property>
-          <property name="name" type="string">Background</property>
-          <property name="roundedcorners" type="boolean">true</property>
-          <property name="visible" type="boolean">true</property>
-        </properties>
-      </element>
-      <element type="image">
-        <properties>
-          <property name="ellipse" type="boolean">false</property>
-          <property name="extractcropcenter" type="boolean">false</property>
-          <property name="fill" type="boolean">true</property>
-          <property name="fillcolor" type="integer">-1</property>
-          <property name="fillshadow" type="boolean">false</property>
-          <property name="fillshadowcolor" type="integer">-16777216</property>
-          <property name="fillshadowoffsetx" type="double">2.0</property>
-          <property name="fillshadowoffsety" type="double">2.0</property>
-          <property name="fillshadowradius" type="double">3.0</property>
-          <property name="height" type="double">109.0</property>
-          <property name="keepaspectratio" type="boolean">true</property>
-          <property name="name" type="string">Spinning Gear</property>
-          <property name="outline" type="boolean">false</property>
-          <property name="outlinecolor" type="integer">-16711936</property>
-          <property name="outlineshadow" type="boolean">false</property>
-          <property name="outlineshadowcolor" type="integer">-16777216</property>
-          <property name="outlineshadowoffsetx" type="double">2.0</property>
-          <property name="outlineshadowoffsety" type="double">2.0</property>
-          <property name="outlineshadowradius" type="double">3.0</property>
-          <property name="outlinewidth" type="double">1.0</property>
-          <property name="path" type="string">app.icon://com.android.settings</property>
-          <property name="rotation" type="double">0.0</property>
-          <property name="rotationx" type="double">0.0</property>
-          <property name="rotationy" type="double">0.0</property>
-          <property name="visible" type="boolean">true</property>
-          <property name="width" type="double">118.0</property>
-          <property name="x" type="double">39.960906982421875</property>
-          <property name="y" type="double">43.84214782714844</property>
-        </properties>
-      </element>
-      <element type="text">
-        <properties>
-          <property name="clip" type="boolean">false</property>
-          <property name="fakebold" type="boolean">false</property>
-          <property name="fill" type="boolean">true</property>
-          <property name="fillcolor" type="integer">-11247910</property>
-          <property name="fillshadow" type="boolean">false</property>
-          <property name="fillshadowcolor" type="integer">-16777216</property>
-          <property name="fillshadowoffsetx" type="double">2.0</property>
-          <property name="fillshadowoffsety" type="double">2.0</property>
-          <property name="fillshadowradius" type="double">3.0</property>
-          <property name="height" type="double">19.0</property>
-          <property name="multiline" type="boolean">false</property>
-          <property name="name" type="string">Title</property>
-          <property name="outline" type="boolean">false</property>
-          <property name="outlinecolor" type="integer">-16711936</property>
-          <property name="outlineshadow" type="boolean">false</property>
-          <property name="outlineshadowcolor" type="integer">-16777216</property>
-          <property name="outlineshadowoffsetx" type="double">2.0</property>
-          <property name="outlineshadowoffsety" type="double">2.0</property>
-          <property name="outlineshadowradius" type="double">3.0</property>
-          <property name="outlinewidth" type="double">1.0</property>
-          <property name="rotation" type="double">0.0</property>
-          <property name="rotationx" type="double">0.0</property>
-          <property name="rotationy" type="double">0.0</property>
-          <property name="strikethrough" type="boolean">false</property>
-          <property name="text" type="string">Loading</property>
-          <property name="textalign" type="string">center</property>
-          <property name="textpaddingbottom" type="double">0.0</property>
-          <property name="textpaddingleft" type="double">0.0</property>
-          <property name="textpaddingright" type="double">0.0</property>
-          <property name="textpaddingtop" type="double">0.0</property>
-          <property name="textscalex" type="double">0.7</property>
-          <property name="textsize" type="double">15.0</property>
-          <property name="textskewx" type="double">-0.0</property>
-          <property name="textstyle" type="string">normal</property>
-          <property name="typeface" type="string">monospace</property>
-          <property name="underline" type="boolean">false</property>
-          <property name="verticaltextalign" type="string">top</property>
-          <property name="visible" type="boolean">true</property>
-          <property name="width" type="double">149.99998474121094</property>
-          <property name="x" type="double">26.820051193237305</property>
-          <property name="y" type="double">9.05935287475586</property>
-        </properties>
-      </element>
-      <element type="text">
-        <properties>
-          <property name="clip" type="boolean">false</property>
-          <property name="fakebold" type="boolean">false</property>
-          <property name="fill" type="boolean">true</property>
-          <property name="fillcolor" type="integer">-1</property>
-          <property name="fillshadow" type="boolean">false</property>
-          <property name="fillshadowcolor" type="integer">-16777216</property>
-          <property name="fillshadowoffsetx" type="double">2.0</property>
-          <property name="fillshadowoffsety" type="double">2.0</property>
-          <property name="fillshadowradius" type="double">3.0</property>
-          <property name="height" type="double">28.0</property>
-          <property name="multiline" type="boolean">false</property>
-          <property name="name" type="string">Subtitle</property>
-          <property name="outline" type="boolean">false</property>
-          <property name="outlinecolor" type="integer">-16711936</property>
-          <property name="outlineshadow" type="boolean">false</property>
-          <property name="outlineshadowcolor" type="integer">-16777216</property>
-          <property name="outlineshadowoffsetx" type="double">2.0</property>
-          <property name="outlineshadowoffsety" type="double">2.0</property>
-          <property name="outlineshadowradius" type="double">3.0</property>
-          <property name="outlinewidth" type="double">1.0</property>
-          <property name="rotation" type="double">0.0</property>
-          <property name="rotationx" type="double">0.0</property>
-          <property name="rotationy" type="double">0.0</property>
-          <property name="strikethrough" type="boolean">false</property>
-          <property name="text" type="string"></property>
-          <property name="textalign" type="string">center</property>
-          <property name="textpaddingbottom" type="double">0.0</property>
-          <property name="textpaddingleft" type="double">0.0</property>
-          <property name="textpaddingright" type="double">0.0</property>
-          <property name="textpaddingtop" type="double">0.0</property>
-          <property name="textscalex" type="double">0.9</property>
-          <property name="textsize" type="double">20.0</property>
-          <property name="textskewx" type="double">0.0</property>
-          <property name="textstyle" type="string">normal</property>
-          <property name="typeface" type="string">monospace</property>
-          <property name="underline" type="boolean">false</property>
-          <property name="verticaltextalign" type="string">top</property>
-          <property name="visible" type="boolean">true</property>
-          <property name="width" type="double">175.0</property>
-          <property name="x" type="double">12.844444274902344</property>
-          <property name="y" type="double">140.30502319335938</property>
-        </properties>
-      </element>
-      <element type="rectangle">
-        <properties>
-          <property name="cornerradiusx" type="double">0.0</property>
-          <property name="cornerradiusy" type="double">0.0</property>
-          <property name="fill" type="boolean">true</property>
-          <property name="fillcolor" type="integer">1124073727</property>
-          <property name="fillshadow" type="boolean">false</property>
-          <property name="fillshadowcolor" type="integer">-16777216</property>
-          <property name="fillshadowoffsetx" type="double">2.0</property>
-          <property name="fillshadowoffsety" type="double">2.0</property>
-          <property name="fillshadowradius" type="double">3.0</property>
-          <property name="height" type="double">70.0</property>
-          <property name="name" type="string">Content Background</property>
-          <property name="outline" type="boolean">false</property>
-          <property name="outlinecolor" type="integer">-16711936</property>
-          <property name="outlineshadow" type="boolean">false</property>
-          <property name="outlineshadowcolor" type="integer">-16777216</property>
-          <property name="outlineshadowoffsetx" type="double">2.0</property>
-          <property name="outlineshadowoffsety" type="double">2.0</property>
-          <property name="outlineshadowradius" type="double">3.0</property>
-          <property name="outlinewidth" type="double">1.0</property>
-          <property name="rotation" type="double">0.0</property>
-          <property name="rotationx" type="double">0.0</property>
-          <property name="rotationy" type="double">0.0</property>
-          <property name="roundedcorners" type="boolean">false</property>
-          <property name="visible" type="boolean">false</property>
-          <property name="width" type="double">150.00006103515625</property>
-          <property name="x" type="double">25.375558853149414</property>
-          <property name="y" type="double">169.74404907226563</property>
-        </properties>
-      </element>
-      <element type="text">
-        <properties>
-          <property name="clip" type="boolean">false</property>
-          <property name="fakebold" type="boolean">false</property>
-          <property name="fill" type="boolean">true</property>
-          <property name="fillcolor" type="integer">-1</property>
-          <property name="fillshadow" type="boolean">false</property>
-          <property name="fillshadowcolor" type="integer">-16777216</property>
-          <property name="fillshadowoffsetx" type="double">2.0</property>
-          <property name="fillshadowoffsety" type="double">2.0</property>
-          <property name="fillshadowradius" type="double">3.0</property>
-          <property name="height" type="double">63.0</property>
-          <property name="multiline" type="boolean">false</property>
-          <property name="name" type="string">Content</property>
-          <property name="outline" type="boolean">false</property>
-          <property name="outlinecolor" type="integer">-16711936</property>
-          <property name="outlineshadow" type="boolean">false</property>
-          <property name="outlineshadowcolor" type="integer">-16777216</property>
-          <property name="outlineshadowoffsetx" type="double">2.0</property>
-          <property name="outlineshadowoffsety" type="double">2.0</property>
-          <property name="outlineshadowradius" type="double">3.0</property>
-          <property name="outlinewidth" type="double">1.0</property>
-          <property name="rotation" type="double">0.0</property>
-          <property name="rotationx" type="double">0.0</property>
-          <property name="rotationy" type="double">0.0</property>
-          <property name="strikethrough" type="boolean">false</property>
-          <property name="text" type="string"></property>
-          <property name="textalign" type="string">center</property>
-          <property name="textpaddingbottom" type="double">0.0</property>
-          <property name="textpaddingleft" type="double">0.0</property>
-          <property name="textpaddingright" type="double">0.0</property>
-          <property name="textpaddingtop" type="double">0.0</property>
-          <property name="textscalex" type="double">1.0</property>
-          <property name="textsize" type="double">12.0</property>
-          <property name="textskewx" type="double">0.0</property>
-          <property name="textstyle" type="string">normal</property>
-          <property name="typeface" type="string">sansserif</property>
-          <property name="underline" type="boolean">false</property>
-          <property name="verticaltextalign" type="string">top</property>
-          <property name="visible" type="boolean">true</property>
-          <property name="width" type="double">171.0</property>
-          <property name="x" type="double">12.844420433044434</property>
-          <property name="y" type="double">171.3099365234375</property>
-        </properties>
-      </element>
-    </elements>
-  </widget>
 </data>
