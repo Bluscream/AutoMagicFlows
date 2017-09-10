@@ -1,47 +1,31 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
 <data version="1.34.0">
-  <trigger type="user_interface_event">
-    <useDefaultName>false</useDefaultName>
-    <name>Click in Youtube</name>
-    <enabled>false</enabled>
-    <accessibilityEventType>TYPE_VIEW_CLICKED</accessibilityEventType>
-    <packageNameFilter>com.google.android.ogyoutube,com.google.android.youtube,com.google.android.apps.youtube.gaming</packageNameFilter>
-    <textMatchType>CONTAINS_TEXT</textMatchType>
-    <textFilter></textFilter>
-    <removeNonPrintableCharacters>false</removeNonPrintableCharacters>
+  <trigger type="global_variable">
+    <useDefaultName>true</useDefaultName>
+    <name>Global Variable: global_youtube_current_hash</name>
+    <enabled>true</enabled>
+    <variable>global_youtube_current_hash</variable>
   </trigger>
   <action type="control_user_interface">
     <useDefaultName>false</useDefaultName>
-    <name>Dis/Like if not already dis/liked</name>
-    <script>_title = "com.google.android.apps.youtube.gaming:id/title";
-if (existsElementById(_title)){
-  title = getTextById(_title);
-  if (title != global_yt_autolike_title){
-    global_yt_autolike_title = title;
-    clickById("com.google.android.apps.youtube.gaming:id/like_button");
-    //clickById("com.google.android.apps.youtube.gaming:id/dislike_button");
-  }
+    <name>Control UI</name>
+    <script>
+_button = "com.google.android.apps.youtube.gaming:id/like_button";
+if (existsElementById(_button)){
+  clickById(_button);
+  //clickById("com.google.android.apps.youtube.gaming:id/dislike_button");
 }</script>
-  </action>
-  <action type="sleep">
-    <useDefaultName>true</useDefaultName>
-    <name>Sleep: 500ms (allow device sleep)</name>
-    <duration>500ms</duration>
-    <keepDeviceAwake>false</keepDeviceAwake>
-    <allowWakeupFromDeviceIdle>false</allowWakeupFromDeviceIdle>
   </action>
   <flow type="flow">
     <name>Youtube Auto Like/Dislike</name>
     <group>YouTube</group>
-    <enabled>false</enabled>
-    <executionPolicy>STOP</executionPolicy>
+    <enabled>true</enabled>
+    <executionPolicy>SKIP</executionPolicy>
     <emergencyStopCount>250</emergencyStopCount>
     <triggercontainer id="t1" x="70.0" y="52.5">
-      <trigger>Click in Youtube</trigger>
+      <trigger>Global Variable: global_youtube_current_hash</trigger>
     </triggercontainer>
-    <actioncontainer id="t2" x="70.0" y="227.5">Sleep: 500ms (allow device sleep)</actioncontainer>
-    <actioncontainer id="t3" x="70.0" y="402.5">Dis/Like if not already dis/liked</actioncontainer>
+    <actioncontainer id="t2" x="70.000015" y="192.5">Control UI</actioncontainer>
     <connection from="t1" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t2" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
   </flow>
 </data>

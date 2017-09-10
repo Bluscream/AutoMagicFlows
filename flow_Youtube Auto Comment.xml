@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<data version="1.34.0">
+  <trigger type="global_variable">
+    <useDefaultName>true</useDefaultName>
+    <name>Global Variable: global_youtube_current_hash</name>
+    <enabled>true</enabled>
+    <variable>global_youtube_current_hash</variable>
+  </trigger>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: _hascommentsbutton</name>
+    <expression>_hascommentsbutton</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: hascomments</name>
+    <expression>hascomments</expression>
+  </condition>
+  <action type="control_user_interface">
+    <useDefaultName>true</useDefaultName>
+    <name>Control UI: _commentsbutton = "com.google.android.apps.youtube.gaming:id/comments_button"; _hascommentsbutton = existsElementById(_commentsbutton);</name>
+    <script>_commentsbutton = "com.google.android.apps.youtube.gaming:id/comments_button";
+_hascommentsbutton = existsElementById(_commentsbutton);</script>
+  </action>
+  <action type="control_user_interface">
+    <useDefaultName>true</useDefaultName>
+    <name>Control UI: clickById("com.google.android.apps.youtube.gaming:id/add_comment_button"); sleep(100); setText2ById("com.google.android.apps.youtube.gaming:id/comment", "watched this video at {triggertime,dateformat,dd.MM.yyyy HH:mm:ss}"); clickById("com.google.android.apps.youtube.gaming:id/send_button");</name>
+    <script>clickById("com.google.android.apps.youtube.gaming:id/add_comment_button");
+sleep(100);
+setText2ById("com.google.android.apps.youtube.gaming:id/comment", "watched this video at {triggertime,dateformat,dd.MM.yyyy HH:mm:ss}");
+clickById("com.google.android.apps.youtube.gaming:id/send_button");</script>
+  </action>
+  <action type="control_user_interface">
+    <useDefaultName>true</useDefaultName>
+    <name>Control UI: clickById(_commentsbutton);</name>
+    <script>clickById(_commentsbutton);</script>
+  </action>
+  <action type="control_user_interface">
+    <useDefaultName>true</useDefaultName>
+    <name>Control UI: hascomments = existsElementById("com.google.android.apps.youtube.gaming:id/add_comment_button");</name>
+    <script>hascomments = existsElementById("com.google.android.apps.youtube.gaming:id/add_comment_button");</script>
+  </action>
+  <action type="notification_screen">
+    <useDefaultName>true</useDefaultName>
+    <name>Notification on Screen: o: {old_global_youtube_current_hash}
+n: {global_youtube_current_hash} (long)</name>
+    <showText>true</showText>
+    <text>o: {old_global_youtube_current_hash}
+n: {global_youtube_current_hash}</text>
+    <widgetName></widgetName>
+    <width>200</width>
+    <height>250</height>
+    <stretchToFillArea>false</stretchToFillArea>
+    <opacity>1.00</opacity>
+    <durationLong>true</durationLong>
+    <customPosition>false</customPosition>
+    <gravityType>TOP_LEFT</gravityType>
+    <xOffset>0</xOffset>
+    <yOffset>0</yOffset>
+  </action>
+  <action type="sleep">
+    <useDefaultName>true</useDefaultName>
+    <name>Sleep: 200ms (allow device sleep)</name>
+    <duration>200ms</duration>
+    <keepDeviceAwake>false</keepDeviceAwake>
+    <allowWakeupFromDeviceIdle>false</allowWakeupFromDeviceIdle>
+  </action>
+  <action type="sleep">
+    <useDefaultName>true</useDefaultName>
+    <name>Sleep: 250ms (allow device sleep)</name>
+    <duration>250ms</duration>
+    <keepDeviceAwake>false</keepDeviceAwake>
+    <allowWakeupFromDeviceIdle>false</allowWakeupFromDeviceIdle>
+  </action>
+  <flow type="flow">
+    <name>Youtube Auto Comment</name>
+    <group>YouTube</group>
+    <enabled>true</enabled>
+    <executionPolicy>SKIP</executionPolicy>
+    <emergencyStopCount>250</emergencyStopCount>
+    <triggercontainer id="t1" x="69.999985" y="-787.50006">
+      <trigger>Global Variable: global_youtube_current_hash</trigger>
+    </triggercontainer>
+    <actioncontainer id="t2" x="-280.0" y="-122.500015">Sleep: 200ms (allow device sleep)</actioncontainer>
+    <conditioncontainer id="t3" x="-279.99988" y="87.50008">Expression: hascomments</conditioncontainer>
+    <actioncontainer id="t4" x="-104.999985" y="-17.500168">Control UI: hascomments = existsElementById("com.google.android.apps.youtube.gaming:id/add_comment_button");</actioncontainer>
+    <actioncontainer id="t5" x="350.0" y="-682.5">Notification on Screen: o: {old_global_youtube_current_hash}
+n: {global_youtube_current_hash} (long)</actioncontainer>
+    <actioncontainer id="t6" x="70.0" y="-122.500015">Sleep: 250ms (allow device sleep)</actioncontainer>
+    <actioncontainer id="t7" x="69.999985" y="17.500046">Control UI: clickById("com.google.android.apps.youtube.gaming:id/add_comment_button"); sleep(100); setText2ById("com.google.android.apps.youtube.gaming:id/comment", "watched this video at {triggertime,dateformat,dd.MM.yyyy HH:mm:ss}"); clickById("com.google.android.apps.youtube.gaming:id/send_button");</actioncontainer>
+    <actioncontainer id="t8" x="70.00003" y="-577.5002">Control UI: _commentsbutton = "com.google.android.apps.youtube.gaming:id/comments_button"; _hascommentsbutton = existsElementById(_commentsbutton);</actioncontainer>
+    <conditioncontainer id="t9" x="70.00003" y="-437.5">Expression: _hascommentsbutton</conditioncontainer>
+    <actioncontainer id="t10" x="70.00008" y="-262.49997">Control UI: clickById(_commentsbutton);</actioncontainer>
+    <connection from="t1" to="t5" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t1" to="t8" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t2" to="t4" type="NORMAL" sourcePosition="EAST" targetPosition="NORTH" />
+    <connection from="t3" to="t2" type="FALSE" sourcePosition="NORTH" targetPosition="SOUTH" />
+    <connection from="t4" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="EAST" />
+    <connection from="t6" to="t7" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t8" to="t9" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t9" to="t10" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t10" to="t6" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+  </flow>
+</data>

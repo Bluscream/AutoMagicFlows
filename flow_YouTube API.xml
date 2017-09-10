@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<data version="1.34.0">
+  <trigger type="user_interface_event">
+    <useDefaultName>false</useDefaultName>
+    <name>Click in Youtube</name>
+    <enabled>true</enabled>
+    <accessibilityEventType>TYPE_VIEW_CLICKED</accessibilityEventType>
+    <packageNameFilter>com.google.android.ogyoutube,com.google.android.youtube,com.google.android.apps.youtube.gaming</packageNameFilter>
+    <textMatchType>GLOB</textMatchType>
+    <textFilter>*</textFilter>
+    <removeNonPrintableCharacters>false</removeNonPrintableCharacters>
+  </trigger>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: _hascommentsbutton</name>
+    <expression>_hascommentsbutton</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: has_loaded</name>
+    <expression>has_loaded</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: isloading</name>
+    <expression>isloading</expression>
+  </condition>
+  <action type="control_user_interface">
+    <useDefaultName>true</useDefaultName>
+    <name>Control UI: _commentsbutton = "com.google.android.apps.youtube.gaming:id/comments_button"; _hascommentsbutton = existsElementById(_commentsbutton);</name>
+    <script>_commentsbutton = "com.google.android.apps.youtube.gaming:id/comments_button";
+_hascommentsbutton = existsElementById(_commentsbutton);</script>
+  </action>
+  <action type="control_user_interface">
+    <useDefaultName>true</useDefaultName>
+    <name>Control UI: has_loaded = existsElementById("com.google.android.apps.youtube.gaming:id/comments_button");</name>
+    <script>has_loaded = existsElementById("com.google.android.apps.youtube.gaming:id/comments_button");</script>
+  </action>
+  <action type="control_user_interface">
+    <useDefaultName>true</useDefaultName>
+    <name>Control UI: isloading = existsElementById("com.google.android.apps.youtube.gaming:id/player_loading_view");</name>
+    <script>isloading = existsElementById("com.google.android.apps.youtube.gaming:id/player_loading_view");</script>
+  </action>
+  <action type="sleep">
+    <useDefaultName>true</useDefaultName>
+    <name>Sleep: 250ms (allow device sleep)</name>
+    <duration>250ms</duration>
+    <keepDeviceAwake>false</keepDeviceAwake>
+    <allowWakeupFromDeviceIdle>false</allowWakeupFromDeviceIdle>
+  </action>
+  <action type="control_user_interface">
+    <useDefaultName>false</useDefaultName>
+    <name>Update Variables if necessary</name>
+    <script>title = "com.google.android.apps.youtube.gaming:id/title";
+author = "com.google.android.apps.youtube.gaming:id/channel_title";
+if (existsElementById(title)){
+  title = getTextById(title);
+  if (title != global_youtube_current_title) {
+    global_youtube_current_title = title;
+  }
+}
+if (existsElementById(author)){
+  author = getTextById(author);
+  if (author != global_youtube_current_author) {
+    global_youtube_current_author = author;
+  }
+}
+hash = hash("{author}::{title}", "UTF-8", "MD5");
+if (hash != global_youtube_current_hash) {
+  global_youtube_current_hash = hash;
+}</script>
+  </action>
+  <flow type="flow">
+    <name>Youtube API</name>
+    <group>YouTube</group>
+    <enabled>true</enabled>
+    <executionPolicy>STOP</executionPolicy>
+    <emergencyStopCount>500</emergencyStopCount>
+    <triggercontainer id="t1" x="-105.0" y="192.5">
+      <trigger>Click in Youtube</trigger>
+    </triggercontainer>
+    <actioncontainer id="t2" x="245.0" y="192.5">Control UI: isloading = existsElementById("com.google.android.apps.youtube.gaming:id/player_loading_view");</actioncontainer>
+    <actioncontainer id="t3" x="70.0" y="192.5">Sleep: 250ms (allow device sleep)</actioncontainer>
+    <actioncontainer id="t4" x="70.0" y="472.5">Control UI: _commentsbutton = "com.google.android.apps.youtube.gaming:id/comments_button"; _hascommentsbutton = existsElementById(_commentsbutton);</actioncontainer>
+    <conditioncontainer id="t5" x="70.0" y="612.5">Expression: _hascommentsbutton</conditioncontainer>
+    <actioncontainer id="t6" x="70.0" y="752.5">Update Variables if necessary</actioncontainer>
+    <conditioncontainer id="t7" x="70.0" y="332.5">Expression: isloading</conditioncontainer>
+    <conditioncontainer id="t8" x="455.0" y="472.5">Expression: has_loaded</conditioncontainer>
+    <actioncontainer id="t9" x="560.0" y="367.5">Control UI: has_loaded = existsElementById("com.google.android.apps.youtube.gaming:id/comments_button");</actioncontainer>
+    <connection from="t1" to="t3" type="NORMAL" sourcePosition="EAST" targetPosition="WEST" />
+    <connection from="t2" to="t7" type="NORMAL" sourcePosition="SOUTH" targetPosition="EAST" />
+    <connection from="t3" to="t2" type="NORMAL" sourcePosition="EAST" targetPosition="WEST" />
+    <connection from="t4" to="t5" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t5" to="t6" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t7" to="t3" type="TRUE" sourcePosition="NORTH" targetPosition="SOUTH" />
+    <connection from="t7" to="t4" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t9" to="t8" type="NORMAL" sourcePosition="SOUTH" targetPosition="EAST" />
+  </flow>
+</data>
