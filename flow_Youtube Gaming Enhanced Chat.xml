@@ -12,12 +12,22 @@
   </trigger>
   <trigger type="user_interface_event">
     <useDefaultName>false</useDefaultName>
+    <name>Chat message long clicked in Twitch</name>
+    <enabled>true</enabled>
+    <accessibilityEventType>TYPE_VIEW_LONG_CLICKED</accessibilityEventType>
+    <packageNameFilter>tv.twitch.android.app</packageNameFilter>
+    <textMatchType>REGEX</textMatchType>
+    <textFilter>^[0-9]{1,2}:[0-9]{1,2} .* .+: (?s:.*)</textFilter>
+    <removeNonPrintableCharacters>true</removeNonPrintableCharacters>
+  </trigger>
+  <trigger type="user_interface_event">
+    <useDefaultName>false</useDefaultName>
     <name>Chat message long clicked in Youtube Gaming</name>
     <enabled>true</enabled>
     <accessibilityEventType>TYPE_VIEW_LONG_CLICKED</accessibilityEventType>
     <packageNameFilter>com.google.android.apps.youtube.gaming</packageNameFilter>
     <textMatchType>REGEX</textMatchType>
-    <textFilter>(^[0-9]{1,2}:[0-9]{1,2}\s(?:AM|PM))\s(\w*)\s(.*)</textFilter>
+    <textFilter>^([0-9]{1,2}:[0-9]{1,2}\s(?:AM|PM))\s(\w+)\s(.*)</textFilter>
     <removeNonPrintableCharacters>false</removeNonPrintableCharacters>
   </trigger>
   <condition type="debug_dialog">
@@ -26,13 +36,12 @@
   </condition>
   <condition type="expression">
     <useDefaultName>true</useDefaultName>
-    <name>Expression: operation == "ok"</name>
-    <expression>operation == "ok"</expression>
-  </condition>
-  <condition type="expression">
-    <useDefaultName>true</useDefaultName>
-    <name>Expression: pattern = '(^[0-9]{1,2}:[0-9]{1,2}\\s(?:AM|PM))\\s(\\w*)\\s(.*)'; if (matches(text, pattern)) { regex = findAll(text, pattern, true); return true; } return false;</name>
-    <expression>pattern = '(^[0-9]{1,2}:[0-9]{1,2}\\s(?:AM|PM))\\s(\\w*)\\s(.*)';
+    <name>Expression: if (trigger == "Chat message long clicked in Youtube Gaming") { pattern = '^([0-9]{1,2}:[0-9]{1,2} (?:AM|PM)) (\\w+) ((?s:.*))'; } else if (trigger == "Chat message long clicked in Twitch") { pattern = '^([0-9]{1,2}:[0-9]{1,2}) .* (.+): ((?s:.*))'; } if (matches(text, pattern)) { regex = findAll(text, pattern, true); return true; } return false;</name>
+    <expression>if (trigger == "Chat message long clicked in Youtube Gaming") {
+  pattern = '^([0-9]{1,2}:[0-9]{1,2} (?:AM|PM)) (\\w+) ((?s:.*))';
+} else if (trigger == "Chat message long clicked in Twitch") {
+  pattern = '^([0-9]{1,2}:[0-9]{1,2}) .* (.+): ((?s:.*))';
+}
 if (matches(text, pattern)) {
   regex = findAll(text, pattern, true);
   return true;
@@ -41,13 +50,18 @@ if (matches(text, pattern)) {
   </condition>
   <condition type="expression">
     <useDefaultName>true</useDefaultName>
+    <name>Expression: operation == "ok"</name>
+    <expression>operation == "ok"</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
     <name>Expression: trigger == "Chat message box long clicked in Youtube Gaming"</name>
     <expression>trigger == "Chat message box long clicked in Youtube Gaming"</expression>
   </condition>
   <condition type="expression">
     <useDefaultName>true</useDefaultName>
-    <name>Expression: trigger == "Chat message long clicked in Youtube Gaming"</name>
-    <expression>trigger == "Chat message long clicked in Youtube Gaming"</expression>
+    <name>Expression: trigger == "Chat message long clicked in Youtube Gaming" or trigger == "Chat message long clicked in Twitch"</name>
+    <expression>trigger == "Chat message long clicked in Youtube Gaming" or trigger == "Chat message long clicked in Twitch"</expression>
   </condition>
   <condition type="expression">
     <useDefaultName>true</useDefaultName>
@@ -143,8 +157,8 @@ setText2ById("com.google.android.apps.youtube.gaming:id/edit_text", n);
     <text>{text}</text>
   </action>
   <action type="execute_flows">
-    <useDefaultName>true</useDefaultName>
-    <name>Execute Flows: API</name>
+    <useDefaultName>false</useDefaultName>
+    <name>Execute Flows: API2</name>
     <includeFlowNamePatternList>API</includeFlowNamePatternList>
     <excludeFlowNamePatternList></excludeFlowNamePatternList>
     <skipDisabledFlowsWithoutError>false</skipDisabledFlowsWithoutError>
@@ -336,85 +350,86 @@ setText2ById("com.google.android.apps.youtube.gaming:id/edit_text", n);
     <group>YouTube</group>
     <enabled>true</enabled>
     <executionPolicy>PARALLEL</executionPolicy>
-    <triggercontainer id="t1" x="70.0" y="-122.5">
+    <conditioncontainer id="t1" x="175.0" y="472.5"> Debug Dialog</conditioncontainer>
+    <actioncontainer id="t2" x="-210.0" y="962.5">Copy Text to Clipboard: {text}</actioncontainer>
+    <actioncontainer id="t3" x="-210.0" y="1067.5">Notification on Screen: Copied "{text}"</actioncontainer>
+    <conditioncontainer id="t4" x="-35.0" y="822.5">Expression: value == "Copy Timestamp"</conditioncontainer>
+    <conditioncontainer id="t5" x="140.0" y="822.5">Expression: value == "Copy Author"</conditioncontainer>
+    <conditioncontainer id="t6" x="315.0" y="822.5">Expression: value == "Copy Message"</conditioncontainer>
+    <actioncontainer id="t7" x="-35.0" y="1067.5">Notification on Screen: Copied "{regex[0][1]}"</actioncontainer>
+    <actioncontainer id="t8" x="-35.0" y="962.5">Copy Text to Clipboard: {regex[0][1]}</actioncontainer>
+    <actioncontainer id="t9" x="140.0" y="962.5">Copy Text to Clipboard: {regex[0][2]}</actioncontainer>
+    <actioncontainer id="t10" x="140.0" y="1067.5">Notification on Screen: Copied "{regex[0][2]}"</actioncontainer>
+    <actioncontainer id="t11" x="315.0" y="962.5">Copy Text to Clipboard: {regex[0][3]}</actioncontainer>
+    <actioncontainer id="t12" x="315.0" y="1067.5">Notification on Screen: Copied "{regex[0][3]}"</actioncontainer>
+    <conditioncontainer id="t13" x="490.0" y="822.5">Expression: value == "Open as URL"</conditioncontainer>
+    <actioncontainer id="t14" x="490.0" y="1067.5">Open URL in Browser: http://{regex[0][3]}</actioncontainer>
+    <conditioncontainer id="t15" x="-70.0" y="612.5">Expression: operation == "ok"</conditioncontainer>
+    <conditioncontainer id="t16" x="-770.0" y="-227.5">Expression: value == "Send URL"</conditioncontainer>
+    <actioncontainer id="t17" x="-945.0" y="-227.5">Copy Text From Clipboard: to variable clipboard</actioncontainer>
+    <actioncontainer id="t18" x="-420.0" y="-122.5">Input Dialog: What do you want to do? Single Choice Menu Send URL</actioncontainer>
+    <conditioncontainer id="t19" x="-595.0" y="-122.5">Expression: operation == "ok"</conditioncontainer>
+    <actioncontainer id="t20" x="-2450.0" y="-227.5">Control UI: sendKey(66);</actioncontainer>
+    <actioncontainer id="t21" x="-2310.0" y="-227.5">Execute Root Command: input keyevent 66 in </actioncontainer>
+    <actioncontainer id="t22" x="-385.0" y="1067.5">Message Dialog: Message by {regex[0][2]} at {regex[0][1]} {regex[0][3]}</actioncontainer>
+    <actioncontainer id="t23" x="-385.0" y="962.5">Input Dialog: Message by {regex[0][2]} at {regex[0][1]} Multi-line text </actioncontainer>
+    <conditioncontainer id="t24" x="-385.0" y="822.5">Expression: value == "Show Message"</conditioncontainer>
+    <actioncontainer id="t25" x="-525.0" y="962.5">Control UI: sleep(250); back();</actioncontainer>
+    <conditioncontainer id="t26" x="-210.0" y="822.5">Expression: value == "Copy to Clipboard"</conditioncontainer>
+    <actioncontainer id="t27" x="-70.0" y="472.5">Input Dialog: Message by {regex[0][2]} at {regex[0][1]} Single Choice Menu Show Message,Copy to Clipboard,Open as URL</actioncontainer>
+    <actioncontainer id="t28" x="-1785.0" y="-227.5">Execute Flows: API2</actioncontainer>
+    <actioncontainer id="t29" x="-1155.0" y="-227.5">Input Dialog: Enter URL you want to send Single-line text Enter URL you want to send</actioncontainer>
+    <actioncontainer id="t30" x="-1155.0" y="-17.5">Control UI: //pasteById("com.google.android.apps.youtube.gaming:id/edit_text"); text = getTextById("com.google.android.apps.youtube.gaming:id/edit_text"); setText2ById("com.google.android.apps.youtube.gaming:id/edit_text", "{text} {clipboard}");</actioncontainer>
+    <conditioncontainer id="t31" x="-770.0" y="-17.5">Expression: value == "Paste"</conditioncontainer>
+    <actioncontainer id="t32" x="-945.0" y="-17.5">Copy Text From Clipboard: to variable clipboard</actioncontainer>
+    <actioncontainer id="t33" x="-1575.0" y="-227.5">Script: api_splitURL = value;</actioncontainer>
+    <actioncontainer id="t34" x="-1995.0" y="-227.5">Control UI: u = trim(value);//api_splitURL; //n = u["host"]["main"]+"."+u["host"]["tld"]; n = replaceAll(value, '(?i:www\\.)', ''); n = replaceAll(value, '(?i:https?://)', ''); setText2ById("com.google.android.apps.youtube.gaming:id/edit_text", n); //clickById("com.google.android.apps.youtube.gaming:id/live_cha</actioncontainer>
+    <conditioncontainer id="t35" x="-1330.0" y="-227.5">Expression: operation == "ok"</conditioncontainer>
+    <conditioncontainer id="t36" x="-175.0" y="-122.5">Expression: trigger == "Chat message box long clicked in Youtube Gaming"</conditioncontainer>
+    <actioncontainer id="t37" x="490.0" y="962.5">Script: </actioncontainer>
+    <triggercontainer id="t38" x="70.0" y="-122.5">
       <trigger>Chat message box long clicked in Youtube Gaming</trigger>
       <trigger>Chat message long clicked in Youtube Gaming</trigger>
+      <trigger>Chat message long clicked in Twitch</trigger>
     </triggercontainer>
-    <conditioncontainer id="t2" x="175.0" y="472.5"> Debug Dialog</conditioncontainer>
-    <actioncontainer id="t3" x="-210.0" y="962.5">Copy Text to Clipboard: {text}</actioncontainer>
-    <actioncontainer id="t4" x="-210.0" y="1067.5">Notification on Screen: Copied "{text}"</actioncontainer>
-    <conditioncontainer id="t5" x="-35.0" y="822.5">Expression: value == "Copy Timestamp"</conditioncontainer>
-    <conditioncontainer id="t6" x="140.0" y="822.5">Expression: value == "Copy Author"</conditioncontainer>
-    <conditioncontainer id="t7" x="315.0" y="822.5">Expression: value == "Copy Message"</conditioncontainer>
-    <actioncontainer id="t8" x="-35.0" y="1067.5">Notification on Screen: Copied "{regex[0][1]}"</actioncontainer>
-    <actioncontainer id="t9" x="-35.0" y="962.5">Copy Text to Clipboard: {regex[0][1]}</actioncontainer>
-    <actioncontainer id="t10" x="140.0" y="962.5">Copy Text to Clipboard: {regex[0][2]}</actioncontainer>
-    <actioncontainer id="t11" x="140.0" y="1067.5">Notification on Screen: Copied "{regex[0][2]}"</actioncontainer>
-    <actioncontainer id="t12" x="315.0" y="962.5">Copy Text to Clipboard: {regex[0][3]}</actioncontainer>
-    <actioncontainer id="t13" x="315.0" y="1067.5">Notification on Screen: Copied "{regex[0][3]}"</actioncontainer>
-    <conditioncontainer id="t14" x="490.0" y="822.5">Expression: value == "Open as URL"</conditioncontainer>
-    <actioncontainer id="t15" x="490.0" y="962.5">Script: </actioncontainer>
-    <actioncontainer id="t16" x="490.0" y="1067.5">Open URL in Browser: http://{regex[0][3]}</actioncontainer>
-    <conditioncontainer id="t17" x="70.0" y="262.5">Expression: pattern = '(^[0-9]{1,2}:[0-9]{1,2}\\s(?:AM|PM))\\s(\\w*)\\s(.*)'; if (matches(text, pattern)) { regex = findAll(text, pattern, true); return true; } return false;</conditioncontainer>
-    <conditioncontainer id="t18" x="70.0" y="87.5">Expression: trigger == "Chat message long clicked in Youtube Gaming"</conditioncontainer>
-    <conditioncontainer id="t19" x="-175.0" y="-122.5">Expression: trigger == "Chat message box long clicked in Youtube Gaming"</conditioncontainer>
-    <conditioncontainer id="t20" x="-70.0" y="612.5">Expression: operation == "ok"</conditioncontainer>
-    <conditioncontainer id="t21" x="-770.0" y="-227.5">Expression: value == "Send URL"</conditioncontainer>
-    <actioncontainer id="t22" x="-945.0" y="-227.5">Copy Text From Clipboard: to variable clipboard</actioncontainer>
-    <actioncontainer id="t23" x="-420.0" y="-122.5">Input Dialog: What do you want to do? Single Choice Menu Send URL</actioncontainer>
-    <conditioncontainer id="t24" x="-595.0" y="-122.5">Expression: operation == "ok"</conditioncontainer>
-    <actioncontainer id="t25" x="-2450.0" y="-227.5">Control UI: sendKey(66);</actioncontainer>
-    <actioncontainer id="t26" x="-2310.0" y="-227.5">Execute Root Command: input keyevent 66 in </actioncontainer>
-    <actioncontainer id="t27" x="-385.0" y="1067.5">Message Dialog: Message by {regex[0][2]} at {regex[0][1]} {regex[0][3]}</actioncontainer>
-    <actioncontainer id="t28" x="-385.0" y="962.5">Input Dialog: Message by {regex[0][2]} at {regex[0][1]} Multi-line text </actioncontainer>
-    <conditioncontainer id="t29" x="-385.0" y="822.5">Expression: value == "Show Message"</conditioncontainer>
-    <actioncontainer id="t30" x="-525.0" y="962.5">Control UI: sleep(250); back();</actioncontainer>
-    <conditioncontainer id="t31" x="-210.0" y="822.5">Expression: value == "Copy to Clipboard"</conditioncontainer>
-    <actioncontainer id="t32" x="-70.0" y="472.5">Input Dialog: Message by {regex[0][2]} at {regex[0][1]} Single Choice Menu Show Message,Copy to Clipboard,Open as URL</actioncontainer>
-    <actioncontainer id="t33" x="-1785.0" y="-227.5">Execute Flows: API</actioncontainer>
-    <actioncontainer id="t34" x="-1155.0" y="-227.5">Input Dialog: Enter URL you want to send Single-line text Enter URL you want to send</actioncontainer>
-    <actioncontainer id="t35" x="-1155.0" y="-17.5">Control UI: //pasteById("com.google.android.apps.youtube.gaming:id/edit_text"); text = getTextById("com.google.android.apps.youtube.gaming:id/edit_text"); setText2ById("com.google.android.apps.youtube.gaming:id/edit_text", "{text} {clipboard}");</actioncontainer>
-    <conditioncontainer id="t36" x="-770.0" y="-17.5">Expression: value == "Paste"</conditioncontainer>
-    <actioncontainer id="t37" x="-945.0" y="-17.5">Copy Text From Clipboard: to variable clipboard</actioncontainer>
-    <actioncontainer id="t38" x="-1575.0" y="-227.5">Script: api_splitURL = value;</actioncontainer>
-    <actioncontainer id="t39" x="-1995.0" y="-227.5">Control UI: u = trim(value);//api_splitURL; //n = u["host"]["main"]+"."+u["host"]["tld"]; n = replaceAll(value, '(?i:www\\.)', ''); n = replaceAll(value, '(?i:https?://)', ''); setText2ById("com.google.android.apps.youtube.gaming:id/edit_text", n); //clickById("com.google.android.apps.youtube.gaming:id/live_cha</actioncontainer>
-    <conditioncontainer id="t40" x="-1330.0" y="-227.5">Expression: operation == "ok"</conditioncontainer>
-    <connection from="t1" to="t18" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t1" to="t19" type="NORMAL" sourcePosition="WEST" targetPosition="EAST" />
-    <connection from="t3" to="t4" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <conditioncontainer id="t39" x="70.0" y="87.5">Expression: trigger == "Chat message long clicked in Youtube Gaming" or trigger == "Chat message long clicked in Twitch"</conditioncontainer>
+    <conditioncontainer id="t40" x="70.0" y="262.5">Expression: if (trigger == "Chat message long clicked in Youtube Gaming") { pattern = '^([0-9]{1,2}:[0-9]{1,2} (?:AM|PM)) (\\w+) ((?s:.*))'; } else if (trigger == "Chat message long clicked in Twitch") { pattern = '^([0-9]{1,2}:[0-9]{1,2}) .* (.+): ((?s:.*))'; } if (matches(text, pattern)) { regex = findAll(text, pattern, true); return true; } return false;</conditioncontainer>
+    <connection from="t2" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t4" to="t8" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
     <connection from="t5" to="t9" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t6" to="t10" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t7" to="t12" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t9" to="t8" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t10" to="t11" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t12" to="t13" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t14" to="t15" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t15" to="t16" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t17" to="t2" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t17" to="t32" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t18" to="t17" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t19" to="t23" type="TRUE" sourcePosition="WEST" targetPosition="EAST" />
-    <connection from="t20" to="t29" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t20" to="t31" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t20" to="t5" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t20" to="t6" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t20" to="t7" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t20" to="t14" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t21" to="t22" type="TRUE" sourcePosition="SOUTH" targetPosition="SOUTH" />
-    <connection from="t22" to="t34" type="NORMAL" sourcePosition="WEST" targetPosition="EAST" />
-    <connection from="t23" to="t24" type="NORMAL" sourcePosition="WEST" targetPosition="EAST" />
-    <connection from="t24" to="t21" type="TRUE" sourcePosition="WEST" targetPosition="NORTH" />
-    <connection from="t24" to="t36" type="TRUE" sourcePosition="WEST" targetPosition="NORTH" />
-    <connection from="t26" to="t25" type="EXCEPTION" sourcePosition="NORTH" targetPosition="NORTH" />
-    <connection from="t29" to="t28" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t29" to="t30" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t31" to="t3" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t32" to="t20" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t33" to="t39" type="NORMAL" sourcePosition="WEST" targetPosition="EAST" />
-    <connection from="t34" to="t40" type="NORMAL" sourcePosition="WEST" targetPosition="EAST" />
-    <connection from="t36" to="t37" type="TRUE" sourcePosition="WEST" targetPosition="EAST" />
-    <connection from="t37" to="t35" type="NORMAL" sourcePosition="WEST" targetPosition="EAST" />
-    <connection from="t38" to="t33" type="NORMAL" sourcePosition="WEST" targetPosition="EAST" />
-    <connection from="t40" to="t39" type="TRUE" sourcePosition="NORTH" targetPosition="NORTH" />
+    <connection from="t6" to="t11" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t8" to="t7" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t9" to="t10" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t11" to="t12" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t13" to="t37" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t15" to="t24" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t15" to="t26" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t15" to="t4" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t15" to="t5" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t15" to="t6" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t15" to="t13" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t16" to="t17" type="TRUE" sourcePosition="SOUTH" targetPosition="SOUTH" />
+    <connection from="t17" to="t29" type="NORMAL" sourcePosition="WEST" targetPosition="EAST" />
+    <connection from="t18" to="t19" type="NORMAL" sourcePosition="WEST" targetPosition="EAST" />
+    <connection from="t19" to="t16" type="TRUE" sourcePosition="WEST" targetPosition="NORTH" />
+    <connection from="t19" to="t31" type="TRUE" sourcePosition="WEST" targetPosition="NORTH" />
+    <connection from="t21" to="t20" type="EXCEPTION" sourcePosition="NORTH" targetPosition="NORTH" />
+    <connection from="t24" to="t23" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t24" to="t25" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t26" to="t2" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t27" to="t15" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t28" to="t34" type="NORMAL" sourcePosition="WEST" targetPosition="EAST" />
+    <connection from="t29" to="t35" type="NORMAL" sourcePosition="WEST" targetPosition="EAST" />
+    <connection from="t31" to="t32" type="TRUE" sourcePosition="WEST" targetPosition="EAST" />
+    <connection from="t32" to="t30" type="NORMAL" sourcePosition="WEST" targetPosition="EAST" />
+    <connection from="t33" to="t28" type="NORMAL" sourcePosition="WEST" targetPosition="EAST" />
+    <connection from="t35" to="t34" type="TRUE" sourcePosition="NORTH" targetPosition="NORTH" />
+    <connection from="t36" to="t18" type="TRUE" sourcePosition="WEST" targetPosition="EAST" />
+    <connection from="t37" to="t14" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t38" to="t39" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t38" to="t36" type="NORMAL" sourcePosition="WEST" targetPosition="EAST" />
+    <connection from="t39" to="t40" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t40" to="t27" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t40" to="t1" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
   </flow>
 </data>

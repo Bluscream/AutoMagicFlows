@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<data version="1.34.0">
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: global_api_loader_spinner_rotate</name>
+    <expression>global_api_loader_spinner_rotate</expression>
+  </condition>
+  <condition type="expression">
+    <useDefaultName>true</useDefaultName>
+    <name>Expression: rot &gt;= 179.00</name>
+    <expression>rot &gt;= 179.00</expression>
+  </condition>
+  <action type="control_user_interface">
+    <useDefaultName>true</useDefaultName>
+    <name>Control UI: rot = 180.00</name>
+    <script>rot = 180.00</script>
+  </action>
+  <action type="control_user_interface">
+    <useDefaultName>true</useDefaultName>
+    <name>Control UI: setWidgetElementProperty("Loader", "Spinning Gear", "rotation", rot);</name>
+    <script>setWidgetElementProperty("Loader", "Spinning Gear", "rotation", rot);</script>
+  </action>
+  <action type="script">
+    <useDefaultName>true</useDefaultName>
+    <name>Script: rot = 0.0; global_api_loader_spinner_rotate = true;</name>
+    <script>rot = 0.0;
+global_api_loader_spinner_rotate = true;</script>
+  </action>
+  <action type="script">
+    <useDefaultName>true</useDefaultName>
+    <name>Script: setWidgetElementProperty("Loader", "Spinning Gear", "rotation", 0.0);</name>
+    <script>setWidgetElementProperty("Loader", "Spinning Gear", "rotation", 0.0);</script>
+  </action>
+  <action type="script">
+    <useDefaultName>true</useDefaultName>
+    <name>Script: while (global_api_loader_spinner_rotate) { if (rot &gt;= 179) { rot = -180; } rot = rot + 0.1; setWidgetElementProperty("Loader", "Spinning Gear", "rotation", rot); sleep(100); }</name>
+    <script>while (global_api_loader_spinner_rotate)
+{
+  if (rot &gt;= 179) { rot = -180; }
+  rot = rot + 0.1;
+  setWidgetElementProperty("Loader", "Spinning Gear", "rotation", rot);
+  sleep(100);
+}</script>
+  </action>
+  <action type="sleep">
+    <useDefaultName>true</useDefaultName>
+    <name>Sleep: 100ms (allow device sleep)</name>
+    <duration>100ms</duration>
+    <keepDeviceAwake>false</keepDeviceAwake>
+    <allowWakeupFromDeviceIdle>false</allowWakeupFromDeviceIdle>
+  </action>
+  <flow type="flow">
+    <name>Rotate Loader</name>
+    <group>. API</group>
+    <enabled>false</enabled>
+    <executionPolicy>PARALLEL</executionPolicy>
+    <triggercontainer id="t1" x="105.0" y="-17.5" />
+    <actioncontainer id="t2" x="105.0" y="122.5">Script: rot = 0.0; global_api_loader_spinner_rotate = true;</actioncontainer>
+    <conditioncontainer id="t3" x="0.0" y="367.5">Expression: rot &gt;= 179.00</conditioncontainer>
+    <actioncontainer id="t4" x="-700.0" y="367.5">Script: while (global_api_loader_spinner_rotate) { if (rot &gt;= 179) { rot = -180; } rot = rot + 0.1; setWidgetElementProperty("Loader", "Spinning Gear", "rotation", rot); sleep(100); }</actioncontainer>
+    <actioncontainer id="t5" x="210.0" y="1067.5">Script: setWidgetElementProperty("Loader", "Spinning Gear", "rotation", 0.0);</actioncontainer>
+    <actioncontainer id="t6" x="35.0" y="682.5">Control UI: setWidgetElementProperty("Loader", "Spinning Gear", "rotation", rot);</actioncontainer>
+    <actioncontainer id="t7" x="210.0" y="402.5">Sleep: 100ms (allow device sleep)</actioncontainer>
+    <conditioncontainer id="t8" x="245.0" y="612.5">Expression: global_api_loader_spinner_rotate</conditioncontainer>
+    <actioncontainer id="t9" x="-105.0" y="507.5">Control UI: rot = 180.00</actioncontainer>
+    <connection from="t1" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t2" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t3" to="t9" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t6" to="t8" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t7" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t8" to="t7" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t8" to="t5" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t9" to="t6" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+  </flow>
+</data>

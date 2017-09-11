@@ -1,43 +1,25 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
 <data version="1.34.0">
-  <trigger type="user_interface_event">
+  <trigger type="activity_started">
     <useDefaultName>true</useDefaultName>
-    <name>UI Event: Window opened package * matches glob *</name>
+    <name>Activity Started: */*</name>
     <enabled>false</enabled>
-    <accessibilityEventType>TYPE_WINDOW_STATE_CHANGED</accessibilityEventType>
+    <method>USAGE_STATISTICS</method>
     <packageNameFilter>*</packageNameFilter>
-    <textMatchType>GLOB</textMatchType>
-    <textFilter>*</textFilter>
-    <removeNonPrintableCharacters>false</removeNonPrintableCharacters>
+    <classNameFilter>*</classNameFilter>
   </trigger>
   <condition type="expression">
     <useDefaultName>true</useDefaultName>
-    <name>Expression: activity_class == "ch.gridvision.ppam.androidautomagic.FlowActivity"</name>
-    <expression>activity_class == "ch.gridvision.ppam.androidautomagic.FlowActivity"</expression>
-  </condition>
-  <condition type="expression">
-    <useDefaultName>true</useDefaultName>
-    <name>Expression: activity_class == "com.android.launcher3.Launcher"</name>
-    <expression>activity_class == "com.android.launcher3.Launcher"</expression>
-  </condition>
-  <condition type="expression">
-    <useDefaultName>true</useDefaultName>
-    <name>Expression: activity_class == "com.android.systemui.recents.RecentsActivity"</name>
-    <expression>activity_class == "com.android.systemui.recents.RecentsActivity"</expression>
-  </condition>
-  <condition type="expression">
-    <useDefaultName>true</useDefaultName>
-    <name>Expression: package_whitelist = newList( "ch.gridvision.ppam.androidautomagic", "com.teslacoilsw.launcher", "com.android.launcher3.Launcher" ); activity_whitelist = newList( "com.android.systemui.recents.RecentsActivity", "android.widget.framelayout" ); source_class_name != "" and source_class_name != null and not containsElement(activity_whitelist, source_class_name) and not containsElement(package_whitelist, package_name)</name>
+    <name>Expression: package_whitelist = newList( "ch.gridvision.ppam.androidautomagic", "com.android.launcher3.Launcher" ); activity_whitelist = newList( "com.android.systemui.recents.RecentsActivity", "android.widget.framelayout" ); activity_class != "" and activity_class != null and not containsElement(activity_whitelist, activity_class) and not containsElement(package_whitelist, package_name)</name>
     <expression>package_whitelist = newList(
 "ch.gridvision.ppam.androidautomagic",
-"com.teslacoilsw.launcher",
 "com.android.launcher3.Launcher"
 );
 activity_whitelist = newList(
 "com.android.systemui.recents.RecentsActivity",
 "android.widget.framelayout"
 );
-source_class_name != "" and source_class_name != null and not containsElement(activity_whitelist, source_class_name) and not containsElement(package_whitelist, package_name)</expression>
+activity_class != "" and activity_class != null and not containsElement(activity_whitelist, activity_class) and not containsElement(package_whitelist, package_name)</expression>
   </condition>
   <action type="copy_text_to_clipboard">
     <useDefaultName>true</useDefaultName>
@@ -58,25 +40,9 @@ source_class_name != "" and source_class_name != null and not containsElement(ac
     <waitForFlowsToFinish>false</waitForFlowsToFinish>
     <returnLocalVariablesToCallingFlow>false</returnLocalVariablesToCallingFlow>
   </action>
-  <action type="notification_screen">
-    <useDefaultName>true</useDefaultName>
-    <name>Notification on Screen: {activity_class} (long)</name>
-    <showText>true</showText>
-    <text>{activity_class}</text>
-    <widgetName></widgetName>
-    <width>200</width>
-    <height>250</height>
-    <stretchToFillArea>false</stretchToFillArea>
-    <opacity>1.00</opacity>
-    <durationLong>true</durationLong>
-    <customPosition>true</customPosition>
-    <gravityType>BOTTOM_CENTER</gravityType>
-    <xOffset>0</xOffset>
-    <yOffset>0</yOffset>
-  </action>
   <action type="notification_status_bar">
     <useDefaultName>true</useDefaultName>
-    <name>Notification on Statusbar: Current Activity Information</name>
+    <name>Notification on Statusbar: Current Activity Information ID {global_i}</name>
     <notificationIconType>BUILTIN</notificationIconType>
     <notificationIcon>INFO</notificationIcon>
     <customNotificationIcon></customNotificationIcon>
@@ -91,12 +57,12 @@ source_class_name != "" and source_class_name != null and not containsElement(ac
     <flagLocalOnly>false</flagLocalOnly>
     <accentColorEnabled>false</accentColorEnabled>
     <accentColor>#ffff0000</accentColor>
-    <flagOngoing>true</flagOngoing>
+    <flagOngoing>false</flagOngoing>
     <flagNoClear>false</flagNoClear>
-    <notificationIDEnabled>false</notificationIDEnabled>
-    <notificationID>1</notificationID>
+    <notificationIDEnabled>true</notificationIDEnabled>
+    <notificationID>{global_i}</notificationID>
     <category>DEFAULT</category>
-    <priority>MIN</priority>
+    <priority>MAX</priority>
     <visibility>PRIVATE</visibility>
     <messageBigEnabled>true</messageBigEnabled>
     <messageBig>{notification_text}</messageBig>
@@ -128,8 +94,9 @@ source_class_name != "" and source_class_name != null and not containsElement(ac
   </action>
   <action type="script">
     <useDefaultName>true</useDefaultName>
-    <name>Script: addElement(global_lastactivites, "{app_name};{package_name};{source_class_name}"); if(length(global_lastactivites) &gt; 3) removeElement(global_lastactivites, 0); notification_text = ""; for (i in global_lastactivites) { a=split(i, ";"); notification_text = notification_text + join(a, "\n") + "\n\n"; }</name>
-    <script>addElement(global_lastactivites, "{app_name};{package_name};{source_class_name}");
+    <name>Script: if (global_lastactivites==null){global_lastactivites=newList()} addElement(global_lastactivites, "{app_name};{package_name};{activity_class};{activity_name}"); if(length(global_lastactivites) &gt; 3) removeElement(global_lastactivites, 0); notification_text = ""; for (i in global_lastactivites) { a=split(i, ";"); notification_text = notification_text + join(a, "\n") + "\n\n"; } global_i = global_i + 1</name>
+    <script>if (global_lastactivites==null){global_lastactivites=newList()}
+addElement(global_lastactivites, "{app_name};{package_name};{activity_class};{activity_name}");
 if(length(global_lastactivites) &gt; 3)
   removeElement(global_lastactivites, 0);
 notification_text = "";
@@ -137,7 +104,8 @@ for (i in global_lastactivites)
 {
   a=split(i, ";");
   notification_text = notification_text + join(a, "\n") + "\n\n";
-}</script>
+}
+global_i = global_i + 1</script>
   </action>
   <action type="set_flow_state">
     <useDefaultName>true</useDefaultName>
@@ -151,31 +119,25 @@ for (i in global_lastactivites)
     <group>Informative</group>
     <enabled>false</enabled>
     <executionPolicy>QUEUE</executionPolicy>
-    <conditioncontainer id="t1" x="-770.0" y="52.5">Expression: activity_class == "ch.gridvision.ppam.androidautomagic.FlowActivity"</conditioncontainer>
-    <actioncontainer id="t2" x="-139.99998" y="332.5">Notification on Screen: {activity_class} (long)</actioncontainer>
-    <conditioncontainer id="t3" x="-210.0" y="52.5">Expression: activity_class == "com.android.launcher3.Launcher"</conditioncontainer>
-    <conditioncontainer id="t4" x="-490.0" y="52.5">Expression: activity_class == "com.android.systemui.recents.RecentsActivity"</conditioncontainer>
-    <actioncontainer id="t5" x="70.0" y="332.50006">Notification on Statusbar: Current Activity Information</actioncontainer>
-    <actioncontainer id="t6" x="70.000015" y="157.49995">Script: addElement(global_lastactivites, "{app_name};{package_name};{source_class_name}"); if(length(global_lastactivites) &gt; 3) removeElement(global_lastactivites, 0); notification_text = ""; for (i in global_lastactivites) { a=split(i, ";"); notification_text = notification_text + join(a, "\n") + "\n\n"; }</actioncontainer>
-    <conditioncontainer id="t7" x="70.000084" y="-17.500008">Expression: package_whitelist = newList( "ch.gridvision.ppam.androidautomagic", "com.teslacoilsw.launcher", "com.android.launcher3.Launcher" ); activity_whitelist = newList( "com.android.systemui.recents.RecentsActivity", "android.widget.framelayout" ); source_class_name != "" and source_class_name != null and not containsElement(activity_whitelist, source_class_name) and not containsElement(package_whitelist, package_name)</conditioncontainer>
-    <triggercontainer id="t8" x="70.0" y="-192.5">
-      <trigger>UI Event: Window opened package * matches glob *</trigger>
+    <triggercontainer id="t1" x="-70.0" y="-227.5">
+      <trigger>Activity Started: */*</trigger>
     </triggercontainer>
-    <connection from="t1" to="t4" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t4" to="t3" type="FALSE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t6" to="t5" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t7" to="t6" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t8" to="t7" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <actioncontainer id="t2" x="70.0" y="332.5">Notification on Statusbar: Current Activity Information ID {global_i}</actioncontainer>
+    <conditioncontainer id="t3" x="70.0" y="-17.5">Expression: package_whitelist = newList( "ch.gridvision.ppam.androidautomagic", "com.android.launcher3.Launcher" ); activity_whitelist = newList( "com.android.systemui.recents.RecentsActivity", "android.widget.framelayout" ); activity_class != "" and activity_class != null and not containsElement(activity_whitelist, activity_class) and not containsElement(package_whitelist, package_name)</conditioncontainer>
+    <actioncontainer id="t4" x="70.0" y="157.5">Script: if (global_lastactivites==null){global_lastactivites=newList()} addElement(global_lastactivites, "{app_name};{package_name};{activity_class};{activity_name}"); if(length(global_lastactivites) &gt; 3) removeElement(global_lastactivites, 0); notification_text = ""; for (i in global_lastactivites) { a=split(i, ";"); notification_text = notification_text + join(a, "\n") + "\n\n"; } global_i = global_i + 1</actioncontainer>
+    <connection from="t1" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t3" to="t4" type="TRUE" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t4" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
   </flow>
   <flow type="flow">
     <name>Stop new activity</name>
     <group>Informative</group>
-    <enabled>true</enabled>
+    <enabled>false</enabled>
     <executionPolicy>PARALLEL</executionPolicy>
-    <actioncontainer id="t1" x="69.999985" y="227.5">Set Flow State: Disable New activity</actioncontainer>
-    <actioncontainer id="t2" x="69.99995" y="402.50003">Remove Notification on Statusbar: 1 (Automagic)</actioncontainer>
-    <triggercontainer id="t3" x="70.0" y="52.5" />
+    <triggercontainer id="t1" x="70.0" y="52.5" />
+    <actioncontainer id="t2" x="69.999985" y="227.5">Set Flow State: Disable New activity</actioncontainer>
+    <actioncontainer id="t3" x="69.99994" y="402.50003">Remove Notification on Statusbar: 1 (Automagic)</actioncontainer>
     <connection from="t1" to="t2" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
-    <connection from="t3" to="t1" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
+    <connection from="t2" to="t3" type="NORMAL" sourcePosition="SOUTH" targetPosition="NORTH" />
   </flow>
 </data>
